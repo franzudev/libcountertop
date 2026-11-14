@@ -70,6 +70,7 @@ type DoorbellDoor struct {
 	Video    DoorbellVideo   `json:"video"`
 	Events   DoorbellFeed    `json:"events"`
 	Talk     DoorbellTalk    `json:"talk"`
+	Lock     string          `json:"lock"`
 }
 
 type DoorbellStream string

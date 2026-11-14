@@ -110,10 +110,16 @@ type Follower interface {
 	Follow(entity, attribute string) *states.Value
 }
 
+// Caller runs a Home Assistant action, such as lock.unlock.
+type Caller interface {
+	Call(ctx context.Context, action string, data map[string]string) error
+}
+
 type Options struct {
 	Settings storage.Section[schema.Doorbell]
 	Finder   Finder
 	States   Follower
+	Actions  Caller
 	DeviceID uint32
 	Chimes   func() []setting.Option
 	Now      func() time.Time
@@ -235,6 +241,10 @@ func (d *Doorbell) BinarySensors(ctx context.Context) ([]homeassistant.Named, er
 
 func (d *Doorbell) Cameras(ctx context.Context) ([]homeassistant.Named, error) {
 	return d.named(ctx, "camera")
+}
+
+func (d *Doorbell) Locks(ctx context.Context) ([]homeassistant.Named, error) {
+	return d.named(ctx, "lock")
 }
 
 func (d *Doorbell) named(ctx context.Context, domain string) ([]homeassistant.Named, error) {
