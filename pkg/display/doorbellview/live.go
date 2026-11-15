@@ -18,6 +18,7 @@ import (
 	"github.com/ygelfand/libcountertop/pkg/display/surface"
 	"github.com/ygelfand/libcountertop/pkg/display/ui"
 	"github.com/ygelfand/libcountertop/pkg/display/widgets"
+	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
 	"github.com/ygelfand/libcountertop/pkg/media/rtc"
 	"github.com/ygelfand/libcountertop/pkg/media/rtsp"
 	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
@@ -30,6 +31,9 @@ const (
 	videoZ     = -2
 	retryFirst = 2 * time.Second
 	retryMost  = 30 * time.Second
+	// unlockArm is how long a first tap on a locked lock waits for the second tap that unlocks it.
+	unlockArm  = 4 * time.Second
+	lockWait   = 15 * time.Second
 	heardAhead = rtc.PlayRate / 5
 	spinStep   = widgets.SpinStep
 )
@@ -51,6 +55,15 @@ type session struct {
 	endTalk context.CancelFunc
 	ended   bool
 	quality schema.DoorbellStream
+
+	lock     *states.Value
+	stopLock func()
+	armed    time.Time
+	pending  bool
+	// press counts lock taps: a timer only acts for the tap that set it, never a newer one.
+	press     int
+	armTimer  *time.Timer
+	waitTimer *time.Timer
 }
 
 var errDecoder = errors.New("doorbell: this screen can't decode the stream")
@@ -85,6 +98,15 @@ func (l *session) start() {
 	l.stop = stop
 	l.audible = l.view.rang
 	l.quality = l.v.o.Settings.Read().Doors[l.slot].Stream
+	if v := l.v.o.Bell.LockState(l.slot); v != nil {
+		l.lock = v
+		l.stopLock = v.Changed.Listen(func(string) {
+			l.mu.Lock()
+			l.pending = false
+			l.mu.Unlock()
+			l.v.o.Shell.Redraw()
+		})
+	}
 	l.mu.Unlock()
 	safe.Go("doorbell picture", func() { l.v.doorPicture(l.slot, l.v.screenMost()) })
 	safe.Go("doorbell live", func() { l.run(ctx) })
@@ -97,8 +119,14 @@ func (l *session) end() {
 		return
 	}
 	l.ended = true
-	stop := l.stop
+	stop, stopLock := l.stop, l.stopLock
+	l.stopLock = nil
+	stopTimer(l.armTimer)
+	stopTimer(l.waitTimer)
 	l.mu.Unlock()
+	if stopLock != nil {
+		stopLock()
+	}
 	l.stopTalking()
 	if stop != nil {
 		stop()
@@ -372,6 +400,7 @@ func (l *session) build(w *gogui.Window) gogui.View {
 	l.mu.Lock()
 	shown, why, audible := l.shown, l.why, l.audible
 	talking := talkState(l.talker, l.endTalk)
+	lock := l.lockButton(time.Now())
 	l.mu.Unlock()
 	name := l.v.doorName(l.slot)
 
@@ -409,8 +438,8 @@ func (l *session) build(w *gogui.Window) gogui.View {
 			l.close,
 		),
 		banner(vw, name, why),
-		l.controls(vw, vh, audible, talking),
 	)
+	content = append(content, l.controls(vw, vh, audible, talking, lock)...)
 	return gogui.Column(gogui.ContainerCfg{
 		ID:      "doorbell-live",
 		Sizing:  gogui.FillFill,
@@ -422,7 +451,12 @@ func (l *session) build(w *gogui.Window) gogui.View {
 	})
 }
 
-func (l *session) controls(vw, vh int, audible bool, talking talk) gogui.View {
+func (l *session) controls(
+	vw, vh int,
+	audible bool,
+	talking talk,
+	lock lockLook,
+) []gogui.View {
 	st := gogui.CurrentTheme().TextStyleIconMedium
 	st.Family = icons.Family
 	st.Size = style.Reach() * 1.2
@@ -451,15 +485,57 @@ func (l *session) controls(vw, vh int, audible bool, talking talk) gogui.View {
 			"doorbell-live-talk", icons.Glyph(icons.Named(glyph)), st,
 			tint, func(gogui.EventCtx) { l.toggleTalk() }))
 	}
+	if lock.shown {
+		ink := st
+		ink.Color = lock.ink
+		buttons = append(buttons, l.v.presses.Button(
+			"doorbell-live-lock", icons.Glyph(icons.Named(lock.glyph)), ink,
+			lock.tint, func(gogui.EventCtx) { l.pressLock() }))
+	}
 	width := len(buttons)*side + max(len(buttons)-1, 0)*gap
 	pad := int(gogui.PadLarge)
-	return widgets.Placed(
-		ui.Rect{X: (vw - width) / 2, Y: vh - pad - side, W: width, H: side},
+	left := (vw - width) / 2
+	row := []gogui.View{widgets.Placed(
+		ui.Rect{X: left, Y: vh - pad - side, W: width, H: side},
 		gogui.Row(gogui.ContainerCfg{
 			Sizing:  gogui.FillFill,
 			Padding: gogui.NoPadding,
 			Spacing: gogui.SpacingPx(float32(gap)),
 			Content: buttons,
+		}),
+	)}
+	if lock.asking {
+		// The lock button is the last one: "tap again to unlock" sits right above it.
+		row = append(row, askAbove(vw, left+width-side/2, vh-pad-side-gap/2))
+	}
+	return row
+}
+
+// askAbove is the "tap again to unlock" note, centred on x with its bottom edge at bottom.
+func askAbove(vw, x, bottom int) gogui.View {
+	st := gogui.CurrentTheme().Cfg.TextStyleDef
+	st.Color = inkDark
+	tall := int(st.Size*2) + int(gogui.PadSmall)*2
+	wide := min(vw, int(st.Size*16))
+	return widgets.Placed(
+		ui.Rect{X: min(max(x-wide/2, 0), vw-wide), Y: bottom - tall, W: wide, H: tall},
+		gogui.Row(gogui.ContainerCfg{
+			Sizing:  gogui.FillFill,
+			HAlign:  gogui.HAlignCenter,
+			VAlign:  gogui.VAlignBottom,
+			Padding: gogui.NoPadding,
+			Content: []gogui.View{gogui.Column(gogui.ContainerCfg{
+				Sizing: gogui.FitFit,
+				Radius: gogui.RadiusLarge,
+				Color:  lockArmed,
+				Padding: gogui.NewPadding(
+					gogui.PadSmall,
+					gogui.PadLarge,
+					gogui.PadSmall,
+					gogui.PadLarge,
+				),
+				Content: []gogui.View{gogui.Label(say.T("doorbell.lock.confirm"), st)},
+			})},
 		}),
 	)
 }

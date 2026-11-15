@@ -1007,6 +1007,8 @@ doorbell.video.connecting: "Connecting via {{.Source}}"
 doorbell.video.failed: "{{.Why}} ({{.Source}})"
 doorbell.tried: "{{.Source}} failed: {{.Why}}"
 doorbell.video.working: "Working via {{.Source}}"
+doorbell.lock: Lock
+doorbell.lock.confirm: Tap again to unlock
 doorbell.looking: Looking in Home Assistant…
 doorbell.manual: Manual
 doorbell.needs: Enter a UID or an IP address or hostname
@@ -1022,6 +1024,7 @@ doorbell.fellback: "{{.Line}} (Reolink failed)"
 doorbell.slot: "Doorbell {{.N}}"
 doorbell.watch: Watch
 doorbell.why.camera: No live video for this doorbell
+doorbell.why.lock: "Can't change the lock: {{.Why}}"
 doorbell.why.lost: Lost the doorbell, retrying
 doorbell.why.talk: "Can't talk: {{.Why}}"
 doorbell.why.fallback: Showing Home Assistant video, no talkback

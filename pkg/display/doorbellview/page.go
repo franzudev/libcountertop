@@ -25,6 +25,7 @@ type found struct {
 	list    []homeassistant.ReolinkDevice
 	binary  []homeassistant.Named
 	cameras []homeassistant.Named
+	locks   []homeassistant.Named
 	fetched bool
 }
 
@@ -76,8 +77,12 @@ func (v *View) lookup(f *found) {
 		if err != nil {
 			slog.Debug("doorbell camera lookup", "err", err)
 		}
+		locks, err := v.o.Bell.Locks(ctx)
+		if err != nil {
+			slog.Debug("doorbell lock lookup", "err", err)
+		}
 		f.mu.Lock()
-		f.list, f.binary, f.cameras, f.fetched = list, binary, cameras, true
+		f.list, f.binary, f.cameras, f.locks, f.fetched = list, binary, cameras, locks, true
 		f.mu.Unlock()
 		v.o.Shell.Redraw()
 	})
@@ -99,6 +104,12 @@ func (f *found) allCameras() []homeassistant.Named {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 	return slices.Clone(f.cameras)
+}
+
+func (f *found) allLocks() []homeassistant.Named {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	return slices.Clone(f.locks)
 }
 
 func freeSlot(cfg schema.Doorbell) (int, bool) {

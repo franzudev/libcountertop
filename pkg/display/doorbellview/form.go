@@ -162,26 +162,35 @@ func (f *form) build() ([]menu.Row, []func(int)) {
 			),
 		)
 	}
-	if door.Events != schema.FeedAssistant && door.Events != schema.FeedAuto {
-		return rows, taps
-	}
-	if door.Video == schema.VideoRTSP {
-		add(menu.Row{
-			Label: say.T("doorbell.camera.pictures"),
-			Hint:  say.T("doorbell.camera.pictures.hint"),
-			Kind:  menu.Chevron,
-			Value: door.Camera,
-		}, func(int) { f.v.o.Shell.Push(f.cameraPage()) })
-	}
-	for _, s := range sensorKinds {
-		title := say.T("doorbell.sensor." + s.field)
-		value := *s.at(&door.Sensors)
-		if value == "" {
-			value = say.T("doorbell.sensor.none")
+	if door.Events == schema.FeedAssistant || door.Events == schema.FeedAuto {
+		if door.Video == schema.VideoRTSP {
+			add(menu.Row{
+				Label: say.T("doorbell.camera.pictures"),
+				Hint:  say.T("doorbell.camera.pictures.hint"),
+				Kind:  menu.Chevron,
+				Value: door.Camera,
+			}, func(int) { f.v.o.Shell.Push(f.cameraPage()) })
 		}
-		add(menu.Row{Label: title, Kind: menu.Chevron, Value: value},
-			func(int) { f.v.o.Shell.Push(f.sensorPage(s, title)) })
+		for _, s := range sensorKinds {
+			title := say.T("doorbell.sensor." + s.field)
+			value := *s.at(&door.Sensors)
+			if value == "" {
+				value = say.T("doorbell.sensor.none")
+			}
+			add(menu.Row{Label: title, Kind: menu.Chevron, Value: value},
+				func(int) { f.v.o.Shell.Push(f.sensorPage(s, title)) })
+		}
 	}
+	// The lock comes after everything about the door's video and events.
+	lock := door.Lock
+	if lock == "" {
+		lock = say.T("doorbell.sensor.none")
+	}
+	add(menu.Row{
+		Label: say.T("doorbell.lock"),
+		Kind:  menu.Chevron,
+		Value: lock,
+	}, func(int) { f.v.o.Shell.Push(f.lockPage()) })
 	return rows, taps
 }
 
@@ -437,6 +446,29 @@ func (f *form) sensorPage(kind sensorKind, title string) *shell.Page {
 		}
 		for _, b := range found.sensors() {
 			offer(b)
+		}
+		return rows, taps
+	}}
+}
+
+func (f *form) lockPage() *shell.Page {
+	found := &found{}
+	f.v.lookup(found)
+	pick := func(entity string) {
+		f.edit(func(d *schema.DoorbellDoor) { d.Lock = entity })
+	}
+	return &shell.Page{Title: say.T("doorbell.lock"), Build: func() ([]menu.Row, []func(int)) {
+		current := f.door().Lock
+		rows := []menu.Row{{Label: say.T("doorbell.sensor.none"), Chosen: current == ""}}
+		taps := []func(int){func(int) { pick("") }}
+		if _, fetched := found.get(); !fetched {
+			rows = append(rows, menu.Row{Label: say.T("doorbell.looking"), Dim: true})
+			taps = append(taps, nil)
+		}
+		for _, l := range found.allLocks() {
+			row := menu.Row{Label: l.Name, Hint: l.Entity, Chosen: current == l.Entity}
+			rows = append(rows, row)
+			taps = append(taps, func(int) { pick(l.Entity) })
 		}
 		return rows, taps
 	}}
