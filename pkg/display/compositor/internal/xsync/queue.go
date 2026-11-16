@@ -104,10 +104,6 @@ func (q *queueRunner[T]) run(done <-chan struct{}) {
 	defer func() {
 		close(q.get)
 		close(q.all)
-		if add != nil {
-			// Ensure that future attempts to send to the queue will fail.
-			close(add)
-		}
 	}()
 
 	var s list.Single[T]
