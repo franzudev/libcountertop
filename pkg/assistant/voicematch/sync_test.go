@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"sync"
 	"testing"
+	"time"
 )
 
 type home struct {
@@ -14,6 +15,20 @@ type home struct {
 	stored  map[string]Profile
 	sent    [][]change
 	offline bool
+	refused int
+}
+
+func (h *home) online(after int) {
+	for {
+		h.mu.Lock()
+		if h.refused >= after {
+			h.offline = false
+			h.mu.Unlock()
+			return
+		}
+		h.mu.Unlock()
+		time.Sleep(time.Millisecond)
+	}
 }
 
 func (h *home) Ask(
@@ -25,6 +40,7 @@ func (h *home) Ask(
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	if h.offline {
+		h.refused++
 		return nil, errors.New("not connected")
 	}
 	if action != exchange {
@@ -58,12 +74,17 @@ func (h *home) Ask(
 func synced(t *testing.T, h *home) *Service {
 	t.Helper()
 	dir := t.TempDir()
-	return NewService(Options{
+	return settled(t, NewService(Options{
 		ModelDir: dir,
 		Profiles: filepath.Join(dir, "voices.json"),
 		Outbox:   filepath.Join(dir, "outbox.json"),
 		Home:     h,
-	})
+	}))
+}
+
+func settled(t *testing.T, s *Service) *Service {
+	t.Cleanup(s.syncs.Wait)
+	return s
 }
 
 func ann() Profile {
@@ -79,8 +100,8 @@ func TestChangesMadeOfflineAreSentOnceHomeAssistantAnswers(t *testing.T) {
 	if err := s.Sync(context.Background()); err == nil {
 		t.Fatal("an offline sync should fail")
 	}
-	again := NewService(s.o)
-	h.offline = false
+	h.online(2)
+	again := settled(t, NewService(s.o))
 	if err := again.Sync(context.Background()); err != nil {
 		t.Fatal(err)
 	}
@@ -115,7 +136,7 @@ func TestVoicesEnrolledBeforeSyncingAreSentUpFirst(t *testing.T) {
 	}
 	h := &home{stored: map[string]Profile{}}
 	o.Outbox, o.Home = filepath.Join(dir, "outbox.json"), h
-	s := NewService(o)
+	s := settled(t, NewService(o))
 	if err := s.Sync(context.Background()); err != nil {
 		t.Fatal(err)
 	}

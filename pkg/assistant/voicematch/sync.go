@@ -75,7 +75,9 @@ func (s *Service) Sync(ctx context.Context) error {
 }
 
 func (s *Service) Resync() {
+	s.syncs.Add(1)
 	safe.Go("voice sync", func() {
+		defer s.syncs.Done()
 		ctx, cancel := context.WithTimeout(context.Background(), syncLimit)
 		defer cancel()
 		if err := s.Sync(ctx); err != nil {

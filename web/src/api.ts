@@ -103,7 +103,17 @@ export type Description = {
   };
 };
 
-type Event = { type: "states"; states: State[] } | { type: "state"; state: State };
+export type Person = { id: string; name: string; picture?: string };
+export type VoiceInfo = { id: string; name: string; person: string; threshold: number };
+export type Enrolment = Record<string, string>;
+export type VoicePage = { voices: VoiceInfo[]; people: Person[]; people_error?: string; enrolment: Enrolment };
+
+type Fired = { name: string; data: Record<string, string> };
+
+type Event =
+  | { type: "states"; states: State[] }
+  | { type: "state"; state: State }
+  | { type: "event"; event: Fired };
 
 export class SignedOut extends Error {}
 export class HTTPError extends Error {
@@ -189,6 +199,10 @@ export const api = {
   deleteAlarm: (id: string) => call<void>(`/alarms/${id}`, { method: "DELETE" }),
   stopAlarm: () => call<void>("/alarms/stop", { method: "POST" }),
   snoozeAlarm: () => call<void>("/alarms/snooze", { method: "POST" }),
+  voices: () => call<VoicePage>("/voices/"),
+  enroll: (name: string, person: string, voice: string) =>
+    call<Enrolment>("/voices/enroll", json({ name, person, voice })),
+  cancelEnrolment: () => call<void>("/voices/cancel", { method: "POST" }),
   login: async (password: string) => {
     const r = await fetch(base + "/login", {
       method: "POST",
@@ -212,10 +226,33 @@ export function follow(onState: (s: State, snapshot: boolean) => void, onLive: (
     socket.onmessage = (m) => {
       const e = JSON.parse(m.data) as Event;
       if (e.type === "states") e.states.forEach((s) => onState(s, true));
-      else onState(e.state, false);
+      else if (e.type === "state") onState(e.state, false);
     };
     socket.onclose = () => {
       onLive(false);
+      if (!stopped) retry = window.setTimeout(open, 3000);
+    };
+  };
+  open();
+  return () => {
+    stopped = true;
+    window.clearTimeout(retry);
+    socket?.close();
+  };
+}
+
+export function fired(name: string, onData: (data: Record<string, string>) => void): () => void {
+  let socket: WebSocket | undefined;
+  let retry: number | undefined;
+  let stopped = false;
+  const open = () => {
+    const scheme = location.protocol === "https:" ? "wss" : "ws";
+    socket = new WebSocket(`${scheme}://${location.host}${base}/events`);
+    socket.onmessage = (m) => {
+      const e = JSON.parse(m.data) as Event;
+      if (e.type === "event" && e.event.name === name) onData(e.event.data);
+    };
+    socket.onclose = () => {
       if (!stopped) retry = window.setTimeout(open, 3000);
     };
   };

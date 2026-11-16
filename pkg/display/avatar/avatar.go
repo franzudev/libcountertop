@@ -17,6 +17,7 @@ import (
 	xdraw "golang.org/x/image/draw"
 
 	"github.com/ygelfand/libcountertop/pkg/display/widgets"
+	"github.com/ygelfand/libcountertop/pkg/homeassistant/people"
 	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
 )
 
@@ -37,11 +38,7 @@ var fills = []gogui.Color{
 	gogui.RGB(0x5c, 0x6b, 0x8a),
 }
 
-type Person struct {
-	ID      string
-	Name    string
-	Picture string
-}
+type Person = people.Person
 
 type Source interface {
 	People(ctx context.Context) ([]Person, error)

@@ -13,7 +13,7 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconAlarm, IconCode, IconLayoutDashboard, IconLogout, IconPhone, IconSpeakerphone } from "@tabler/icons-react";
+import { IconAlarm, IconCode, IconLayoutDashboard, IconLogout, IconPhone, IconSpeakerphone, IconVoice } from "@tabler/icons-react";
 import { Alarms } from "./Alarms";
 import { Broadcast } from "./Broadcast";
 import { Call } from "./Call";
@@ -29,6 +29,7 @@ import { sections, type Section } from "./sections";
 import { Settings } from "./Settings";
 import { SettingsLink } from "./SettingsLink";
 import { Theme } from "./Theme";
+import { Voices } from "./Voices";
 import { Wifi } from "./Wifi";
 
 const seenMost = 500;
@@ -36,12 +37,14 @@ const overview = "overview";
 const alarms = "alarms";
 const calls = "call";
 const broadcast = "broadcast";
+const voices = "voices";
 const developer = "developer";
 
 export const appPages = [
   { slug: alarms, label: "Alarms", icon: IconAlarm },
   { slug: calls, label: "Call", icon: IconPhone },
   { slug: broadcast, label: "Broadcast", icon: IconSpeakerphone },
+  { slug: voices, label: "Voice match", icon: IconVoice },
 ];
 
 function page(): string {
@@ -280,6 +283,8 @@ export function Shell({ device, onOut }: { device: Device; onOut: () => void }) 
           <Call device={device} onSignedOut={signedOut} />
         ) : app === broadcast ? (
           <Broadcast device={device} onSignedOut={signedOut} />
+        ) : app === voices ? (
+          <Voices onSignedOut={signedOut} />
         ) : open === developer ? (
           <Developer name={device.name} entities={entities} states={states} focus={focus} onSignedOut={signedOut} />
         ) : (

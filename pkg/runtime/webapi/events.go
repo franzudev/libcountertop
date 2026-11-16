@@ -3,10 +3,13 @@ package webapi
 import (
 	"log/slog"
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/gorilla/websocket"
 	esphome "github.com/ygelfand/go-esphome-device"
+
+	"github.com/ygelfand/libcountertop/pkg/runtime/component"
 )
 
 const (
@@ -20,6 +23,16 @@ type event struct {
 	Type   string          `json:"type"`
 	State  *esphome.State  `json:"state,omitempty"`
 	States []esphome.State `json:"states,omitempty"`
+	Event  *fired          `json:"event,omitempty"`
+}
+
+type fired struct {
+	Name string            `json:"name"`
+	Data map[string]string `json:"data"`
+}
+
+type Fired interface {
+	Listen(fn func(component.Event)) (cancel func())
 }
 
 var upgrader = websocket.Upgrader{}
@@ -35,20 +48,22 @@ func (a *API) events(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	queue := make(chan esphome.State, queueMost)
+	queue := make(chan event, queueMost)
 	full := make(chan struct{})
-	stop := a.o.States.Listen(func(s esphome.State) {
+	var overflow sync.Once
+	push := func(e event) {
 		select {
-		case queue <- s:
+		case queue <- e:
 		default:
-			select {
-			case <-full:
-			default:
-				close(full)
-			}
+			overflow.Do(func() { close(full) })
 		}
-	})
-	defer stop()
+	}
+	defer a.o.States.Listen(func(s esphome.State) { push(event{Type: "state", State: &s}) })()
+	if a.o.Fired != nil {
+		defer a.o.Fired.Listen(func(f component.Event) {
+			push(event{Type: "event", Event: &fired{Name: f.Name, Data: f.Data}})
+		})()
+	}
 
 	gone := make(chan struct{})
 	conn.SetReadLimit(readMost)
@@ -68,8 +83,8 @@ func (a *API) events(w http.ResponseWriter, r *http.Request) {
 	defer ping.Stop()
 	for {
 		select {
-		case s := <-queue:
-			if !a.send(conn, event{Type: "state", State: &s}) {
+		case e := <-queue:
+			if !a.send(conn, e) {
 				return
 			}
 		case <-ping.C:

@@ -2,8 +2,11 @@ package voicematch
 
 import (
 	"os"
+	"reflect"
 	"testing"
 	"time"
+
+	esphome "github.com/ygelfand/go-esphome-device"
 )
 
 func TestSaveReplacesTheSameVoiceAndRemoveDropsIt(t *testing.T) {
@@ -106,6 +109,79 @@ func TestTheTurnThatAskedHearsItsOwnAnswer(t *testing.T) {
 	if empty.Spoke(at, nil) {
 		t.Error("with no profiles, no match should be promised")
 	}
+}
+
+func TestTheWakeLabelLosesItsAssistantName(t *testing.T) {
+	for label, want := range map[string]string{
+		"Gemini: Hey Google": "Hey Google",
+		"Alexa":              "Alexa",
+		"":                   "",
+	} {
+		if got := spoken(label); got != want {
+			t.Errorf("spoken(%q) = %q, want %q", label, got, want)
+		}
+	}
+}
+
+func TestAVoiceIsKeyedByItsPersonOrItsName(t *testing.T) {
+	if got := IDFor("  Mary  Ann ", ""); got != "mary_ann" {
+		t.Errorf("IDFor a typed name = %q, want mary_ann", got)
+	}
+	if got := IDFor("Mary", "person.mary"); got != "person.mary" {
+		t.Errorf("IDFor a person = %q, want person.mary", got)
+	}
+}
+
+func TestEveryChangeReachesHomeAssistantAsFields(t *testing.T) {
+	s := newService(t)
+	var sent []map[string]string
+	s.o.Emit = func(f map[string]string) { sent = append(sent, f) }
+	s = NewService(s.o)
+	s.update(func(p *Progress) {
+		*p = Progress{ID: "person.ann", Name: "Ann", Wake: "Alexa", Outcome: Enrolling}
+	})
+	s.update(func(p *Progress) {
+		p.Step = Step{Number: 2, Of: 5, Phrase: "lock the front door", Stage: Heard}
+	})
+	s.update(func(p *Progress) { p.Outcome, p.Score = Ready, 0.71 })
+	s.Cancel()
+	want := []map[string]string{
+		{"stage": "preparing", "voice": "person.ann", "name": "Ann", "person": "", "wake": "Alexa"},
+		{
+			"stage": "heard", "voice": "person.ann", "name": "Ann", "person": "", "wake": "Alexa",
+			"take": "2", "of": "5", "confirm": "false", "phrase": "lock the front door",
+		},
+		{
+			"stage": "ready", "voice": "person.ann", "name": "Ann", "person": "", "wake": "Alexa",
+			"take": "2", "of": "5", "confirm": "false", "phrase": "lock the front door",
+			"score": "0.710",
+		},
+		{"stage": "idle"},
+	}
+	if !reflect.DeepEqual(sent, want) {
+		t.Errorf("sent %v\nwant %v", sent, want)
+	}
+}
+
+func TestEnrollingNeedsAName(t *testing.T) {
+	c, err := esphome.NewCall(map[string]any{"name": "  ", "person": "", "voice": ""})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := named(t, newService(t), "voice_enroll").Run(c); err == nil {
+		t.Error("an enrolment with no name was started")
+	}
+}
+
+func named(t *testing.T, s *Service, name string) *esphome.Action {
+	t.Helper()
+	for _, a := range s.Actions() {
+		if a.Name == name {
+			return a
+		}
+	}
+	t.Fatalf("no %s action", name)
+	return nil
 }
 
 func TestCancelWithoutAnEnrolmentClearsTheResult(t *testing.T) {

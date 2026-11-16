@@ -46,6 +46,7 @@ type Arbiter interface {
 type Voices interface {
 	Spoke(at time.Time, told func(name, person string, score float64)) bool
 	Claim(at time.Time) bool
+	Wake(phrase func() string)
 }
 
 type Recorder interface {

@@ -50,6 +50,7 @@ type Options struct {
 	Profiles string
 	Outbox   string
 	Home     Asker
+	Emit     func(fields map[string]string)
 }
 
 const checkPhrase = "voicematch.phrase.lights"
@@ -92,8 +93,10 @@ type Service struct {
 	stop     context.CancelFunc
 	asked    map[time.Time]func(name, person string, score float64)
 	outbox   []change
+	wake     func() string
 
 	syncing sync.Mutex
+	syncs   sync.WaitGroup
 }
 
 func (s *Service) Last() []int16 {
@@ -140,6 +143,9 @@ func NewService(o Options) *Service {
 	if o.Outbox != "" {
 		s.loadOutbox()
 	}
+	if o.Emit != nil {
+		s.Changed.Listen(func(p Progress) { o.Emit(p.fields()) })
+	}
 	return s
 }
 
@@ -148,7 +154,7 @@ func (s *Service) Name() string { return "voice match" }
 func (s *Service) Entities() []esphome.Entity { return []esphome.Entity{s.speaker, s.score} }
 
 func (s *Service) Actions() []*esphome.Action {
-	return []*esphome.Action{{
+	return append(s.enrolActions(), &esphome.Action{
 		Name:        "voice_profiles",
 		Description: "Replace the voice profiles this device matches speakers against.",
 		Answers:     true,
@@ -169,7 +175,7 @@ func (s *Service) Actions() []*esphome.Action {
 			}
 			return map[string]any{"profiles": len(ps)}, nil
 		},
-	}}
+	})
 }
 
 func (s *Service) Profiles() []Profile {
@@ -188,6 +194,8 @@ func (s *Service) SetProfiles(ps []Profile) error {
 	if err != nil {
 		return err
 	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	if err := os.MkdirAll(filepath.Dir(s.o.Profiles), 0o755); err != nil {
 		return fmt.Errorf("voice profiles: %w", err)
 	}
@@ -198,9 +206,7 @@ func (s *Service) SetProfiles(ps []Profile) error {
 	if err := os.Rename(tmp, s.o.Profiles); err != nil {
 		return fmt.Errorf("voice profiles: %w", err)
 	}
-	s.mu.Lock()
 	s.profiles = slices.Clone(ps)
-	s.mu.Unlock()
 	return nil
 }
 
@@ -372,6 +378,12 @@ func (s *Service) hold() (<-chan time.Time, func()) {
 		s.claims = nil
 		s.mu.Unlock()
 	}
+}
+
+func (s *Service) Wake(phrase func() string) {
+	s.mu.Lock()
+	s.wake = phrase
+	s.mu.Unlock()
 }
 
 func (s *Service) Claim(at time.Time) bool {

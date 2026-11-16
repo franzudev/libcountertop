@@ -1,8 +1,6 @@
 package voicematchview
 
 import (
-	"strings"
-
 	gogui "github.com/go-gui-org/go-gui/gui"
 
 	"github.com/ygelfand/libcountertop/pkg/assistant/voicematch"
@@ -100,8 +98,8 @@ func (v *View) heading(p voicematch.Progress, pal theme.Theme) []gogui.View {
 		return []gogui.View{gogui.Label(say.T("voicematch.preparing"), lead)}
 	}
 	line := say.T("voicematch.say_plain")
-	if wake := spoken(v.o.Wake()); wake != "" {
-		line = say.F("voicematch.say", map[string]any{"Wake": wake})
+	if p.Wake != "" {
+		line = say.F("voicematch.say", map[string]any{"Wake": p.Wake})
 	}
 	return []gogui.View{
 		gogui.Label(line, lead),
@@ -159,13 +157,6 @@ func (v *View) footer(w *gogui.Window, p voicematch.Progress, pal theme.Theme) [
 		gogui.Label(statusText(p.Step), status),
 		v.key(w, "voicematch-cancel", say.T("voicematch.cancel"), false, pal, v.o.Shell.Pop),
 	}
-}
-
-func spoken(label string) string {
-	if i := strings.LastIndex(label, ": "); i >= 0 {
-		return label[i+2:]
-	}
-	return label
 }
 
 func statusText(st voicematch.Step) string {

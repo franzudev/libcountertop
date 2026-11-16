@@ -57,7 +57,7 @@ func TestProfilesActionReplacesTheSet(t *testing.T) {
 	_ = s.SetProfiles(
 		[]Profile{{ID: "old", Name: "Old", Threshold: Default, Prints: [][]float32{{1}}}},
 	)
-	action := s.Actions()[0]
+	action := named(t, s, "voice_profiles")
 	call, err := esphome.NewCall(map[string]any{
 		"profiles": `[{"id":"a","name":"Ann","prints":[[1,0]],"threshold":0.5},` +
 			`{"id":"b","name":"Bo","prints":[[0,1]],"threshold":0.6}]`,

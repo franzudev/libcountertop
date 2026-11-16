@@ -6,7 +6,6 @@ import (
 	"math"
 	"slices"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/ygelfand/libcountertop/pkg/assistant/voicematch"
@@ -43,7 +42,6 @@ type Options struct {
 	Shell   *shell.Shell
 	Voices  Voices
 	People  *avatar.Book
-	Wake    func() string
 	GPU     livevisual.Layers
 	Display livevisual.Oriented
 	Visuals livevisual.Visuals
@@ -63,9 +61,6 @@ type View struct {
 	o     Options
 	halo  *livevisual.Panel
 	enrol Enrolling
-
-	mu     sync.Mutex
-	person string
 }
 
 func New(o Options) *View {
@@ -181,7 +176,7 @@ func (v *View) pick() *shell.Page {
 				Kind:  menu.Field,
 				Save: func(name string) {
 					if name = strings.TrimSpace(name); name != "" {
-						v.start(slug(name), name, "")
+						v.start(voicematch.IDFor(name, ""), name, "")
 					}
 				},
 			})
@@ -196,9 +191,6 @@ func (v *View) start(id, name, person string) {
 		slog.Warn("voice enrolment not started", "voice", id, "err", err)
 		return
 	}
-	v.mu.Lock()
-	v.person = person
-	v.mu.Unlock()
 	from := v.o.Shell.Top()
 	v.o.Shell.Push(&v.enrol)
 	if from != nil {
@@ -208,10 +200,7 @@ func (v *View) start(id, name, person string) {
 
 func (v *View) again() {
 	p := v.o.Voices.Progress()
-	v.mu.Lock()
-	person := v.person
-	v.mu.Unlock()
-	if err := v.o.Voices.Begin(p.ID, p.Name, person); err != nil {
+	if err := v.o.Voices.Begin(p.ID, p.Name, p.Person); err != nil {
 		slog.Warn("voice enrolment not restarted", "voice", p.ID, "err", err)
 	}
 }
@@ -221,8 +210,4 @@ func (v *View) leave() {
 	if !slices.Contains(v.o.Shell.Views(), shell.View(&v.enrol)) {
 		v.o.Voices.Cancel()
 	}
-}
-
-func slug(name string) string {
-	return strings.Join(strings.Fields(strings.ToLower(name)), "_")
 }

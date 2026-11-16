@@ -68,6 +68,7 @@ type Options struct {
 	Address  func() string
 	Input    *textentry.Controller
 	Wifi     Wifi
+	Fired    Fired
 }
 
 type API struct {

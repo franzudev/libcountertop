@@ -5,6 +5,10 @@ import (
 	"errors"
 	"log/slog"
 	"slices"
+	"strconv"
+	"strings"
+
+	esphome "github.com/ygelfand/go-esphome-device"
 
 	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
 )
@@ -23,13 +27,29 @@ const (
 type Progress struct {
 	ID      string
 	Name    string
+	Person  string
+	Wake    string
 	Step    Step
 	Outcome Outcome
 	Score   float64
 	Err     error
 }
 
+func IDFor(name, person string) string {
+	if person != "" {
+		return person
+	}
+	return strings.Join(strings.Fields(strings.ToLower(name)), "_")
+}
+
 func (s *Service) Begin(id, name, person string) error {
+	s.mu.Lock()
+	phrase := s.wake
+	s.mu.Unlock()
+	wake := ""
+	if phrase != nil {
+		wake = spoken(phrase())
+	}
 	s.mu.Lock()
 	if s.stop != nil {
 		s.mu.Unlock()
@@ -37,7 +57,7 @@ func (s *Service) Begin(id, name, person string) error {
 	}
 	ctx, stop := context.WithCancel(context.Background())
 	s.stop = stop
-	s.progress = Progress{ID: id, Name: name, Outcome: Enrolling}
+	s.progress = Progress{ID: id, Name: name, Person: person, Wake: wake, Outcome: Enrolling}
 	s.mu.Unlock()
 	s.Changed.Emit(s.Progress())
 
@@ -112,4 +132,103 @@ func (s *Service) update(change func(*Progress)) {
 	p := s.progress
 	s.mu.Unlock()
 	s.Changed.Emit(p)
+}
+
+func (p Progress) fields() map[string]string {
+	out := map[string]string{"stage": p.stage()}
+	if p.Outcome == 0 {
+		return out
+	}
+	out["voice"], out["name"], out["person"], out["wake"] = p.ID, p.Name, p.Person, p.Wake
+	if p.Step.Of > 0 {
+		out["take"] = strconv.Itoa(p.Step.Number)
+		out["of"] = strconv.Itoa(p.Step.Of)
+		out["confirm"] = strconv.FormatBool(p.Step.Confirm)
+		out["phrase"] = p.Step.Phrase
+	}
+	if p.Outcome != Enrolling {
+		out["score"] = strconv.FormatFloat(p.Score, 'f', 3, 64)
+	}
+	return out
+}
+
+func (p Progress) stage() string {
+	switch p.Outcome {
+	case Ready:
+		return "ready"
+	case Unconfirmed:
+		return "unconfirmed"
+	case Failed:
+		return "failed"
+	case Enrolling:
+		switch p.Step.Stage {
+		case Prompt:
+			return "prompt"
+		case Heard:
+			return "heard"
+		case Missed:
+			return "missed"
+		}
+		return "preparing"
+	}
+	return "idle"
+}
+
+func (s *Service) enrolActions() []*esphome.Action {
+	return []*esphome.Action{
+		{
+			Name:        "voice_enroll",
+			Description: "Start enrolling a voice on this device. Progress arrives as esphome.echolocal_enrolment events.",
+			Answers:     true,
+			Args: []esphome.Arg{
+				{
+					Name:        "name",
+					Type:        esphome.ArgString,
+					Description: "The name to show for this voice.",
+				},
+				{
+					Name:        "person",
+					Type:        esphome.ArgString,
+					Description: "The Home Assistant person this voice belongs to, or empty.",
+				},
+				{
+					Name:        "voice",
+					Type:        esphome.ArgString,
+					Description: "The id of a voice to record again, or empty for a new one.",
+				},
+			},
+			Run: func(c esphome.Call) (any, error) {
+				return s.start(c.String("name"), c.String("person"), c.String("voice"))
+			},
+		},
+		{
+			Name:        "voice_enroll_cancel",
+			Description: "Stop the voice enrolment running on this device.",
+			Run: func(esphome.Call) (any, error) {
+				s.Cancel()
+				return nil, nil
+			},
+		},
+	}
+}
+
+func (s *Service) start(name, person, id string) (map[string]string, error) {
+	name = strings.TrimSpace(name)
+	if name == "" {
+		return nil, errors.New("voice enrolment: a name is required")
+	}
+	if id == "" {
+		id = IDFor(name, person)
+	}
+	if err := s.Begin(id, name, person); err != nil {
+		return nil, err
+	}
+	return s.Progress().fields(), nil
+}
+
+func spoken(label string) string {
+	if i := strings.LastIndex(label, ": "); i >= 0 {
+		return label[i+2:]
+	}
+	return label
 }

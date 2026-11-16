@@ -16,6 +16,8 @@ import (
 	"github.com/gorilla/websocket"
 	esphome "github.com/ygelfand/go-esphome-device"
 
+	"github.com/ygelfand/libcountertop/pkg/hook"
+	"github.com/ygelfand/libcountertop/pkg/runtime/component"
 	setting "github.com/ygelfand/libcountertop/pkg/settings"
 	"github.com/ygelfand/libcountertop/pkg/settings/schema"
 )
@@ -413,6 +415,41 @@ func TestSettingsReadAndWriteThroughTheRegistry(t *testing.T) {
 		},
 	); got.StatusCode != http.StatusNotFound {
 		t.Errorf("an unknown setting answered %d, want 404", got.StatusCode)
+	}
+}
+
+func TestDeviceEventsReachTheEventStream(t *testing.T) {
+	a, settings, _, srv := fixture(t)
+	var fire hook.Hook[component.Event]
+	a.o.Fired = &fire
+	header := http.Header{}
+	req := &http.Request{Header: header}
+	req.SetBasicAuth("admin", settings.v.Password)
+	url := "ws" + strings.TrimPrefix(srv.URL, "http") + Prefix + "/events"
+	conn, _, err := websocket.DefaultDialer.Dial(url, header)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer conn.Close()
+	_ = conn.SetReadDeadline(time.Now().Add(5 * time.Second))
+	var first event
+	if err := conn.ReadJSON(&first); err != nil {
+		t.Fatal(err)
+	}
+	for fire.Listeners() == 0 {
+		time.Sleep(time.Millisecond)
+	}
+	fire.Emit(component.Event{
+		Name: "esphome.echolocal_enrolment",
+		Data: map[string]string{"stage": "heard"},
+	})
+	var next event
+	if err := conn.ReadJSON(&next); err != nil {
+		t.Fatal(err)
+	}
+	if next.Type != "event" || next.Event == nil ||
+		next.Event.Name != "esphome.echolocal_enrolment" || next.Event.Data["stage"] != "heard" {
+		t.Errorf("message %+v, want the enrolment event", next)
 	}
 }
 

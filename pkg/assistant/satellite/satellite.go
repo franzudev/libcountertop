@@ -68,6 +68,9 @@ func New(vs *esphome.VoiceSatellite, deps turn.Dependencies, options Options) *S
 
 	deps.Word = s.selection.ID
 	s.turn = turn.NewConversation(vs, deps)
+	if deps.Voices != nil {
+		deps.Voices.Wake(s.wake)
+	}
 
 	vs.OnTimer = options.Timers.Event
 	vs.OnSubscribed = func(subscribed bool) {
@@ -217,4 +220,13 @@ func (s *Satellite) SetSlots(slots []string) {
 	s.selection.Set(slots)
 	s.vs.ActiveWakeWords = wakeslots.Advertised(slots)
 	slog.Info("wake words listening", "slots", slots)
+}
+
+func (s *Satellite) wake() string {
+	for slot := range s.selection.Get() {
+		if phrase, ok := s.turn.PhraseFor(slot); ok {
+			return phrase
+		}
+	}
+	return ""
 }
