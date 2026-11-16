@@ -22,6 +22,7 @@ const (
 	Ready
 	Unconfirmed
 	Failed
+	Similar
 )
 
 type Progress struct {
@@ -29,6 +30,7 @@ type Progress struct {
 	Name    string
 	Person  string
 	Wake    string
+	Like    string
 	Step    Step
 	Outcome Outcome
 	Score   float64
@@ -57,6 +59,7 @@ func (s *Service) Begin(id, name, person string) error {
 	}
 	ctx, stop := context.WithCancel(context.Background())
 	s.stop = stop
+	s.held = Profile{}
 	s.progress = Progress{ID: id, Name: name, Person: person, Wake: wake, Outcome: Enrolling}
 	s.mu.Unlock()
 	s.Changed.Emit(s.Progress())
@@ -71,6 +74,9 @@ func (s *Service) Begin(id, name, person string) error {
 		}
 		s.mu.Lock()
 		s.stop = nil
+		if errors.Is(err, ErrSimilar) {
+			s.held = p
+		}
 		s.mu.Unlock()
 		if errors.Is(err, context.Canceled) {
 			s.update(func(pr *Progress) { *pr = Progress{} })
@@ -83,11 +89,19 @@ func (s *Service) Begin(id, name, person string) error {
 				pr.Outcome = Ready
 			case errors.Is(err, ErrNotConfirmed):
 				pr.Outcome = Unconfirmed
+			case errors.Is(err, ErrSimilar):
+				pr.Outcome, pr.Like = Similar, m.Profile.Name
 			default:
 				pr.Outcome = Failed
 			}
 		})
-		slog.Info("voice enrolment ended", "name", name, "score", m.Score, "err", err)
+		slog.Info(
+			"voice enrolment ended",
+			"name", name,
+			"matched", m.Profile.Name,
+			"score", m.Score,
+			"err", err,
+		)
 	})
 	return nil
 }
@@ -106,7 +120,30 @@ func (s *Service) Cancel() {
 		stop()
 		return
 	}
+	s.mu.Lock()
+	s.held = Profile{}
+	s.mu.Unlock()
 	s.update(func(pr *Progress) { *pr = Progress{} })
+}
+
+func (s *Service) Accept() error {
+	s.mu.Lock()
+	held := s.held
+	if s.progress.Outcome != Similar || held.ID == "" {
+		s.mu.Unlock()
+		return ErrNothingHeld
+	}
+	s.held = Profile{}
+	s.mu.Unlock()
+	err := s.Save(held)
+	s.update(func(pr *Progress) {
+		pr.Like, pr.Err = "", err
+		pr.Outcome = Ready
+		if err != nil {
+			pr.Outcome = Failed
+		}
+	})
+	return err
 }
 
 func (s *Service) Save(p Profile) error {
@@ -149,6 +186,9 @@ func (p Progress) fields() map[string]string {
 	if p.Outcome != Enrolling {
 		out["score"] = strconv.FormatFloat(p.Score, 'f', 3, 64)
 	}
+	if p.Like != "" {
+		out["like"] = p.Like
+	}
 	return out
 }
 
@@ -160,6 +200,8 @@ func (p Progress) stage() string {
 		return "unconfirmed"
 	case Failed:
 		return "failed"
+	case Similar:
+		return "similar"
 	case Enrolling:
 		switch p.Step.Stage {
 		case Prompt:
@@ -207,6 +249,13 @@ func (s *Service) enrolActions() []*esphome.Action {
 			Run: func(esphome.Call) (any, error) {
 				s.Cancel()
 				return nil, nil
+			},
+		},
+		{
+			Name:        "voice_enroll_accept",
+			Description: "Keep a voice that sounds like an existing one.",
+			Run: func(esphome.Call) (any, error) {
+				return nil, s.Accept()
 			},
 		},
 	}

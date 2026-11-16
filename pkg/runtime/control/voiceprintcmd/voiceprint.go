@@ -88,7 +88,15 @@ func Command(src func() Source) *cobra.Command {
 			p, m, err := s.Enroll(ctx, id, name, "", prompts(c))
 			if errors.Is(err, voicematch.ErrNotConfirmed) {
 				c.Printf(
-					"not confirmed: closest %s at %.3f; enroll again\n",
+					"not confirmed: %.3f, below %.2f; enroll again\n",
+					m.Score,
+					m.Profile.Threshold,
+				)
+				return nil
+			}
+			if errors.Is(err, voicematch.ErrSimilar) {
+				c.Printf(
+					"not saved: sounds like %s at %.3f\n",
 					m.Profile.Name,
 					m.Score,
 				)

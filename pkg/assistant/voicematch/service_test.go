@@ -145,28 +145,54 @@ func TestClaimOnlyWhileEnrolling(t *testing.T) {
 		t.Error("a wake word should start a turn when nobody is enrolling")
 	}
 	s.claims = make(chan time.Time, 1)
-	if !s.Claim(time.Now()) || !s.Claim(time.Now()) {
+	first, second := s.Claim(time.Now()), s.Claim(time.Now())
+	if !first || !second {
 		t.Error("while enrolling every wake word belongs to the enrolment")
 	}
 }
 
-func TestConfirmationNeedsTheNewProfileToWin(t *testing.T) {
+func TestANewVoiceCloseToAnotherIsNoticed(t *testing.T) {
 	ann := Profile{ID: "a", Name: "Ann", Threshold: Default, Prints: [][]float32{{1, 0}}}
-	bo := Profile{ID: "b", Name: "Bo", Threshold: Default, Prints: [][]float32{{0, 1}}}
-	if _, ok := confirmed([]float32{1, 0.1}, ann, []Profile{bo}); !ok {
-		t.Error("a clip close to the new profile should confirm")
+	bo := Profile{ID: "b", Name: "Bo", Threshold: Default, Prints: [][]float32{{1, 0.2}}}
+	cy := Profile{ID: "c", Name: "Cy", Threshold: Default, Prints: [][]float32{{0, 1}}}
+	if m, ok := resembles([]float32{1, 0.1}, ann, []Profile{bo, cy}); !ok || m.Profile.ID != "b" {
+		t.Errorf("a clip that also clears Bo's threshold %+v %v, want Bo", m, ok)
 	}
-	if m, ok := confirmed([]float32{0.1, 1}, ann, []Profile{bo}); ok || m.Profile.ID != "b" {
-		t.Errorf("a clip closer to another profile should not confirm: %+v %v", m, ok)
+	if _, ok := resembles([]float32{1, 0}, ann, []Profile{cy}); ok {
+		t.Error("a clip far from every other voice should not be noticed")
 	}
-	if _, ok := confirmed([]float32{-1, 0}, ann, nil); ok {
-		t.Error("a clip below the threshold should not confirm")
+	if _, ok := resembles([]float32{1, 0}, ann, []Profile{ann}); ok {
+		t.Error("recording a voice again should not be compared with its old copy")
 	}
-	if _, ok := confirmed(
-		[]float32{1, 0},
-		ann,
-		[]Profile{{ID: "a", Name: "Ann", Threshold: Default, Prints: [][]float32{{0, 1}}}},
-	); !ok {
-		t.Error("re-enrolling should compare against the new profile, not the old copy")
+}
+
+func TestTheConfirmationTakeDecidesTheOutcome(t *testing.T) {
+	ann := Profile{ID: "a", Name: "Ann", Threshold: Default, Prints: [][]float32{{1, 0}}}
+	far := Profile{ID: "b", Name: "Bo", Threshold: Default, Prints: [][]float32{{0, 1}}}
+	near := Profile{ID: "c", Name: "Cy", Threshold: Default, Prints: [][]float32{{1, 0.05}}}
+	oldAnn := Profile{ID: "a", Name: "Ann", Threshold: Default, Prints: [][]float32{{0, 1}}}
+	for _, c := range []struct {
+		name     string
+		print    []float32
+		existing []Profile
+		want     error
+		matched  string
+	}{
+		{"close to the new voice only", []float32{1, 0.1}, []Profile{far}, nil, "a"},
+		{"below its own threshold", []float32{-1, 0}, nil, ErrNotConfirmed, "a"},
+		{"another voice is closer", []float32{1, 0.06}, []Profile{near}, ErrSimilar, "c"},
+		{"the old copy of the same voice", []float32{1, 0}, []Profile{oldAnn}, nil, "a"},
+	} {
+		m, err := judge(c.print, ann, c.existing)
+		if !errors.Is(err, c.want) || m.Profile.ID != c.matched {
+			t.Errorf(
+				"%s: %v matched %q, want %v and %q",
+				c.name,
+				err,
+				m.Profile.ID,
+				c.want,
+				c.matched,
+			)
+		}
 	}
 }

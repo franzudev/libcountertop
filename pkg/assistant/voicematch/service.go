@@ -32,8 +32,12 @@ const (
 	forgetAsked = time.Minute
 )
 
-var ErrNotConfirmed = errors.New(
-	"voicematch: the confirmation wake word did not match the new profile",
+var (
+	ErrNotConfirmed = errors.New(
+		"voicematch: the confirmation wake word did not match the new profile",
+	)
+	ErrSimilar     = errors.New("voicematch: the new voice matches an existing one")
+	ErrNothingHeld = errors.New("voicematch: no voice is waiting to be accepted")
 )
 
 type Stage int
@@ -90,6 +94,7 @@ type Service struct {
 	last     []int16
 	claims   chan time.Time
 	progress Progress
+	held     Profile
 	stop     context.CancelFunc
 	asked    map[time.Time]func(name, person string, score float64)
 	outbox   []change
@@ -327,11 +332,19 @@ func (s *Service) Enroll(
 	if err != nil {
 		return Profile{}, Match{}, err
 	}
-	m, ok := confirmed(print, profile, s.Profiles())
-	if !ok {
-		return profile, m, ErrNotConfirmed
+	m, err := judge(print, profile, s.Profiles())
+	return profile, m, err
+}
+
+func judge(print []float32, profile Profile, existing []Profile) (Match, error) {
+	own, _ := best(print, []Profile{profile})
+	if own.Score < profile.Threshold {
+		return own, ErrNotConfirmed
 	}
-	return profile, m, nil
+	if like, ok := resembles(print, profile, existing); ok {
+		return like, ErrSimilar
+	}
+	return own, nil
 }
 
 func (s *Service) Check(
@@ -444,13 +457,13 @@ func (s *Service) sample(
 	return nil, ErrNoSpeech
 }
 
-func confirmed(print []float32, profile Profile, existing []Profile) (Match, bool) {
+func resembles(print []float32, profile Profile, existing []Profile) (Match, bool) {
 	others := slices.DeleteFunc(
 		slices.Clone(existing),
 		func(p Profile) bool { return p.ID == profile.ID },
 	)
-	m, _ := best(print, append(others, profile))
-	return m, m.Profile.ID == profile.ID && m.Score >= profile.Threshold
+	m, found := best(print, others)
+	return m, found && m.Score >= m.Profile.Threshold
 }
 
 func (s *Service) embedder(ctx context.Context) (*voiceprint.Embedder, error) {

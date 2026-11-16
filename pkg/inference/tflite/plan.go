@@ -47,8 +47,7 @@ func planFor(g *Subgraph, tensors []*Tensor) *plan {
 	for i := range parent {
 		parent[i] = i
 	}
-	var root func(int) int
-	root = func(i int) int {
+	root := func(i int) int {
 		for parent[i] != i {
 			parent[i] = parent[parent[i]]
 			i = parent[i]

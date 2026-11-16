@@ -239,8 +239,12 @@ func (f *form) refuse(why string) {
 		Text:    say.T("doorbell.notsaved"),
 		Detail:  why,
 		Outcome: shell.Failed,
-		Close:   say.T("doorbell.ok"),
-		Dismiss: func() { f.show(nil) },
+		Buttons: []shell.BusyButton{{
+			ID:      "doorbell-ok",
+			Label:   say.T("doorbell.ok"),
+			Primary: true,
+			Do:      func() { f.show(nil) },
+		}},
 	})
 }
 

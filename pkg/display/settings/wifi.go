@@ -198,13 +198,17 @@ func (p *WifiPages) refuse(ssid, why string) {
 		Text:    say.F("wifi.failed", map[string]any{"Network": ssid}),
 		Detail:  why,
 		Outcome: shell.Failed,
-		Close:   say.T("wifi.ok"),
-		Dismiss: func() {
-			p.mu.Lock()
-			p.refused = nil
-			p.mu.Unlock()
-			p.stack.Redraw()
-		},
+		Buttons: []shell.BusyButton{{
+			ID:      "wifi-ok",
+			Label:   say.T("wifi.ok"),
+			Primary: true,
+			Do: func() {
+				p.mu.Lock()
+				p.refused = nil
+				p.mu.Unlock()
+				p.stack.Redraw()
+			},
+		}},
 	}
 	p.mu.Unlock()
 	p.stack.Redraw()
@@ -256,8 +260,9 @@ func (p *WifiPages) busy() (shell.Busy, bool) {
 			Text:    say.F("wifi.failed", map[string]any{"Network": s.SSID}),
 			Detail:  failure(s.Failed),
 			Outcome: shell.Failed,
-			Close:   say.T("wifi.ok"),
-			Dismiss: p.dismiss(s.Until),
+			Buttons: []shell.BusyButton{
+				{ID: "wifi-ok", Label: say.T("wifi.ok"), Primary: true, Do: p.dismiss(s.Until)},
+			},
 		}, true
 	default:
 		p.close(s.Until)

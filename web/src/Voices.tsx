@@ -1,7 +1,27 @@
 import { useCallback, useEffect, useState } from "react";
-import { Alert, Avatar, Button, Group, Paper, Select, Stack, Text, TextInput, Title } from "@mantine/core";
-import { IconCircleCheck, IconAlertCircle, IconMicrophone, IconPlus } from "@tabler/icons-react";
-import { api, fired, type Enrolment, type Person, type VoiceInfo } from "./api";
+import {
+  ActionIcon,
+  Alert,
+  Avatar,
+  Button,
+  Group,
+  Paper,
+  Select,
+  Slider,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
+import {
+  IconAlertCircle,
+  IconCircleCheck,
+  IconMicrophone,
+  IconPlus,
+  IconTrash,
+  IconUsers,
+} from "@tabler/icons-react";
+import { api, fired, type Enrolment, type Person, type VoiceInfo, type VoiceLimits } from "./api";
 
 const enrolmentEvent = "esphome.echolocal_enrolment";
 const someone = "";
@@ -51,7 +71,88 @@ function Dots({ step }: { step: Enrolment }) {
   );
 }
 
+type RowProps = {
+  voice: VoiceInfo;
+  limits: VoiceLimits;
+  busy: boolean;
+  onRecord: () => void;
+  onThreshold: (t: number) => void;
+  onRemove: () => void;
+};
+
+function VoiceRow({ voice, limits, busy, onRecord, onThreshold, onRemove }: RowProps) {
+  const [threshold, setThreshold] = useState(voice.threshold);
+  const [removing, setRemoving] = useState(false);
+  useEffect(() => setThreshold(voice.threshold), [voice.threshold]);
+  return (
+    <Paper withBorder p="sm">
+      <Stack gap="xs">
+        <Group justify="space-between" wrap="nowrap">
+          <Group gap="sm" wrap="nowrap" style={{ minWidth: 0 }}>
+            <Avatar radius="xl" color="initials" name={voice.name}>
+              {initials(voice.name)}
+            </Avatar>
+            <Text fw={500} truncate>
+              {voice.name}
+            </Text>
+          </Group>
+          {removing ? (
+            <Group gap="xs" wrap="nowrap">
+              <Button size="xs" variant="subtle" onClick={() => setRemoving(false)}>
+                Cancel
+              </Button>
+              <Button size="xs" color="red" onClick={onRemove}>
+                Remove
+              </Button>
+            </Group>
+          ) : (
+            <Group gap="xs" wrap="nowrap">
+              <Button
+                size="xs"
+                variant="subtle"
+                leftSection={<IconMicrophone size={14} />}
+                disabled={busy}
+                onClick={onRecord}
+              >
+                Record again
+              </Button>
+              <ActionIcon
+                variant="subtle"
+                color="gray"
+                aria-label="Remove"
+                disabled={busy}
+                onClick={() => setRemoving(true)}
+              >
+                <IconTrash size={18} />
+              </ActionIcon>
+            </Group>
+          )}
+        </Group>
+        <Group gap="sm" wrap="nowrap">
+          <Text size="xs" c="dimmed" w={110}>
+            Match threshold
+          </Text>
+          <Slider
+            style={{ flex: 1 }}
+            min={limits.loosest}
+            max={limits.strictest}
+            step={0.01}
+            value={threshold}
+            onChange={setThreshold}
+            onChangeEnd={onThreshold}
+            label={null}
+          />
+          <Text size="sm" ff="monospace" w={40} ta="right">
+            {threshold.toFixed(2)}
+          </Text>
+        </Group>
+      </Stack>
+    </Paper>
+  );
+}
+
 export function Voices({ onSignedOut }: { onSignedOut: (e: unknown) => void }) {
+  const [limits, setLimits] = useState<VoiceLimits>({ loosest: 0.3, strictest: 0.7, default: 0.5 });
   const [voices, setVoices] = useState<VoiceInfo[]>([]);
   const [people, setPeople] = useState<Person[]>([]);
   const [peopleError, setPeopleError] = useState("");
@@ -64,6 +165,7 @@ export function Voices({ onSignedOut }: { onSignedOut: (e: unknown) => void }) {
     api
       .voices()
       .then((p) => {
+        setLimits(p.limits);
         setVoices(p.voices);
         setPeople(p.people);
         setPeopleError(p.people_error ?? "");
@@ -111,13 +213,18 @@ export function Voices({ onSignedOut }: { onSignedOut: (e: unknown) => void }) {
     }
   };
 
-  const stop = async () => {
+  const run = async (work: Promise<void>) => {
+    setError("");
     try {
-      await api.cancelEnrolment();
+      await work;
     } catch (e) {
       onSignedOut(e);
+      setError(e instanceof Error ? e.message : "Try again");
     }
+    load();
   };
+
+  const stop = () => run(api.cancelEnrolment());
 
   const running = step.stage !== "idle";
   const lead = step.wake ? `Say “${step.wake}”, then` : "Say the wake word, then";
@@ -163,6 +270,24 @@ export function Voices({ onSignedOut }: { onSignedOut: (e: unknown) => void }) {
                     Cancel
                   </Button>
                   {last && <Button onClick={() => void start(last)}>Try again</Button>}
+                </Group>
+              </>
+            ) : step.stage === "similar" ? (
+              <>
+                <Group gap="xs">
+                  <IconUsers size={28} color="var(--mantine-color-yellow-filled)" />
+                  <Text fw={600} size="lg">
+                    This voice sounds very similar to {step.like}
+                  </Text>
+                </Group>
+                <Group>
+                  <Button variant="subtle" onClick={() => void stop()}>
+                    Cancel
+                  </Button>
+                  {last && <Button onClick={() => void start(last)}>Try again</Button>}
+                  <Button variant="default" onClick={() => void run(api.acceptEnrolment())}>
+                    Accept
+                  </Button>
                 </Group>
               </>
             ) : step.phrase ? (
@@ -228,36 +353,17 @@ export function Voices({ onSignedOut }: { onSignedOut: (e: unknown) => void }) {
         <Text c="dimmed">No voices yet.</Text>
       ) : (
         <Stack gap="xs">
-          {voices.map((v) => {
-            return (
-              <Paper key={v.id} withBorder p="sm">
-                <Group justify="space-between" wrap="nowrap">
-                  <Group gap="sm" wrap="nowrap" style={{ minWidth: 0 }}>
-                    <Avatar radius="xl" color="initials" name={v.name}>
-                      {initials(v.name)}
-                    </Avatar>
-                    <Stack gap={0} style={{ minWidth: 0 }}>
-                      <Text fw={500} truncate>
-                        {v.name}
-                      </Text>
-                      <Text size="xs" c="dimmed">
-                        Match threshold {v.threshold.toFixed(2)}
-                      </Text>
-                    </Stack>
-                  </Group>
-                  <Button
-                    size="xs"
-                    variant="subtle"
-                    leftSection={<IconMicrophone size={14} />}
-                    disabled={running || !!draft}
-                    onClick={() => add(v)}
-                  >
-                    Record again
-                  </Button>
-                </Group>
-              </Paper>
-            );
-          })}
+          {voices.map((v) => (
+            <VoiceRow
+              key={v.id}
+              voice={v}
+              limits={limits}
+              busy={running || !!draft}
+              onRecord={() => add(v)}
+              onThreshold={(t) => void run(api.setThreshold(v.id, t))}
+              onRemove={() => void run(api.removeVoice(v.id))}
+            />
+          ))}
         </Stack>
       )}
     </Stack>

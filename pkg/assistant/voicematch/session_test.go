@@ -1,6 +1,7 @@
 package voicematch
 
 import (
+	"errors"
 	"os"
 	"reflect"
 	"testing"
@@ -182,6 +183,49 @@ func named(t *testing.T, s *Service, name string) *esphome.Action {
 	}
 	t.Fatalf("no %s action", name)
 	return nil
+}
+
+func held(t *testing.T, s *Service) {
+	t.Helper()
+	p := Profile{ID: "bo", Name: "Bo", Threshold: Default, Prints: [][]float32{{1, 0}}}
+	s.mu.Lock()
+	s.held = p
+	s.mu.Unlock()
+	s.update(func(pr *Progress) {
+		*pr = Progress{ID: p.ID, Name: p.Name, Like: "Ann", Outcome: Similar}
+	})
+}
+
+func TestAcceptingKeepsTheHeldVoice(t *testing.T) {
+	s := newService(t)
+	held(t, s)
+	if got := s.Progress().fields(); got["stage"] != "similar" || got["like"] != "Ann" {
+		t.Errorf("fields %v, want similar to Ann", got)
+	}
+	if err := s.Accept(); err != nil {
+		t.Fatal(err)
+	}
+	if got := s.Profiles(); len(got) != 1 || got[0].ID != "bo" {
+		t.Errorf("profiles %+v, want Bo", got)
+	}
+	if got := s.Progress(); got.Outcome != Ready || got.Like != "" {
+		t.Errorf("progress %+v, want ready", got)
+	}
+	if err := s.Accept(); !errors.Is(err, ErrNothingHeld) {
+		t.Errorf("a second accept returned %v, want %v", err, ErrNothingHeld)
+	}
+}
+
+func TestCancellingDropsTheHeldVoice(t *testing.T) {
+	s := newService(t)
+	held(t, s)
+	s.Cancel()
+	if err := s.Accept(); !errors.Is(err, ErrNothingHeld) {
+		t.Errorf("accept after cancel returned %v, want %v", err, ErrNothingHeld)
+	}
+	if got := s.Profiles(); len(got) != 0 {
+		t.Errorf("profiles %+v, want none", got)
+	}
 }
 
 func TestCancelWithoutAnEnrolmentClearsTheResult(t *testing.T) {

@@ -16,6 +16,7 @@ import (
 	"github.com/ygelfand/libcountertop/pkg/display/shell"
 	"github.com/ygelfand/libcountertop/pkg/display/style"
 	"github.com/ygelfand/libcountertop/pkg/display/widgets"
+	"github.com/ygelfand/libcountertop/pkg/hook"
 	"github.com/ygelfand/libcountertop/pkg/say"
 	"github.com/ygelfand/libcountertop/pkg/settings/schema"
 )
@@ -33,6 +34,7 @@ type Voices interface {
 	Begin(id, name, person string) error
 	Progress() voicematch.Progress
 	Cancel()
+	Accept() error
 	Save(voicematch.Profile) error
 	Remove(id string) error
 }
@@ -42,6 +44,7 @@ type Options struct {
 	Shell   *shell.Shell
 	Voices  Voices
 	People  *avatar.Book
+	Changed *hook.Hook[voicematch.Progress]
 	GPU     livevisual.Layers
 	Display livevisual.Oriented
 	Visuals livevisual.Visuals
@@ -75,6 +78,7 @@ func New(o Options) *View {
 		Depth:   belowUI,
 		Showing: func() bool { return o.Shell.Visible(&v.enrol) },
 	})
+	o.Changed.Listen(v.follow)
 	return v
 }
 
@@ -187,14 +191,23 @@ func (v *View) pick() *shell.Page {
 }
 
 func (v *View) start(id, name, person string) {
+	from := v.o.Shell.Top()
 	if err := v.o.Voices.Begin(id, name, person); err != nil {
 		slog.Warn("voice enrolment not started", "voice", id, "err", err)
 		return
 	}
-	from := v.o.Shell.Top()
-	v.o.Shell.Push(&v.enrol)
-	if from != nil {
+	if from != nil && from != shell.View(&v.enrol) {
 		v.o.Shell.Remove(from)
+	}
+}
+
+func (v *View) follow(p voicematch.Progress) {
+	showing := slices.Contains(v.o.Shell.Views(), shell.View(&v.enrol))
+	switch {
+	case p.Outcome == voicematch.Enrolling && !showing:
+		v.o.Shell.Push(&v.enrol)
+	case p.Outcome == 0 && showing:
+		v.o.Shell.Remove(&v.enrol)
 	}
 }
 
@@ -202,6 +215,12 @@ func (v *View) again() {
 	p := v.o.Voices.Progress()
 	if err := v.o.Voices.Begin(p.ID, p.Name, p.Person); err != nil {
 		slog.Warn("voice enrolment not restarted", "voice", p.ID, "err", err)
+	}
+}
+
+func (v *View) accept() {
+	if err := v.o.Voices.Accept(); err != nil {
+		slog.Warn("keeping a similar voice failed", "err", err)
 	}
 }
 

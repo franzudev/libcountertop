@@ -48,8 +48,14 @@ type Busy struct {
 	Text    string
 	Detail  string
 	Outcome Outcome
-	Close   string
-	Dismiss func()
+	Buttons []BusyButton
+}
+
+type BusyButton struct {
+	ID      string
+	Label   string
+	Primary bool
+	Do      func()
 }
 
 type Outcome int
@@ -58,6 +64,7 @@ const (
 	Working Outcome = iota
 	Succeeded
 	Failed
+	Warned
 )
 
 type Feed struct {

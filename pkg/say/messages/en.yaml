@@ -1709,6 +1709,7 @@ visual.synthwave: Synthwave
 visual.tesla: Tesla
 visual.thunderstorm: Thunderstorm
 voice.group.actions: Actions
+voicematch.accept: Accept
 voicematch.add: Add a voice
 voicematch.again: Try again
 voicematch.cancel: Cancel
@@ -1724,6 +1725,7 @@ voicematch.redo: Record again
 voicematch.remove: Remove
 voicematch.say: "Say “{{.Wake}}”, then"
 voicematch.say_plain: Say the wake word, then
+voicematch.similar: "This voice sounds very similar to {{.Name}}"
 voicematch.someone: Someone else
 voicematch.threshold: Match threshold
 voicematch.title: Voice match

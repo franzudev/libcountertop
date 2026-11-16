@@ -106,7 +106,14 @@ export type Description = {
 export type Person = { id: string; name: string; picture?: string };
 export type VoiceInfo = { id: string; name: string; person: string; threshold: number };
 export type Enrolment = Record<string, string>;
-export type VoicePage = { voices: VoiceInfo[]; people: Person[]; people_error?: string; enrolment: Enrolment };
+export type VoiceLimits = { loosest: number; strictest: number; default: number };
+export type VoicePage = {
+  limits: VoiceLimits;
+  voices: VoiceInfo[];
+  people: Person[];
+  people_error?: string;
+  enrolment: Enrolment;
+};
 
 type Fired = { name: string; data: Record<string, string> };
 
@@ -203,6 +210,14 @@ export const api = {
   enroll: (name: string, person: string, voice: string) =>
     call<Enrolment>("/voices/enroll", json({ name, person, voice })),
   cancelEnrolment: () => call<void>("/voices/cancel", { method: "POST" }),
+  acceptEnrolment: () => call<void>("/voices/accept", { method: "POST" }),
+  setThreshold: (id: string, threshold: number) =>
+    call<void>(`/voices/voices/${encodeURIComponent(id)}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ threshold }),
+    }),
+  removeVoice: (id: string) => call<void>(`/voices/voices/${encodeURIComponent(id)}`, { method: "DELETE" }),
   login: async (password: string) => {
     const r = await fetch(base + "/login", {
       method: "POST",

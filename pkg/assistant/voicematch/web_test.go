@@ -54,6 +54,38 @@ func TestThePageStillListsVoicesWithoutHomeAssistant(t *testing.T) {
 	}
 }
 
+func TestThePageSetsAThresholdAndRemovesAVoice(t *testing.T) {
+	s := newService(t)
+	_ = s.SetProfiles([]Profile{
+		{ID: "ann", Name: "Ann", Threshold: Default, Prints: [][]float32{{1, 0}}},
+	})
+	h := s.Handler(func(context.Context) ([]people.Person, error) { return nil, nil })
+	for _, c := range []struct {
+		body string
+		want int
+	}{
+		{`{"threshold":0.42}`, http.StatusNoContent},
+		{`{"threshold":0.9}`, http.StatusBadRequest},
+	} {
+		rec := httptest.NewRecorder()
+		h.ServeHTTP(
+			rec,
+			httptest.NewRequest(http.MethodPut, "/voices/ann", strings.NewReader(c.body)),
+		)
+		if rec.Code != c.want {
+			t.Errorf("threshold %s answered %d, want %d", c.body, rec.Code, c.want)
+		}
+	}
+	if got := s.Profiles()[0].Threshold; got != 0.42 {
+		t.Errorf("threshold %v, want 0.42", got)
+	}
+	rec := httptest.NewRecorder()
+	h.ServeHTTP(rec, httptest.NewRequest(http.MethodDelete, "/voices/ann", nil))
+	if rec.Code != http.StatusNoContent || len(s.Profiles()) != 0 {
+		t.Errorf("remove answered %d, profiles %+v", rec.Code, s.Profiles())
+	}
+}
+
 func TestEnrollingFromThePageNeedsAName(t *testing.T) {
 	h := newService(t).Handler(func(context.Context) ([]people.Person, error) { return nil, nil })
 	rec := httptest.NewRecorder()

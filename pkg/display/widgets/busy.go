@@ -19,6 +19,7 @@ const (
 	busyDots  = 12
 	busyShare = 0.42
 	busyMost  = 0.8
+	busyInset = 0.12
 )
 
 var busySpinning atomic.Bool
@@ -42,6 +43,9 @@ func (kit *Toolkit) Busy(w *gogui.Window, b shell.Busy, pal theme.Theme) gogui.V
 	}
 	lead := int(time.Now().UnixNano()/int64(SpinStep)) % busyDots
 	ring := busyRing(d, b.Outcome, lead, pal)
+	title.Align = gogui.TextAlignCenter
+	detail.Align = gogui.TextAlignCenter
+	inner := d * (1 - 2*busyInset)
 	lines := []gogui.View{}
 	if glyph := outcomeGlyph(b.Outcome); glyph != "" {
 		mark := IconStyle(Color(outcomeColor(b.Outcome, pal)))
@@ -49,12 +53,20 @@ func (kit *Toolkit) Busy(w *gogui.Window, b shell.Busy, pal theme.Theme) gogui.V
 		mark.Size = style.Reach()
 		lines = append(lines, gogui.Label(icons.Glyph(icons.Named(glyph)), mark))
 	}
-	lines = append(lines, gogui.Label(b.Text, title))
+	lines = append(lines, gogui.Text(gogui.TextCfg{
+		Text:      b.Text,
+		TextStyle: title,
+		Mode:      gogui.TextModeWrap,
+	}))
 	if b.Detail != "" {
-		lines = append(lines, gogui.Label(b.Detail, detail))
+		lines = append(lines, gogui.Text(gogui.TextCfg{
+			Text:      b.Detail,
+			TextStyle: detail,
+			Mode:      gogui.TextModeWrap,
+		}))
 	}
-	if b.Outcome == shell.Failed && b.Dismiss != nil {
-		lines = append(lines, kit.busyButton(w, b.Close, b.Dismiss, pal))
+	if len(b.Buttons) > 0 {
+		lines = append(lines, kit.busyButtons(w, b.Buttons, inner, pal))
 	}
 	if b.Outcome == shell.Working {
 		busyAgain(w)
@@ -74,7 +86,7 @@ func (kit *Toolkit) Busy(w *gogui.Window, b shell.Busy, pal theme.Theme) gogui.V
 			Placed(box, ring),
 			Placed(box, gogui.Column(gogui.ContainerCfg{
 				Sizing:  gogui.FillFill,
-				Padding: gogui.NewPadding(0, d*0.12, 0, d*0.12),
+				Padding: gogui.NewPadding(0, d*busyInset, 0, d*busyInset),
 				Spacing: gogui.SpacingSmall,
 				HAlign:  gogui.HAlignCenter,
 				VAlign:  gogui.VAlignMiddle,
@@ -84,29 +96,52 @@ func (kit *Toolkit) Busy(w *gogui.Window, b shell.Busy, pal theme.Theme) gogui.V
 	})
 }
 
-func (kit *Toolkit) busyButton(
+func (kit *Toolkit) busyButtons(
 	w *gogui.Window,
-	label string,
-	do func(),
+	buttons []shell.BusyButton,
+	room float32,
 	pal theme.Theme,
 ) gogui.View {
 	st := gogui.CurrentTheme().TextStyleTitle
-	st.Color = Color(pal.Contrast(pal.Accent))
 	tall := style.Reach()
-	return kit.Pressable(gogui.Row, gogui.ContainerCfg{
-		ID:      "busy-close",
-		Width:   KeyWidth(w, label, st, tall) + tall,
-		Height:  tall,
-		Sizing:  gogui.FixedFixed,
-		Radius:  gogui.RadiusLarge,
-		HAlign:  gogui.HAlignCenter,
-		VAlign:  gogui.VAlignMiddle,
+	gap := gogui.CurrentTheme().SpacingLarge
+	keys := make([]gogui.View, 0, len(buttons))
+	var wide float32
+	for _, b := range buttons {
+		fill, ink := pal.Background.Blend(pal.Text, 0.12), pal.Text
+		if b.Primary {
+			fill, ink = pal.Accent, pal.Contrast(pal.Accent)
+		}
+		st.Color = Color(ink)
+		width := KeyWidth(w, b.Label, st, tall) + tall
+		wide += width
+		keys = append(keys, kit.Pressable(gogui.Row, gogui.ContainerCfg{
+			ID:      b.ID,
+			Width:   width,
+			Height:  tall,
+			Sizing:  gogui.FixedFixed,
+			Radius:  gogui.RadiusLarge,
+			HAlign:  gogui.HAlignCenter,
+			VAlign:  gogui.VAlignMiddle,
+			Padding: gogui.NoPadding,
+			Color:   Color(fill),
+			Content: []gogui.View{gogui.Label(b.Label, st)},
+		}, func(e gogui.EventCtx) {
+			b.Do()
+			e.Window.InvalidateLayout()
+		}))
+	}
+	wide += gap * float32(len(keys)-1)
+	lay := gogui.Row
+	if wide > room {
+		lay = gogui.Column
+	}
+	return lay(gogui.ContainerCfg{
+		Sizing:  gogui.FitFit,
 		Padding: gogui.NoPadding,
-		Color:   Color(pal.Accent),
-		Content: []gogui.View{gogui.Label(label, st)},
-	}, func(e gogui.EventCtx) {
-		do()
-		e.Window.InvalidateLayout()
+		Spacing: gogui.SpacingLarge,
+		HAlign:  gogui.HAlignCenter,
+		Content: keys,
 	})
 }
 
@@ -138,6 +173,8 @@ func outcomeColor(o shell.Outcome, pal theme.Theme) theme.Color {
 		return pal.Success
 	case shell.Failed:
 		return pal.Danger
+	case shell.Warned:
+		return pal.Warning
 	}
 	return pal.Accent
 }
@@ -148,6 +185,8 @@ func outcomeGlyph(o shell.Outcome) string {
 		return "mdi:check-circle-outline"
 	case shell.Failed:
 		return "mdi:alert-circle-outline"
+	case shell.Warned:
+		return "mdi:account-multiple-outline"
 	}
 	return ""
 }
