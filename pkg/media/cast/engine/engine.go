@@ -27,6 +27,7 @@ const (
 	maxArchive = 256 << 20
 	firstToGo  = 1000
 	diskCache  = 16 << 20
+	scratch    = "size=192m,mode=0700"
 )
 
 type Options struct {
@@ -95,6 +96,10 @@ func session(ctx context.Context, o Options) error {
 		return fmt.Errorf("engine: %w", err)
 	}
 	tidy(filepath.Join(o.State, "profile"))
+	tmp := filepath.Join(o.State, "tmp")
+	if err := wipe(tmp, ""); err != nil {
+		return err
+	}
 	args := append([]string{
 		"--remote-debugging-address=127.0.0.1",
 		"--remote-debugging-port=" + strconv.Itoa(o.Port),
@@ -112,8 +117,11 @@ func session(ctx context.Context, o Options) error {
 			"WAYLAND_DISPLAY=" + o.Display,
 			"XDG_RUNTIME_DIR=" + filepath.Dir(o.Display),
 		},
-		Log:      "cast engine",
-		Binds:    []payload.Bind{{Source: etc, Target: target}},
+		Log: "cast engine",
+		Mounts: []payload.Mount{
+			{Source: etc, Target: target},
+			{Source: "tmpfs", Target: tmp, Type: "tmpfs", Data: scratch},
+		},
 		OOMScore: firstToGo,
 	})
 	if err != nil {

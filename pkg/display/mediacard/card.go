@@ -11,6 +11,7 @@ import (
 
 	"github.com/ygelfand/libcountertop/pkg/display/shell"
 	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
+	setting "github.com/ygelfand/libcountertop/pkg/settings"
 	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
 	"github.com/ygelfand/libcountertop/pkg/settings/storage"
 )
@@ -29,19 +30,27 @@ type Dependencies struct {
 	Media  storage.Section[config.Media]
 	Device uint32
 	Shell  *shell.Shell
-	Wake   func()
 }
 
 func New(o Dependencies) *Card {
-	return &Card{options: o, page: &Screen{}, settings: NewSettings(o.Media, o.Device)}
+	return &Card{
+		options:  o,
+		page:     &Screen{},
+		settings: NewSettings(o.Media, o.Device, o.Shell.Redraw),
+	}
 }
 
 func (c *Card) Settings() *Settings             { return c.settings }
 func (c *Card) Entities() []esphome.Entity      { return c.settings.Entities() }
 func (c *Card) PlayerStart() config.PlayerStart { return c.options.Media.Read().Player }
-func (c *Card) SetPlayerStart(p config.PlayerStart) {
-	if err := c.settings.Change("player", string(p)); err != nil {
-		slog.Warn("the player setting could not be saved", "err", err)
+func (c *Card) Mini() bool                      { return c.options.Media.Read().Mini }
+
+func (c *Card) SetPlayerStart(p config.PlayerStart) { c.change("player", string(p)) }
+func (c *Card) SetMini(on bool)                     { c.change("mini", setting.OnOff(on)) }
+
+func (c *Card) change(name, value string) {
+	if err := c.settings.Change(name, value); err != nil {
+		slog.Warn("the player setting could not be saved", "setting", name, "err", err)
 	}
 }
 func (c *Card) Page() *Screen  { return c.page }
@@ -174,11 +183,7 @@ func (c *Card) start(src Source) {
 	}
 	player := c.options.Media.Read().Player
 	slog.Info("the player opened", "by", fmt.Sprintf("%T", src), "as", player)
-	switch player {
-	case config.PlayerNone:
-	case config.PlayerMini:
-		c.options.Wake()
-	default:
+	if player != config.PlayerNone {
 		c.hold()
 	}
 }

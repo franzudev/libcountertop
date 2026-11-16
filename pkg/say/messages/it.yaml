@@ -684,6 +684,7 @@ media.entity.duck: Abbassamento musica
 media.group.media: Contenuti multimediali
 media.setting.buttons: Pulsanti volume
 media.setting.duck: Livello abbassamento
+media.setting.mini: Mini lettore
 media.setting.player: Lettore all'avvio
 microphone.group.microphone: Microfono
 microphone.setting.cancel: Cancellazione eco microfono
@@ -1144,7 +1145,6 @@ player.ad_clip: Annuncio {{.Clip}} di {{.Clips}}
 player.full: Lettore completo
 player.live: LIVE
 player.lyrics: Testo
-player.mini: Mini lettore
 player.next: A seguire
 player.none: Niente
 player.now: In riproduzione
@@ -1365,6 +1365,7 @@ settings.debug: Opzioni sviluppatore
 settings.display: Schermo
 settings.features: Servizi connessi
 settings.language: Lingua
+settings.media: Contenuti multimediali
 settings.network: Rete e Internet
 settings.power: Riavvio
 settings.sync: Sincronizzazione config

@@ -17,16 +17,23 @@ func Enter() {
 }
 
 func isolate(args []string) error {
-	binds, argv, err := parseNamespace(args)
+	mounts, argv, err := parseNamespace(args)
 	if err != nil {
 		return err
 	}
 	if err := syscall.Mount("none", "/", "", syscall.MS_REC|syscall.MS_PRIVATE, ""); err != nil {
 		return fmt.Errorf("payload: private mounts: %w", err)
 	}
-	for _, b := range binds {
-		if err := syscall.Mount(b.Source, b.Target, "", syscall.MS_BIND, ""); err != nil {
-			return fmt.Errorf("payload: bind %s on %s: %w", b.Source, b.Target, err)
+	for _, m := range mounts {
+		if m.Type == "" {
+			if err := syscall.Mount(m.Source, m.Target, "", syscall.MS_BIND, ""); err != nil {
+				return fmt.Errorf("payload: bind %s on %s: %w", m.Source, m.Target, err)
+			}
+			continue
+		}
+		flags := uintptr(syscall.MS_NOSUID | syscall.MS_NODEV)
+		if err := syscall.Mount(m.Source, m.Target, m.Type, flags, m.Data); err != nil {
+			return fmt.Errorf("payload: %s on %s: %w", m.Type, m.Target, err)
 		}
 	}
 	return syscall.Exec(argv[0], argv, os.Environ())
@@ -35,5 +42,5 @@ func isolate(args []string) error {
 func isolated(c Command) (string, []string, *syscall.SysProcAttr, error) {
 	a := attrs()
 	a.Unshareflags = syscall.CLONE_NEWNS
-	return "/proc/self/exe", namespaceArgs(c.Binds, c.Path, c.Args), a, nil
+	return "/proc/self/exe", namespaceArgs(c.Mounts, c.Path, c.Args), a, nil
 }

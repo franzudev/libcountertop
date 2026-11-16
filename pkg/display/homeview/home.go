@@ -523,8 +523,6 @@ type Visuals interface {
 	LocalRows() ([]menu.Row, []func(int))
 	CompactClockRow() (menu.Row, func(int))
 	WeatherRow() (menu.Row, func(int))
-	MediaRow() (menu.Row, func(int))
-	PlayerRow() (menu.Row, func(int))
 }
 
 type Listener interface {
@@ -617,11 +615,9 @@ func (view *Renderer) Dashboard(w *gogui.Window) gogui.View {
 }
 
 func (view *Renderer) dashboardRows() ([]menu.Row, []func(int)) {
-	media, delay := view.options.Visuals.MediaRow()
-	player, pick := view.options.Visuals.PlayerRow()
 	title, _, _ := view.trouble()
-	rows := []menu.Row{media, player}
-	taps := []func(int){delay, pick}
+	var rows []menu.Row
+	var taps []func(int)
 	if title == "" {
 		row := settings.ModeRow(
 			view.options.Marks,

@@ -5,6 +5,7 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
+	"github.com/ygelfand/libcountertop/pkg/display/shell"
 	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
 )
 
@@ -28,6 +29,19 @@ func glyphs(controls []miniControl) []string {
 		out[i] = c.glyph
 	}
 	return out
+}
+
+func TestMiniStaysHiddenWhenTurnedOff(t *testing.T) {
+	stack := shell.New()
+	defer stack.Close()
+	p := &Renderer{options: Dependencies{
+		Player: playing{now: nowplaying.Now{Playing: true}},
+		Shell:  stack,
+		Mini:   func() bool { return false },
+	}}
+	if p.Mini(nil) != nil {
+		t.Error("the mini player drew while turned off")
+	}
 }
 
 func TestMiniShowsStopOnlyWhenTheSourceCanStop(t *testing.T) {

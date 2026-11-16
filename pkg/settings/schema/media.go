@@ -9,17 +9,17 @@ type Media struct {
 	DuckDB  float64       `json:"duck_db"`
 	Buttons VolumeButtons `json:"buttons"`
 	Player  PlayerStart   `json:"player"`
+	Mini    bool          `json:"mini"`
 }
 
 func DefaultMedia() Media {
-	return Media{DuckDB: ducking.DefaultDB, Buttons: ButtonsDynamic, Player: PlayerFull}
+	return Media{DuckDB: ducking.DefaultDB, Buttons: ButtonsDynamic, Player: PlayerFull, Mini: true}
 }
 
 type PlayerStart string
 
 const (
 	PlayerFull PlayerStart = "full"
-	PlayerMini PlayerStart = "mini"
 	PlayerNone PlayerStart = "none"
 )
 
@@ -27,15 +27,13 @@ func (p PlayerStart) Label() string {
 	switch p {
 	case PlayerFull:
 		return say.T("player.full")
-	case PlayerMini:
-		return say.T("player.mini")
 	case PlayerNone:
 		return say.T("player.none")
 	}
 	return string(p)
 }
 
-func PlayerStarts() []PlayerStart { return []PlayerStart{PlayerFull, PlayerMini, PlayerNone} }
+func PlayerStarts() []PlayerStart { return []PlayerStart{PlayerFull, PlayerNone} }
 
 type VolumeButtons string
 

@@ -15,13 +15,13 @@ import (
 )
 
 type Command struct {
-	Path  string
-	Args  []string
-	Dir   string
-	Env   []string
-	Files []*os.File
-	Log   string
-	Binds []Bind
+	Path   string
+	Args   []string
+	Dir    string
+	Env    []string
+	Files  []*os.File
+	Log    string
+	Mounts []Mount
 
 	OOMScore int
 }
@@ -36,7 +36,7 @@ type Process struct {
 
 func Start(c Command) (*Process, error) {
 	path, args, attr := c.Path, c.Args, attrs()
-	if len(c.Binds) > 0 {
+	if len(c.Mounts) > 0 {
 		var err error
 		if path, args, attr, err = isolated(c); err != nil {
 			return nil, err

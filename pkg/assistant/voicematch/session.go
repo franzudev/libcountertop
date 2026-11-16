@@ -91,13 +91,19 @@ func (s *Service) Cancel() {
 
 func (s *Service) Save(p Profile) error {
 	profiles := slices.DeleteFunc(s.Profiles(), func(q Profile) bool { return q.ID == p.ID })
-	return s.SetProfiles(append(profiles, p))
+	if err := s.SetProfiles(append(profiles, p)); err != nil {
+		return err
+	}
+	return s.queue(change{Save: &p})
 }
 
 func (s *Service) Remove(id string) error {
-	return s.SetProfiles(
+	if err := s.SetProfiles(
 		slices.DeleteFunc(s.Profiles(), func(q Profile) bool { return q.ID == id }),
-	)
+	); err != nil {
+		return err
+	}
+	return s.queue(change{Remove: id})
 }
 
 func (s *Service) update(change func(*Progress)) {

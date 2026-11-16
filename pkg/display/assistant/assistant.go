@@ -15,6 +15,8 @@ const (
 
 	slide = 220 * time.Millisecond
 
+	sameTurn = 2 * time.Second
+
 	// Ordinary speech is around fifteen characters a second.
 	reading = 15.0
 )
@@ -30,6 +32,7 @@ type Assistant struct {
 
 	opened  time.Time
 	closing time.Time
+	speaker Speaker
 
 	wake chan struct{}
 	took *int
@@ -59,7 +62,7 @@ func (a *Assistant) Show(s voice.Showing) {
 	}
 	began := a.turn.Phase == voice.Idle && s.Phase != voice.Idle
 	if began {
-		a.opened, a.closing = time.Now(), time.Time{}
+		a.opened, a.closing, a.speaker = time.Now(), time.Time{}, Speaker{}
 	}
 	if s.Phase == voice.Idle && a.turn.Phase != voice.Idle {
 		a.closing = time.Now()
@@ -71,6 +74,23 @@ func (a *Assistant) Show(s voice.Showing) {
 		a.wakeScreen(s.Slot)
 	}
 
+	select {
+	case a.wake <- struct{}{}:
+	default:
+	}
+}
+
+func (a *Assistant) Spoke(s Speaker, woke time.Time) {
+	a.mu.Lock()
+	ours := !a.opened.IsZero() && woke.After(a.opened.Add(-sameTurn)) &&
+		woke.Before(a.opened.Add(sameTurn))
+	if ours {
+		a.speaker = s
+	}
+	a.mu.Unlock()
+	if !ours {
+		return
+	}
 	select {
 	case a.wake <- struct{}{}:
 	default:
@@ -128,6 +148,7 @@ func (a *Assistant) Now() (Showing, bool) {
 		At:      now,
 		Down:    a.down(now),
 		Reveal:  a.reveal(now),
+		Speaker: a.speaker,
 	}
 	a.mu.Unlock()
 

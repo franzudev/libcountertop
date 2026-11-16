@@ -684,6 +684,7 @@ media.entity.duck: Music ducking
 media.group.media: Media
 media.setting.buttons: Volume buttons
 media.setting.duck: Ducking depth
+media.setting.mini: Mini player
 media.setting.player: Player on start
 microphone.group.microphone: Microphone
 microphone.setting.cancel: Microphone echo cancellation
@@ -1144,7 +1145,6 @@ player.ad_clip: Ad {{.Clip}} of {{.Clips}}
 player.full: Full player
 player.live: LIVE
 player.lyrics: Lyrics
-player.mini: Mini player
 player.next: Up next
 player.none: Nothing
 player.now: Now playing
@@ -1365,6 +1365,7 @@ settings.debug: Developer options
 settings.display: Display
 settings.features: Connected services
 settings.language: Language
+settings.media: Media
 settings.network: Network & internet
 settings.power: Restart
 settings.sync: Config sync

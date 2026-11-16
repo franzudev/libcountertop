@@ -86,18 +86,25 @@ func TestLastSpeakerNamesTheClosestAboveTheThreshold(t *testing.T) {
 		{ID: "a", Name: "Ann", Threshold: Default, Prints: [][]float32{{1, 0}}},
 		{ID: "b", Name: "Bo", Threshold: Default, Prints: [][]float32{{0, 1}}},
 	})
-	s.heard([]int16{7}, []float32{0.1, 1})
+	at := time.Now()
+	var seen []Identified
+	s.Identified.Listen(func(i Identified) { seen = append(seen, i) })
+	s.heard(at, []int16{7}, []float32{0.1, 1})
+	if len(seen) != 1 || !seen[0].At.Equal(at) || !seen[0].Known ||
+		seen[0].Match.Profile.ID != "b" {
+		t.Errorf("identified %+v, want Bo known at the wake time", seen)
+	}
 	if got := s.speaker.Get(); got != "Bo" {
 		t.Errorf("speaker %q, want Bo", got)
 	}
 	if got := s.Last(); len(got) != 1 || got[0] != 7 {
 		t.Errorf("last clip %v, want the one just matched", got)
 	}
-	s.heard(nil, []float32{1, 1})
+	s.heard(at, nil, []float32{1, 1})
 	if got := s.speaker.Get(); got != "Ann" && got != "Bo" {
 		t.Errorf("an even split above the threshold should still name someone, got %q", got)
 	}
-	s.heard(nil, []float32{-1, -1})
+	s.heard(at, nil, []float32{-1, -1})
 	if got := s.speaker.Get(); got != unknown {
 		t.Errorf("speaker %q, want %q", got, unknown)
 	}

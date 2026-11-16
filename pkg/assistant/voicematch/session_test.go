@@ -1,7 +1,9 @@
 package voicematch
 
 import (
+	"os"
 	"testing"
+	"time"
 )
 
 func TestSaveReplacesTheSameVoiceAndRemoveDropsIt(t *testing.T) {
@@ -40,23 +42,69 @@ func TestThresholdsOutsideTheRangeAreRefused(t *testing.T) {
 	}
 }
 
+func TestASavedVoiceWithoutAThresholdIsNotLoaded(t *testing.T) {
+	s := newService(t)
+	raw := `[{"id":"a","name":"Ann","prints":[[1,0]]},` +
+		`{"id":"b","name":"Bo","prints":[[0,1]],"threshold":0.5}]`
+	if err := os.WriteFile(s.o.Profiles, []byte(raw), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if got := NewService(s.o).Profiles(); len(got) != 1 || got[0].ID != "b" {
+		t.Errorf("loaded %+v, want only Bo", got)
+	}
+}
+
 func TestEachVoiceIsJudgedByItsOwnThreshold(t *testing.T) {
 	s := newService(t)
 	_ = s.SetProfiles([]Profile{
 		{ID: "a", Name: "Ann", Threshold: Loosest, Prints: [][]float32{{1, 0, 0}}},
 		{ID: "b", Name: "Bo", Threshold: Strictest, Prints: [][]float32{{0, 1, 0}}},
 	})
-	s.heard(nil, []float32{0.35, 0.3, 0.89})
+	s.heard(time.Now(), nil, []float32{0.35, 0.3, 0.89})
 	if got := s.speaker.Get(); got != "Ann" {
 		t.Errorf("a 0.35 match against Ann at %.2f gave %q, want Ann", Loosest, got)
 	}
-	s.heard(nil, []float32{0.3, 0.6, 0.74})
+	s.heard(time.Now(), nil, []float32{0.3, 0.6, 0.74})
 	if got := s.speaker.Get(); got != unknown {
 		t.Errorf("a 0.60 match against Bo at %.2f gave %q, want %q", Strictest, got, unknown)
 	}
-	s.heard(nil, []float32{0, 0.8, 0.6})
+	s.heard(time.Now(), nil, []float32{0, 0.8, 0.6})
 	if got := s.speaker.Get(); got != "Bo" {
 		t.Errorf("a 0.80 match against Bo at %.2f gave %q, want Bo", Strictest, got)
+	}
+}
+
+func TestTheTurnThatAskedHearsItsOwnAnswer(t *testing.T) {
+	s := newService(t)
+	_ = s.SetProfiles([]Profile{
+		{
+			ID:        "a",
+			Name:      "Ann",
+			Person:    "person.ann",
+			Threshold: Default,
+			Prints:    [][]float32{{1, 0}},
+		},
+	})
+	if !s.Spoke(time.Time{}, nil) {
+		t.Fatal("with a profile enrolled, a match should be coming")
+	}
+	at := time.Now()
+	var name, person string
+	var score float64
+	s.mu.Lock()
+	s.asked[at] = func(n, p string, sc float64) { name, person, score = n, p, sc }
+	s.mu.Unlock()
+	s.heard(at.Add(time.Second), nil, []float32{1, 0})
+	if name != "" {
+		t.Errorf("a match for another wake answered this turn with %q", name)
+	}
+	s.heard(at, nil, []float32{1, 0.1})
+	if name != "Ann" || person != "person.ann" || score < 0.99 {
+		t.Errorf("answer %q %q %.2f, want Ann", name, person, score)
+	}
+	empty := newService(t)
+	if empty.Spoke(at, nil) {
+		t.Error("with no profiles, no match should be promised")
 	}
 }
 

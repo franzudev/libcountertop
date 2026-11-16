@@ -17,6 +17,13 @@ type Showing struct {
 	At time.Time
 
 	Reveal float64
+
+	Speaker Speaker
+}
+
+type Speaker struct {
+	ID   string
+	Name string
 }
 
 func Revealed(text string, part float64) string {

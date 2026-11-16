@@ -1,7 +1,6 @@
 package voicematchview
 
 import (
-	"context"
 	"fmt"
 	"log/slog"
 	"math"
@@ -11,20 +10,21 @@ import (
 	"time"
 
 	"github.com/ygelfand/libcountertop/pkg/assistant/voicematch"
+	"github.com/ygelfand/libcountertop/pkg/display/avatar"
 	"github.com/ygelfand/libcountertop/pkg/display/livevisual"
 	"github.com/ygelfand/libcountertop/pkg/display/menu"
 	"github.com/ygelfand/libcountertop/pkg/display/navigation"
 	"github.com/ygelfand/libcountertop/pkg/display/shell"
+	"github.com/ygelfand/libcountertop/pkg/display/style"
 	"github.com/ygelfand/libcountertop/pkg/display/widgets"
 	"github.com/ygelfand/libcountertop/pkg/say"
 	"github.com/ygelfand/libcountertop/pkg/settings/schema"
 )
 
 const (
-	halo        = "halo"
-	belowUI     = 1
-	peopleLimit = 5 * time.Second
-	step        = 0.01
+	halo    = "halo"
+	belowUI = 1
+	step    = 0.01
 )
 
 var stops = int(math.Round((voicematch.Strictest-voicematch.Loosest)/step)) + 1
@@ -38,16 +38,11 @@ type Voices interface {
 	Remove(id string) error
 }
 
-type Person struct {
-	ID   string
-	Name string
-}
-
 type Options struct {
 	UI      *widgets.UI
 	Shell   *shell.Shell
 	Voices  Voices
-	People  func(context.Context) ([]Person, error)
+	People  *avatar.Book
 	Wake    func() string
 	GPU     livevisual.Layers
 	Display livevisual.Oriented
@@ -71,7 +66,6 @@ type View struct {
 
 	mu     sync.Mutex
 	person string
-	people []Person
 }
 
 func New(o Options) *View {
@@ -97,26 +91,32 @@ func (v *View) Screen(sv shell.View) *navigation.Screen {
 }
 
 func (v *View) Page() *shell.Page {
-	return &shell.Page{Title: say.T("voicematch.title"), Build: func() ([]menu.Row, []func(int)) {
-		var (
-			rows []menu.Row
-			taps []func(int)
-		)
-		for _, p := range v.o.Voices.Profiles() {
+	return &shell.Page{
+		Title:  say.T("voicematch.title"),
+		OnOpen: v.o.People.Refresh,
+		Build: func() ([]menu.Row, []func(int)) {
+			var (
+				rows []menu.Row
+				taps []func(int)
+			)
+			for _, p := range v.o.Voices.Profiles() {
+				rows = append(rows, menu.Row{
+					Picture: v.o.People.Badge(p.Who(), p.Name, badge()),
+					Label:   p.Name,
+					Kind:    menu.Chevron,
+				})
+				taps = append(taps, func(int) { v.o.Shell.Push(v.voice(p)) })
+			}
 			rows = append(
 				rows,
-				menu.Row{Glyph: "mdi:account-voice", Label: p.Name, Kind: menu.Chevron},
+				menu.Row{Glyph: "mdi:plus", Label: say.T("voicematch.add"), Kind: menu.Chevron},
 			)
-			taps = append(taps, func(int) { v.o.Shell.Push(v.voice(p)) })
-		}
-		rows = append(
-			rows,
-			menu.Row{Glyph: "mdi:plus", Label: say.T("voicematch.add"), Kind: menu.Chevron},
-		)
-		taps = append(taps, func(int) { v.o.Shell.Push(v.pick()) })
-		return rows, taps
-	}}
+			taps = append(taps, func(int) { v.o.Shell.Push(v.pick()) })
+			return rows, taps
+		}}
 }
+
+func badge() float32 { return style.Reach() * 0.8 }
 
 func (v *View) voice(p voicematch.Profile) *shell.Page {
 	return &shell.Page{Title: p.Name, Build: func() ([]menu.Row, []func(int)) {
@@ -161,20 +161,18 @@ func (v *View) voice(p voicematch.Profile) *shell.Page {
 func (v *View) pick() *shell.Page {
 	return &shell.Page{
 		Title:  say.T("voicematch.pick"),
-		OnOpen: v.fetch,
+		OnOpen: v.o.People.Refresh,
 		Build: func() ([]menu.Row, []func(int)) {
-			v.mu.Lock()
-			people := v.people
-			v.mu.Unlock()
 			var (
 				rows []menu.Row
 				taps []func(int)
 			)
-			for _, p := range people {
-				rows = append(
-					rows,
-					menu.Row{Glyph: "mdi:account", Label: p.Name, Kind: menu.Chevron},
-				)
+			for _, p := range v.o.People.People() {
+				rows = append(rows, menu.Row{
+					Picture: v.o.People.Badge(p.ID, p.Name, badge()),
+					Label:   p.Name,
+					Kind:    menu.Chevron,
+				})
 				taps = append(taps, func(int) { v.start(p.ID, p.Name, p.ID) })
 			}
 			rows = append(rows, menu.Row{
@@ -191,22 +189,6 @@ func (v *View) pick() *shell.Page {
 			return rows, taps
 		},
 	}
-}
-
-func (v *View) fetch() {
-	go func() {
-		ctx, cancel := context.WithTimeout(context.Background(), peopleLimit)
-		defer cancel()
-		people, err := v.o.People(ctx)
-		if err != nil {
-			slog.Warn("listing people for voice match failed", "err", err)
-			return
-		}
-		v.mu.Lock()
-		v.people = people
-		v.mu.Unlock()
-		v.o.Shell.Redraw()
-	}()
 }
 
 func (v *View) start(id, name, person string) {

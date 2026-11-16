@@ -25,18 +25,31 @@ func Table() *setting.Table[schema.Media] {
 				schema.PlayerStarts(),
 				func(m *schema.Media) *schema.PlayerStart { return &m.Player },
 			),
+			setting.Flag(
+				setting.Setting[schema.Media]{
+					Name:  "mini",
+					Group: volume.MediaGroup,
+					ID:    "mini_player",
+					Icon:  "mdi:dock-bottom",
+				},
+				func(m *schema.Media) *bool { return &m.Mini },
+			),
 		},
 		setting.Messages{Text: say.T, Missing: say.Missing},
 	)
 }
 
-func NewSettings(at storage.Section[schema.Media], device uint32) *Settings {
+func NewSettings(at storage.Section[schema.Media], device uint32, changed func()) *Settings {
 	return &Settings{
 		Table:  Table(),
 		Device: device,
 		Read:   at.Read,
 		Save: func(s setting.Setting[schema.Media], v string) error {
-			return setting.Store(at, s, v)
+			if err := setting.Store(at, s, v); err != nil {
+				return err
+			}
+			changed()
+			return nil
 		},
 	}
 }

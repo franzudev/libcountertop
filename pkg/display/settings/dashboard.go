@@ -1,14 +1,11 @@
 package settings
 
 import (
-	"slices"
-
 	gogui "github.com/go-gui-org/go-gui/gui"
 
 	"github.com/ygelfand/libcountertop/pkg/display/menu"
 	"github.com/ygelfand/libcountertop/pkg/display/shell"
 	"github.com/ygelfand/libcountertop/pkg/say"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
 )
 
 func (p *BasicPages) LocalRows() ([]menu.Row, []func(int)) {
@@ -44,40 +41,5 @@ func (p *BasicPages) WeatherRow() (menu.Row, func(int)) {
 		Kind:  menu.Chevron,
 		Value: weatherShown(weather.Dashboard, weather.WeatherLayout),
 		Open:  func() shell.View { return p.options.Idle.DashboardWeather() },
-	}, nil
-}
-
-func (p *BasicPages) MediaRow() (menu.Row, func(int)) {
-	media := menu.Steps(len(config.MediaDelays()))
-	delay := p.state().Idle.Media
-	return menu.Row{
-		Glyph: gogui.IconPause,
-		Label: say.T("idle.media"),
-		Hint:  say.T("idle.media.hint"),
-		Kind:  menu.Slider,
-		Level: media.Level(slices.Index(config.MediaDelays(), delay)),
-		Snap:  media.Snap,
-		Value: delay.Label(),
-	}, func(level int) {
-		p.options.Media.SetIdle(config.MediaDelays()[media.Index(level)])
-	}
-}
-
-func (p *BasicPages) PlayerRow() (menu.Row, func(int)) {
-	player := p.options.Player
-	return menu.Row{
-		Glyph: gogui.IconPlay,
-		Label: say.T("media.setting.player"),
-		Kind:  menu.Chevron,
-		Value: player.PlayerStart().Label(),
-		Open: func() shell.View {
-			return Choose(
-				say.T("media.setting.player"),
-				config.PlayerStarts(),
-				player.PlayerStart,
-				player.SetPlayerStart,
-				nil,
-			)
-		},
 	}, nil
 }

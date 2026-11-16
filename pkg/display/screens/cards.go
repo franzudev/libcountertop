@@ -111,6 +111,9 @@ func (a *App) assistantPanel(w *gogui.Window) gogui.View {
 		)
 	}
 	content := []gogui.View{band}
+	if chip := a.speaker(w, show); chip != nil {
+		content = append(content, chip)
+	}
 	if show.Said != "" {
 		content = append(content, gogui.Label(show.Said, widgets.Secondary()))
 	}
@@ -143,6 +146,9 @@ func (a *App) assistantPanel(w *gogui.Window) gogui.View {
 func (a *App) captions(w *gogui.Window, show assistant.Showing) gogui.View {
 	t := gogui.CurrentTheme()
 	var lines []gogui.View
+	if chip := a.speaker(w, show); chip != nil {
+		lines = append(lines, chip)
+	}
 	if show.Said != "" {
 		lines = append(
 			lines,
@@ -179,12 +185,35 @@ func (a *App) captions(w *gogui.Window, show assistant.Showing) gogui.View {
 			Content: lines,
 		}))
 	}
+	vw, _ := w.WindowSize()
 	return gogui.Column(gogui.ContainerCfg{
 		ID:      "assistant",
-		Sizing:  gogui.FillFill,
+		Width:   float32(vw),
+		Sizing:  gogui.FixedFit,
 		Padding: gogui.PaddingLarge,
 		VAlign:  gogui.VAlignBottom,
 		Content: content,
+	})
+}
+
+func (a *App) speaker(w *gogui.Window, show assistant.Showing) gogui.View {
+	if a.o.Badge == nil || show.Speaker.Name == "" {
+		return nil
+	}
+	name := gogui.CurrentTheme().Cfg.TextStyleDef
+	name.Size *= 1.1
+	size := name.Size * 2
+	return gogui.Row(gogui.ContainerCfg{
+		ID:      "assistant-speaker",
+		Sizing:  gogui.FillFit,
+		Padding: gogui.NoPadding,
+		Spacing: gogui.SpacingSmall,
+		VAlign:  gogui.VAlignMiddle,
+		Content: []gogui.View{
+			gogui.Label(show.Speaker.Name, name),
+			gogui.Row(gogui.ContainerCfg{Sizing: gogui.FillFit, Padding: gogui.NoPadding}),
+			a.o.Badge(show.Speaker.ID, show.Speaker.Name, size),
+		},
 	})
 }
 

@@ -18,13 +18,13 @@ type Embedder interface {
 type Matcher struct {
 	speech *capture.History
 	embed  Embedder
-	heard  func(clip []int16, print []float32)
+	heard  func(at time.Time, clip []int16, print []float32)
 }
 
 func New(
 	speech *capture.History,
 	embed Embedder,
-	heard func(clip []int16, print []float32),
+	heard func(at time.Time, clip []int16, print []float32),
 ) *Matcher {
 	return &Matcher{speech: speech, embed: embed, heard: heard}
 }
@@ -58,5 +58,5 @@ func (m *Matcher) match(at time.Time, mark int64) {
 		"speech_ms",
 		took.Milliseconds(),
 	)
-	m.heard(clip, print)
+	m.heard(at, clip, print)
 }

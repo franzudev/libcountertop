@@ -47,7 +47,7 @@ func Tint(img *ui.Image) gogui.Color {
 
 func (p *Renderer) Mini(w *gogui.Window) gogui.View {
 	now := p.options.Player.Now()
-	if p.options.Shell.Open() || !now.Playing && !now.Paused {
+	if !p.options.Mini() || p.options.Shell.Open() || !now.Playing && !now.Paused {
 		return nil
 	}
 	vw, vh := w.WindowSize()

@@ -43,7 +43,6 @@ type started struct {
 	card  *Card
 	stack *shell.Shell
 	src   *testSource
-	woke  int
 }
 
 func start(t *testing.T, player schema.PlayerStart, video bool) *started {
@@ -58,7 +57,6 @@ func start(t *testing.T, player schema.PlayerStart, video bool) *started {
 		Idle:   testIdle{},
 		Media:  testMedia{player},
 		Shell:  s.stack,
-		Wake:   func() { s.woke++ },
 	})
 	s.card.Began(s.src)
 	s.card.Follow()
@@ -69,20 +67,15 @@ func TestAudioStartFollowsThePlayerSetting(t *testing.T) {
 	cases := []struct {
 		player schema.PlayerStart
 		card   bool
-		woke   int
 	}{
-		{schema.PlayerFull, true, 0},
-		{"", true, 0},
-		{schema.PlayerMini, false, 1},
-		{schema.PlayerNone, false, 0},
+		{schema.PlayerFull, true},
+		{"", true},
+		{schema.PlayerNone, false},
 	}
 	for _, tc := range cases {
 		s := start(t, tc.player, false)
 		if got := s.stack.Top() == s.card.Page(); got != tc.card {
 			t.Errorf("%q: card shown %v, want %v", tc.player, got, tc.card)
-		}
-		if s.woke != tc.woke {
-			t.Errorf("%q: woke %d times, want %d", tc.player, s.woke, tc.woke)
 		}
 	}
 }
@@ -90,8 +83,8 @@ func TestAudioStartFollowsThePlayerSetting(t *testing.T) {
 func TestVideoStartIgnoresThePlayerSetting(t *testing.T) {
 	for _, player := range schema.PlayerStarts() {
 		s := start(t, player, true)
-		if s.stack.Open() || s.woke != 0 {
-			t.Errorf("%q: video start held the card or woke the screen", player)
+		if s.stack.Open() {
+			t.Errorf("%q: video start held the card", player)
 		}
 	}
 }

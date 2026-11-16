@@ -29,6 +29,7 @@ const (
 	unknown     = "Unknown"
 	tries       = 3
 	waitForWake = 20 * time.Second
+	forgetAsked = time.Minute
 )
 
 var ErrNotConfirmed = errors.New(
@@ -47,6 +48,8 @@ type Options struct {
 	Speech   *capture.History
 	ModelDir string
 	Profiles string
+	Outbox   string
+	Home     Asker
 }
 
 const checkPhrase = "voicematch.phrase.lights"
@@ -76,7 +79,8 @@ type Service struct {
 	speaker *esphome.TextSensor
 	score   *esphome.Sensor
 
-	Changed hook.Hook[Progress]
+	Changed    hook.Hook[Progress]
+	Identified hook.Hook[Identified]
 
 	mu       sync.Mutex
 	embed    *voiceprint.Embedder
@@ -86,6 +90,10 @@ type Service struct {
 	claims   chan time.Time
 	progress Progress
 	stop     context.CancelFunc
+	asked    map[time.Time]func(name, person string, score float64)
+	outbox   []change
+
+	syncing sync.Mutex
 }
 
 func (s *Service) Last() []int16 {
@@ -96,8 +104,9 @@ func (s *Service) Last() []int16 {
 
 func NewService(o Options) *Service {
 	s := &Service{
-		o:    o,
-		pool: background.New(helpers, nice),
+		o:     o,
+		pool:  background.New(helpers, nice),
+		asked: map[time.Time]func(name, person string, score float64){},
 		speaker: &esphome.TextSensor{
 			Base: esphome.Base{
 				ObjectID: "last_speaker",
@@ -120,6 +129,16 @@ func NewService(o Options) *Service {
 		if err := json.Unmarshal(raw, &s.profiles); err != nil {
 			slog.Warn("voice profiles unreadable", "path", o.Profiles, "err", err)
 		}
+		s.profiles = slices.DeleteFunc(s.profiles, func(p Profile) bool {
+			err := p.Valid()
+			if err != nil {
+				slog.Warn("voice profile skipped", "err", err)
+			}
+			return err != nil
+		})
+	}
+	if o.Outbox != "" {
+		s.loadOutbox()
 	}
 	return s
 }
@@ -185,14 +204,25 @@ func (s *Service) SetProfiles(ps []Profile) error {
 	return nil
 }
 
-func (s *Service) Spoke(at time.Time) {
+func (s *Service) Spoke(at time.Time, told func(name, person string, score float64)) bool {
 	if len(s.Profiles()) == 0 {
-		return
+		return false
 	}
+	s.mu.Lock()
+	for when := range s.asked {
+		if time.Since(when) > forgetAsked {
+			delete(s.asked, when)
+		}
+	}
+	if told != nil {
+		s.asked[at] = told
+	}
+	s.mu.Unlock()
 	s.matcher.Spoke(at)
+	return true
 }
 
-func (s *Service) heard(clip []int16, print []float32) {
+func (s *Service) heard(at time.Time, clip []int16, print []float32) {
 	s.mu.Lock()
 	s.last = clip
 	s.mu.Unlock()
@@ -200,13 +230,26 @@ func (s *Service) heard(clip []int16, print []float32) {
 	if !ok {
 		return
 	}
+	known := m.Score >= m.Profile.Threshold
 	name := m.Profile.Name
-	if m.Score < m.Profile.Threshold {
+	if !known {
 		name = unknown
 	}
 	slog.Info("voice match", "speaker", name, "closest", m.Profile.Name, "score", m.Score)
 	s.speaker.Set(name)
 	s.score.Set(float32(m.Score))
+	s.mu.Lock()
+	told := s.asked[at]
+	delete(s.asked, at)
+	s.mu.Unlock()
+	if told != nil {
+		if known {
+			told(m.Profile.Name, m.Profile.Person, m.Score)
+		} else {
+			told("", "", m.Score)
+		}
+	}
+	s.Identified.Emit(Identified{At: at, Match: m, Known: known})
 }
 
 func (s *Service) Embed(clip []int16) ([]float32, error) {

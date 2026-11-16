@@ -6,21 +6,25 @@ import (
 )
 
 func TestNamespaceArgumentsRoundTrip(t *testing.T) {
-	binds := []Bind{{Source: "/data/etc", Target: "/system/etc"}, {Source: "/a", Target: "/b"}}
+	mounts := []Mount{
+		{Source: "/data/etc", Target: "/system/etc"},
+		{Source: "tmpfs", Target: "/data/state/tmp", Type: "tmpfs", Data: "size=192m,mode=0700"},
+		{Source: "/a", Target: "/b"},
+	}
 	args := namespaceArgs(
-		binds,
+		mounts,
 		"/engine/chromium.sh",
 		[]string{"--remote-debugging-port=9222", "--"},
 	)
 	if args[0] != marker {
 		t.Fatalf("first argument %q, want the marker", args[0])
 	}
-	gotBinds, argv, err := parseNamespace(args[1:])
+	got, argv, err := parseNamespace(args[1:])
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !slices.Equal(gotBinds, binds) {
-		t.Fatalf("binds %v, want %v", gotBinds, binds)
+	if !slices.Equal(got, mounts) {
+		t.Fatalf("mounts %v, want %v", got, mounts)
 	}
 	want := []string{"/engine/chromium.sh", "--remote-debugging-port=9222", "--"}
 	if !slices.Equal(argv, want) {
@@ -31,8 +35,9 @@ func TestNamespaceArgumentsRoundTrip(t *testing.T) {
 func TestNamespaceArgumentsRejectMalformedInput(t *testing.T) {
 	for _, args := range [][]string{
 		{"/only-source", "--", "/bin/true"},
-		{"/a", "/b", "--"},
-		{"/a", "/b", "/bin/true"},
+		{"/a", "/b", "--", "/bin/true"},
+		{"/a", "/b", "", "", "--"},
+		{"/a", "/b", "", "", "/bin/true"},
 	} {
 		if _, _, err := parseNamespace(args); err == nil {
 			t.Fatalf("parseNamespace(%q) accepted malformed input", args)

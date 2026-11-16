@@ -758,7 +758,10 @@ func audioSettings() *api.VoiceAssistantAudioSettings {
 
 func (c *Conversation) startAudio(slot int, heard time.Time) {
 	if c.options.Voices != nil && !heard.IsZero() {
-		c.options.Voices.Spoke(heard)
+		t := c.turn
+		if c.options.Voices.Spoke(heard, t.Spoke) {
+			t.Awaits()
+		}
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	done := make(chan struct{})

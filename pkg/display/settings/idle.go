@@ -77,6 +77,8 @@ type MediaIdle interface{ SetIdle(config.Delay) }
 type PlayerStart interface {
 	PlayerStart() config.PlayerStart
 	SetPlayerStart(config.PlayerStart)
+	Mini() bool
+	SetMini(bool)
 }
 type VisualLabel interface{ SetLabel(string) }
 type HomeAccess interface{ Access() ha.Access }

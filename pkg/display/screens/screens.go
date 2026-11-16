@@ -96,6 +96,7 @@ type Settings struct {
 	Clock   schema.Clock
 	Idle    schema.Idle
 	Weather schema.Weather
+	Media   schema.Media
 }
 
 type Placer interface {
@@ -173,6 +174,7 @@ type Options struct {
 	Messages  *message.Messages
 	Assistant *assistant.Assistant
 	Stage     Stage
+	Badge     func(id, name string, size float32) gogui.View
 	Timers    *timer.Timers
 	Poster    *poster.Poster
 	Drawer    *drawer.Rail
@@ -288,6 +290,7 @@ func New(o Options) *App {
 		Dock:             func() schema.Edge { return o.Settings().Screen.Drawer },
 		Loud:             func() { o.Volume.Show(schema.StreamMedia) },
 		BluetoothSources: o.BluetoothSources,
+		Mini:             func() bool { return o.Settings().Media.Mini },
 	})
 	a.home = homeview.New(homeview.Dependencies{
 		Engine:          o.Home,

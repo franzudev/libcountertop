@@ -34,6 +34,7 @@ type Dependencies struct {
 	Dock             func() schema.Edge
 	Loud             func()
 	BluetoothSources func() shell.View
+	Mini             func() bool
 }
 type Renderer struct {
 	options Dependencies

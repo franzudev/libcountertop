@@ -82,6 +82,7 @@ func RootPage(o RootDependencies) *shell.Page {
 			fmt.Sprintf("%d%%", o.Volume.Level()),
 			o.VolumePage,
 		)
+		add(gogui.IconPlay, "settings.media", "", func() shell.View { return o.Basic.Media() })
 		add(gogui.IconBell, "alerts.page", "", func() shell.View { return o.Basic.AlertsPage() })
 		add(
 			gogui.IconComment,

@@ -2,6 +2,7 @@ package voicematch
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/ygelfand/libcountertop/pkg/inference/voiceprint"
 )
@@ -33,6 +34,19 @@ func (p Profile) Valid() error {
 type Match struct {
 	Profile Profile
 	Score   float64
+}
+
+type Identified struct {
+	At    time.Time
+	Match Match
+	Known bool
+}
+
+func (p Profile) Who() string {
+	if p.Person != "" {
+		return p.Person
+	}
+	return p.ID
 }
 
 func best(print []float32, profiles []Profile) (Match, bool) {

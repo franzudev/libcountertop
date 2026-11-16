@@ -27,6 +27,7 @@ var Shared = Coverage{
 		"Media.DuckDB":              "media.duck",
 		"Media.Buttons":             "media.buttons",
 		"Media.Player":              "media.player",
+		"Media.Mini":                "media.mini",
 		"Poster.Enabled":            "poster.on",
 		"Poster.Every":              "poster.every",
 		"Poster.Fit":                "poster.fit",
