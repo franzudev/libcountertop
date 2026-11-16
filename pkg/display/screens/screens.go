@@ -495,9 +495,6 @@ func (a *App) Run(ctx context.Context) error {
 			w.QueueCommand(func(w *gogui.Window) {
 				a.ui.Gestures.Lift()
 				a.ui.Presses.Lift(w)
-				if !a.ui.Editor.Typing(w) {
-					w.ClearFocus()
-				}
 			})
 		}
 	})

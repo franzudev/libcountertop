@@ -169,6 +169,79 @@ func TestBackchannelUsesTheChannelTheServerAssigns(t *testing.T) {
 	}
 }
 
+func TestVideoPlaysWhenTheStreamHasNoBackchannel(t *testing.T) {
+	_, st, addr := serve(t)
+	st.Write(annexB(sps, pps, slice(nalIDR, 100)), 0)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	c, err := Dial(ctx, "rtsp://"+addr+"/main", Options{Video: func(Unit) {}, Backchannel: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer c.Close()
+	if c.BackCodec() != "" {
+		t.Fatalf("backchannel %q on a stream without one", c.BackCodec())
+	}
+}
+
+func TestVideoRetriesWithoutTheBackchannelWhenRefused(t *testing.T) {
+	ln, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer ln.Close()
+	sdp := "v=0\r\nm=video 0 RTP/AVP 96\r\na=rtpmap:96 H264/90000\r\na=control:trackID=0\r\n"
+	go func() {
+		conn, err := ln.Accept()
+		if err != nil {
+			return
+		}
+		defer conn.Close()
+		tp := textproto.NewReader(bufio.NewReader(conn))
+		for {
+			line, err := tp.ReadLine()
+			if err != nil {
+				return
+			}
+			h, err := tp.ReadMIMEHeader()
+			if err != nil {
+				return
+			}
+			method, _, _ := strings.Cut(line, " ")
+			reply := "RTSP/1.0 200 OK\r\nCSeq: " + h.Get("CSeq") + "\r\nSession: 1\r\n"
+			switch {
+			case h.Get("Require") != "":
+				reply = "RTSP/1.0 551 Option not supported\r\nCSeq: " + h.Get("CSeq") + "\r\n\r\n"
+			case method == "DESCRIBE":
+				reply += fmt.Sprintf(
+					"Content-Type: application/sdp\r\nContent-Length: %d\r\n\r\n%s",
+					len(sdp),
+					sdp,
+				)
+			default:
+				reply += "\r\n"
+			}
+			if _, err := io.WriteString(conn, reply); err != nil {
+				return
+			}
+		}
+	}()
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	c, err := Dial(
+		ctx,
+		"rtsp://"+ln.Addr().String()+"/main",
+		Options{Video: func(Unit) {}, Backchannel: true},
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer c.Close()
+	if c.BackCodec() != "" {
+		t.Fatalf("backchannel %q after the camera refused it", c.BackCodec())
+	}
+}
+
 func TestDescriptionFindsTheBackchannel(t *testing.T) {
 	m := parseSDP("v=0\r\nm=video 0 RTP/AVP 96\r\na=rtpmap:96 H265/90000\r\na=control:track1\r\n" +
 		"m=audio 0 RTP/AVP 0\r\na=control:track3\r\na=sendonly\r\n")

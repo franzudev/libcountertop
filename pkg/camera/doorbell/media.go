@@ -84,7 +84,7 @@ func (d *Doorbell) Watch(
 			slot,
 			source,
 			w,
-			func(w Watcher) error { return rtspWatch(ctx, door, w) },
+			func(w Watcher) error { return d.rtspWatch(ctx, slot, door, w) },
 		)
 	}
 	d.seeVideo(slot, sourceAssistant, Unset, "")
@@ -128,14 +128,28 @@ func (d *Doorbell) Talk(ctx context.Context, slot int) (Talker, error) {
 	case schema.TalkReolink:
 		return d.reolinkTalk(ctx, slot, door)
 	case schema.TalkONVIF:
-		return onvifTalk(ctx, door)
+		return d.onvifTalk(ctx, slot, door)
 	}
 	t, err := d.reolinkTalk(ctx, slot, door)
 	if err == nil || ctx.Err() != nil || door.Host == "" || errors.Is(err, ErrBadLogin) {
 		return t, err
 	}
 	slog.Warn("doorbell talk falls back to ONVIF", "door", door.Name, "why", err)
-	return onvifTalk(ctx, door)
+	return d.onvifTalk(ctx, slot, door)
+}
+
+func (d *Doorbell) liveClient(slot int) *rtsp.Client {
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	return d.live[slot]
+}
+
+func (d *Doorbell) setLive(slot int, c, want *rtsp.Client) {
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	if d.live[slot] == want {
+		d.live[slot] = c
+	}
 }
 
 func doorAt(cfg schema.Doorbell, slot int) (schema.DoorbellDoor, bool) {
@@ -230,12 +244,22 @@ func (m *micros) at(us uint32) time.Duration {
 	return time.Duration(m.wraps<<32+int64(us)-int64(m.first)) * time.Microsecond
 }
 
-func rtspWatch(ctx context.Context, door schema.DoorbellDoor, w Watcher) error {
+func (d *Doorbell) rtspWatch(
+	ctx context.Context,
+	slot int,
+	door schema.DoorbellDoor,
+	w Watcher,
+) error {
 	uri, err := streamURI(ctx, door)
 	if err != nil {
 		return err
 	}
-	o := rtsp.Options{User: door.User, Password: door.Password, Video: w.Picture}
+	o := rtsp.Options{
+		User:        door.User,
+		Password:    door.Password,
+		Video:       w.Picture,
+		Backchannel: door.Talk != schema.TalkReolink,
+	}
 	if w.Sound != nil {
 		ear := newEar(w.Sound)
 		o.Audio = ear.rtsp
@@ -248,6 +272,10 @@ func rtspWatch(ctx context.Context, door schema.DoorbellDoor, w Watcher) error {
 		return errors.Join(ErrUnreachable, err)
 	}
 	defer c.Close()
+	if c.BackCodec() != "" {
+		d.setLive(slot, c, nil)
+		defer d.setLive(slot, nil, c)
+	}
 	if err := c.Run(ctx); err != nil {
 		return errors.Join(ErrUnreachable, err)
 	}
@@ -326,6 +354,7 @@ func (t *reolinkTalker) Close() error {
 
 type onvifTalker struct {
 	c       *rtsp.Client
+	owned   bool
 	stop    context.CancelFunc
 	done    sync.WaitGroup
 	down    *resample.Rational
@@ -334,7 +363,15 @@ type onvifTalker struct {
 	pending []int16
 }
 
-func onvifTalk(ctx context.Context, door schema.DoorbellDoor) (Talker, error) {
+func (d *Doorbell) onvifTalk(
+	ctx context.Context,
+	slot int,
+	door schema.DoorbellDoor,
+) (Talker, error) {
+	if c := d.liveClient(slot); c != nil {
+		slog.Info("doorbell talk shares the video session", "door", door.Name)
+		return newOnvifTalker(c)
+	}
 	uri, err := streamURI(ctx, door)
 	if err != nil {
 		return nil, err
@@ -347,9 +384,20 @@ func onvifTalk(ctx context.Context, door schema.DoorbellDoor) (Talker, error) {
 	if err != nil {
 		return nil, err
 	}
+	t, err := newOnvifTalker(c)
+	if err != nil {
+		_ = c.Close()
+		return nil, err
+	}
+	run, stop := context.WithCancel(context.WithoutCancel(ctx))
+	t.owned, t.stop = true, stop
+	t.done.Go(func() { _ = c.Run(run) })
+	return t, nil
+}
+
+func newOnvifTalker(c *rtsp.Client) (*onvifTalker, error) {
 	rate := c.BackRate()
 	if rate <= 0 {
-		_ = c.Close()
 		return nil, fmt.Errorf("doorbell: backchannel %q has no clock rate", c.BackCodec())
 	}
 	var alaw bool
@@ -358,19 +406,14 @@ func onvifTalk(ctx context.Context, door schema.DoorbellDoor) (Talker, error) {
 		alaw = true
 	case "PCMU":
 	default:
-		_ = c.Close()
 		return nil, fmt.Errorf("doorbell: backchannel sends %q", c.BackCodec())
 	}
-	run, stop := context.WithCancel(context.WithoutCancel(ctx))
-	t := &onvifTalker{
+	return &onvifTalker{
 		c:     c,
-		stop:  stop,
 		down:  resample.NewRational(upsample.VoiceRate, rate, 1),
 		alaw:  alaw,
 		frame: rate * int(backFrame/time.Millisecond) / 1000,
-	}
-	t.done.Go(func() { _ = c.Run(run) })
-	return t, nil
+	}, nil
 }
 
 func (t *onvifTalker) Speak(pcm []int16) error {
@@ -390,6 +433,9 @@ func (t *onvifTalker) Speak(pcm []int16) error {
 }
 
 func (t *onvifTalker) Close() error {
+	if !t.owned {
+		return nil
+	}
 	t.stop()
 	err := t.c.Close()
 	t.done.Wait()

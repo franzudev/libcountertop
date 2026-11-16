@@ -16,6 +16,7 @@ import (
 	"github.com/ygelfand/libcountertop/pkg/homeassistant"
 	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
 	"github.com/ygelfand/libcountertop/pkg/hook"
+	"github.com/ygelfand/libcountertop/pkg/media/rtsp"
 	"github.com/ygelfand/libcountertop/pkg/runtime/service"
 	"github.com/ygelfand/libcountertop/pkg/say"
 	setting "github.com/ygelfand/libcountertop/pkg/settings"
@@ -132,6 +133,7 @@ type Doorbell struct {
 	recent  []Event
 	restart context.CancelFunc
 	links   [schema.DoorbellSlots]*link
+	live    [schema.DoorbellSlots]*rtsp.Client
 }
 
 var errUnsupported = errors.New("doorbell: this source is not available yet")

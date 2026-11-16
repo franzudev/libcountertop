@@ -129,6 +129,11 @@ func (c *Client) start() error {
 		extra = append(extra, "Require: "+backchannel)
 	}
 	desc, err := c.call("DESCRIBE", c.base.String(), append(extra, "Accept: application/sdp")...)
+	if err != nil && len(extra) > 0 && c.o.Video != nil && desc.status != 0 &&
+		!errors.Is(err, ErrRefused) {
+		extra = nil
+		desc, err = c.call("DESCRIBE", c.base.String(), "Accept: application/sdp")
+	}
 	if err != nil {
 		return err
 	}
@@ -175,7 +180,7 @@ func (c *Client) start() error {
 	if !video && c.o.Video != nil {
 		return ErrNoVideo
 	}
-	if c.o.Backchannel && c.back == nil {
+	if c.o.Backchannel && c.back == nil && c.o.Video == nil {
 		return ErrNoBackAudio
 	}
 	_, err = c.call("PLAY", c.base.String(), append(extra, "Range: npt=0.000-")...)
