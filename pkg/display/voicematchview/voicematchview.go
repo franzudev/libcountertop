@@ -121,7 +121,10 @@ func (v *View) Page() *shell.Page {
 func (v *View) voice(p voicematch.Profile) *shell.Page {
 	return &shell.Page{Title: p.Name, Build: func() ([]menu.Row, []func(int)) {
 		all := v.o.Voices.Profiles()
-		if i := slices.IndexFunc(all, func(q voicematch.Profile) bool { return q.ID == p.ID }); i >= 0 {
+		if i := slices.IndexFunc(
+			all,
+			func(q voicematch.Profile) bool { return q.ID == p.ID },
+		); i >= 0 {
 			p = all[i]
 		}
 		steps := menu.Steps(stops)
