@@ -104,3 +104,22 @@ func TestChildFrameFailuresAreIgnored(t *testing.T) {
 		t.Error("a failed child frame marked the dashboard unreachable")
 	}
 }
+
+func TestAViewStartsShown(t *testing.T) {
+	if NewView(Options{Name: "home"}).hidden {
+		t.Error("a new view starts hidden")
+	}
+}
+
+func TestSetShownWithoutAPageKeepsTheStateForTheNextOne(t *testing.T) {
+	v := NewView(Options{Name: "home"})
+	v.SetShown(false)
+	v.SetShown(false)
+	if !v.hidden {
+		t.Fatal("SetShown(false) left the view shown")
+	}
+	v.SetShown(true)
+	if v.hidden {
+		t.Fatal("SetShown(true) left the view hidden")
+	}
+}

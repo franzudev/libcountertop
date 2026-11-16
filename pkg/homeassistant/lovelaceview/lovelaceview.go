@@ -79,6 +79,28 @@ type View struct {
 	wait     time.Duration
 	retry    *time.Timer
 	rescale  *time.Timer
+	hidden   bool
+}
+
+func (v *View) SetShown(shown bool) {
+	v.mu.Lock()
+	changed := v.hidden == shown
+	v.hidden = !shown
+	page := v.page
+	v.mu.Unlock()
+	if changed && page != nil {
+		show(page, shown)
+	}
+}
+
+func show(page *engine.Page, shown bool) {
+	if shown {
+		page.Window.Resume()
+		_ = page.Call("Emulation.setFocusEmulationEnabled", map[string]any{"enabled": true})
+		return
+	}
+	_ = page.Call("Emulation.setFocusEmulationEnabled", map[string]any{"enabled": false})
+	page.Window.Suspend()
 }
 
 func NewView(o Options) *View {
@@ -341,7 +363,6 @@ func (v *View) session(ctx context.Context) error {
 		{"Page.enable", nil},
 		{"Runtime.addBinding", map[string]any{"name": binding}},
 		{"Runtime.addBinding", map[string]any{"name": focus}},
-		{"Emulation.setFocusEmulationEnabled", map[string]any{"enabled": true}},
 		{"Page.addScriptToEvaluateOnNewDocument", map[string]any{"source": bridge}},
 		{"Page.addScriptToEvaluateOnNewDocument", map[string]any{"source": v.themeScript()}},
 	} {
@@ -352,8 +373,9 @@ func (v *View) session(ctx context.Context) error {
 
 	v.mu.Lock()
 	v.page, v.shown = page, v.address()
-	w, h, shown := v.w, v.h, v.shown
+	w, h, shown, hidden := v.w, v.h, v.shown, v.hidden
 	v.mu.Unlock()
+	show(page, !hidden)
 	defer func() {
 		v.mu.Lock()
 		if v.page == page {
