@@ -524,6 +524,7 @@ type Visuals interface {
 	CompactClockRow() (menu.Row, func(int))
 	WeatherRow() (menu.Row, func(int))
 	MediaRow() (menu.Row, func(int))
+	PlayerRow() (menu.Row, func(int))
 }
 
 type Listener interface {
@@ -617,9 +618,10 @@ func (view *Renderer) Dashboard(w *gogui.Window) gogui.View {
 
 func (view *Renderer) dashboardRows() ([]menu.Row, []func(int)) {
 	media, delay := view.options.Visuals.MediaRow()
+	player, pick := view.options.Visuals.PlayerRow()
 	title, _, _ := view.trouble()
-	rows := []menu.Row{media}
-	taps := []func(int){delay}
+	rows := []menu.Row{media, player}
+	taps := []func(int){delay, pick}
 	if title == "" {
 		row := settings.ModeRow(
 			view.options.Marks,
@@ -716,7 +718,10 @@ func (view *Renderer) saverRows() ([]menu.Row, []func(int)) {
 	if saver := view.options.Saver; saver != nil {
 		modes := schema.SaverModes()
 		if !engine.Tessera() {
-			modes = slices.DeleteFunc(modes, func(m schema.SaverMode) bool { return m == schema.SaverTessera })
+			modes = slices.DeleteFunc(
+				modes,
+				func(m schema.SaverMode) bool { return m == schema.SaverTessera },
+			)
 		}
 		row := settings.ModeRow(
 			view.options.Marks,

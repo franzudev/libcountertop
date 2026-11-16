@@ -33,7 +33,7 @@ type Source interface {
 		scored func(voicematch.Match),
 	) error
 	Profiles() []voicematch.Profile
-	SetProfiles([]voicematch.Profile) error
+	Save(voicematch.Profile) error
 	Last() []int16
 }
 
@@ -97,11 +97,7 @@ func Command(src func() Source) *cobra.Command {
 			if err != nil {
 				return err
 			}
-			profiles := slices.DeleteFunc(
-				s.Profiles(),
-				func(q voicematch.Profile) bool { return q.ID == id },
-			)
-			if err := s.SetProfiles(append(profiles, p)); err != nil {
+			if err := s.Save(p); err != nil {
 				return err
 			}
 			c.Printf("enrolled %s, confirmed at %.3f\n", name, m.Score)

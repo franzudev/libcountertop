@@ -1,14 +1,33 @@
 package voicematch
 
 import (
+	"fmt"
+
 	"github.com/ygelfand/libcountertop/pkg/inference/voiceprint"
 )
 
+const (
+	Loosest   = 0.30
+	Default   = 0.50
+	Strictest = 0.70
+)
+
 type Profile struct {
-	ID     string      `json:"id"`
-	Name   string      `json:"name"`
-	Person string      `json:"person,omitempty"`
-	Prints [][]float32 `json:"prints"`
+	ID        string      `json:"id"`
+	Name      string      `json:"name"`
+	Person    string      `json:"person,omitempty"`
+	Prints    [][]float32 `json:"prints"`
+	Threshold float64     `json:"threshold"`
+}
+
+func (p Profile) Valid() error {
+	if p.Threshold < Loosest || p.Threshold > Strictest {
+		return fmt.Errorf(
+			"voicematch: %s has threshold %.2f, want %.2f to %.2f",
+			p.ID, p.Threshold, Loosest, Strictest,
+		)
+	}
+	return nil
 }
 
 type Match struct {

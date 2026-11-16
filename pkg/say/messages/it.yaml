@@ -684,6 +684,7 @@ media.entity.duck: Abbassamento musica
 media.group.media: Contenuti multimediali
 media.setting.buttons: Pulsanti volume
 media.setting.duck: Livello abbassamento
+media.setting.player: Lettore all'avvio
 microphone.group.microphone: Microfono
 microphone.setting.cancel: Cancellazione eco microfono
 microphone.setting.denoise: Soppressione rumore
@@ -1140,9 +1141,12 @@ place.size: Dimensione
 place.vertical: Posizione verticale
 player.ad: Annuncio
 player.ad_clip: Annuncio {{.Clip}} di {{.Clips}}
+player.full: Lettore completo
 player.live: LIVE
 player.lyrics: Testo
+player.mini: Mini lettore
 player.next: A seguire
+player.none: Niente
 player.now: In riproduzione
 music.app: Musica
 music.now: In riproduzione
@@ -1704,6 +1708,25 @@ visual.synthwave: Synthwave
 visual.tesla: Tesla
 visual.thunderstorm: Temporale
 voice.group.actions: Azioni
+voicematch.add: Aggiungi una voce
+voicematch.again: Riprova
+voicematch.cancel: Annulla
+voicematch.done: "Voice match è pronto per {{.Name}}"
+voicematch.failed: Impossibile configurare Voice match
+voicematch.finish: Fine
+voicematch.heard: Ricevuto
+voicematch.listening: In ascolto…
+voicematch.missed: Non ho capito. Ancora una volta.
+voicematch.pick: Scegli una persona
+voicematch.preparing: Preparazione…
+voicematch.redo: Registra di nuovo
+voicematch.remove: Rimuovi
+voicematch.say: "Di' “{{.Wake}}”, poi"
+voicematch.say_plain: Di' la parola di attivazione, poi
+voicematch.someone: Qualcun altro
+voicematch.threshold: Soglia di riconoscimento
+voicematch.title: Voice match
+voicematch.unconfirmed: Non sembrava la stessa voce
 voicematch.phrase.calendar: "cosa ho in agenda oggi"
 voicematch.phrase.door: "chiudi la porta d'ingresso"
 voicematch.phrase.lights: "accendi le luci"

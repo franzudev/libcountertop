@@ -7,6 +7,8 @@ import (
 	"sync"
 	"time"
 
+	esphome "github.com/ygelfand/go-esphome-device"
+
 	"github.com/ygelfand/libcountertop/pkg/display/shell"
 	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
 	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
@@ -24,10 +26,24 @@ type Player interface {
 type Dependencies struct {
 	Player Player
 	Idle   storage.Section[config.Idle]
+	Media  storage.Section[config.Media]
+	Device uint32
 	Shell  *shell.Shell
+	Wake   func()
 }
 
-func New(o Dependencies) *Card { return &Card{options: o, page: &Screen{}} }
+func New(o Dependencies) *Card {
+	return &Card{options: o, page: &Screen{}, settings: NewSettings(o.Media, o.Device)}
+}
+
+func (c *Card) Settings() *Settings             { return c.settings }
+func (c *Card) Entities() []esphome.Entity      { return c.settings.Entities() }
+func (c *Card) PlayerStart() config.PlayerStart { return c.options.Media.Read().Player }
+func (c *Card) SetPlayerStart(p config.PlayerStart) {
+	if err := c.settings.Change("player", string(p)); err != nil {
+		slog.Warn("the player setting could not be saved", "err", err)
+	}
+}
 func (c *Card) Page() *Screen  { return c.page }
 func (c *Card) Began(s Source) { c.mu.Lock(); c.begun = s; c.mu.Unlock() }
 
@@ -59,13 +75,14 @@ const (
 )
 
 type Card struct {
-	options Dependencies
-	page    *Screen
-	mu      sync.Mutex
-	held    *shell.Hold
-	sounded time.Time
-	stalled time.Time
-	begun   Source
+	options  Dependencies
+	settings *Settings
+	page     *Screen
+	mu       sync.Mutex
+	held     *shell.Hold
+	sounded  time.Time
+	stalled  time.Time
+	begun    Source
 }
 
 func (c *Card) Name() string { return "player" }
@@ -125,8 +142,7 @@ func (c *Card) Follow() {
 
 	switch {
 	case begun != nil && begun == src:
-		slog.Info("the player opened", "by", fmt.Sprintf("%T", src))
-		c.open()
+		c.start(src)
 
 	case !playing && held.Held() && quiet > gap:
 		slog.Info("the player is done", "quiet", quiet.Round(time.Second))
@@ -151,15 +167,42 @@ func (c *Card) Follow() {
 
 func (c *Card) Open() { c.open() }
 
-func (c *Card) open() {
-	if o, ok := c.options.Player.Holder().(Opener); ok && o.Open() {
-		c.mu.Lock()
-		held := c.held
-		c.held = nil
-		c.mu.Unlock()
-		held.Release()
+func (c *Card) start(src Source) {
+	if c.video() {
+		slog.Info("the player opened", "by", fmt.Sprintf("%T", src), "as", "video")
 		return
 	}
+	player := c.options.Media.Read().Player
+	slog.Info("the player opened", "by", fmt.Sprintf("%T", src), "as", player)
+	switch player {
+	case config.PlayerNone:
+	case config.PlayerMini:
+		c.options.Wake()
+	default:
+		c.hold()
+	}
+}
+
+func (c *Card) open() {
+	if !c.video() {
+		c.hold()
+	}
+}
+
+func (c *Card) video() bool {
+	o, ok := c.options.Player.Holder().(Opener)
+	if !ok || !o.Open() {
+		return false
+	}
+	c.mu.Lock()
+	held := c.held
+	c.held = nil
+	c.mu.Unlock()
+	held.Release()
+	return true
+}
+
+func (c *Card) hold() {
 	if p, ok := c.options.Shell.Top().(Presenter); ok && p.Presents() {
 		return
 	}

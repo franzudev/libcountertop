@@ -11,7 +11,14 @@ import (
 func TestTheAppOpensTheCardWithNothingPlaying(t *testing.T) {
 	stack := shell.New()
 	defer stack.Close()
-	c := New(Dependencies{Player: testPlayer{&testSource{}}, Idle: testIdle{}, Shell: stack})
+	c := New(
+		Dependencies{
+			Player: testPlayer{&testSource{}},
+			Idle:   testIdle{},
+			Media:  testMedia{},
+			Shell:  stack,
+		},
+	)
 
 	app := c.App()
 	if app.ID != schema.AppPlayer || app.Label() == "" || app.Icon == "" {
@@ -27,7 +34,14 @@ func TestTheAppOpensWhatIsPlaying(t *testing.T) {
 	stack := shell.New()
 	defer stack.Close()
 	src := &testSource{now: nowplaying.Now{Playing: true}}
-	c := New(Dependencies{Player: testPlayer{src}, Idle: testIdle{}, Shell: stack})
+	c := New(
+		Dependencies{
+			Player: testPlayer{src},
+			Idle:   testIdle{},
+			Media:  testMedia{schema.PlayerNone},
+			Shell:  stack,
+		},
+	)
 	c.Began(src)
 
 	c.App().Open()

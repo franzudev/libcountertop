@@ -56,6 +56,7 @@ type AssistantDependencies struct {
 	Words       turn.Words
 	Look        *LookPages
 	Shell       *shell.Shell
+	VoiceMatch  func() *shell.Page
 }
 
 type pipeline struct {
@@ -104,6 +105,14 @@ func (p *AssistantPages) Page() *shell.Page {
 
 					Hint:   p.Hearing(slot),
 					Chosen: false,
+				})
+				acts = append(acts, nil)
+			}
+			if match := p.options.VoiceMatch; match != nil {
+				rows = append(rows, menu.Row{
+					Label: say.T("voicematch.title"),
+					Open:  func() shell.View { return match() },
+					Kind:  menu.Chevron,
 				})
 				acts = append(acts, nil)
 			}

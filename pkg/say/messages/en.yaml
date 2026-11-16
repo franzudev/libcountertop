@@ -684,6 +684,7 @@ media.entity.duck: Music ducking
 media.group.media: Media
 media.setting.buttons: Volume buttons
 media.setting.duck: Ducking depth
+media.setting.player: Player on start
 microphone.group.microphone: Microphone
 microphone.setting.cancel: Microphone echo cancellation
 microphone.setting.denoise: Noise suppression
@@ -1140,9 +1141,12 @@ place.size: Size
 place.vertical: Vertical position
 player.ad: Ad
 player.ad_clip: Ad {{.Clip}} of {{.Clips}}
+player.full: Full player
 player.live: LIVE
 player.lyrics: Lyrics
+player.mini: Mini player
 player.next: Up next
+player.none: Nothing
 player.now: Now playing
 music.app: Music
 music.now: Playing
@@ -1704,6 +1708,25 @@ visual.synthwave: Synthwave
 visual.tesla: Tesla
 visual.thunderstorm: Thunderstorm
 voice.group.actions: Actions
+voicematch.add: Add a voice
+voicematch.again: Try again
+voicematch.cancel: Cancel
+voicematch.done: "Voice match is ready for {{.Name}}"
+voicematch.failed: Voice match couldn't be set up
+voicematch.finish: Done
+voicematch.heard: Got it
+voicematch.listening: Listening…
+voicematch.missed: Didn't catch that. Once more.
+voicematch.pick: Pick a person
+voicematch.preparing: Getting ready…
+voicematch.redo: Record again
+voicematch.remove: Remove
+voicematch.say: "Say “{{.Wake}}”, then"
+voicematch.say_plain: Say the wake word, then
+voicematch.someone: Someone else
+voicematch.threshold: Match threshold
+voicematch.title: Voice match
+voicematch.unconfirmed: That didn't sound like the same voice
 voicematch.phrase.calendar: "what's on my calendar today"
 voicematch.phrase.door: "lock the front door"
 voicematch.phrase.lights: "turn on the lights"

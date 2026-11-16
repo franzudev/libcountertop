@@ -26,6 +26,7 @@ var Shared = Coverage{
 		"Alerts.Wake":               "alerts.wake",
 		"Media.DuckDB":              "media.duck",
 		"Media.Buttons":             "media.buttons",
+		"Media.Player":              "media.player",
 		"Poster.Enabled":            "poster.on",
 		"Poster.Every":              "poster.every",
 		"Poster.Fit":                "poster.fit",

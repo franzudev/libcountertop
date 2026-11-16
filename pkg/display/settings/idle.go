@@ -74,6 +74,10 @@ type WeatherActions interface {
 	WeatherRendering
 }
 type MediaIdle interface{ SetIdle(config.Delay) }
+type PlayerStart interface {
+	PlayerStart() config.PlayerStart
+	SetPlayerStart(config.PlayerStart)
+}
 type VisualLabel interface{ SetLabel(string) }
 type HomeAccess interface{ Access() ha.Access }
 type IdleDependencies struct {

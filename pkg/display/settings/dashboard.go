@@ -62,3 +62,22 @@ func (p *BasicPages) MediaRow() (menu.Row, func(int)) {
 		p.options.Media.SetIdle(config.MediaDelays()[media.Index(level)])
 	}
 }
+
+func (p *BasicPages) PlayerRow() (menu.Row, func(int)) {
+	player := p.options.Player
+	return menu.Row{
+		Glyph: gogui.IconPlay,
+		Label: say.T("media.setting.player"),
+		Kind:  menu.Chevron,
+		Value: player.PlayerStart().Label(),
+		Open: func() shell.View {
+			return Choose(
+				say.T("media.setting.player"),
+				config.PlayerStarts(),
+				player.PlayerStart,
+				player.SetPlayerStart,
+				nil,
+			)
+		},
+	}, nil
+}

@@ -24,8 +24,8 @@ func newService(t *testing.T) *Service {
 }
 
 func TestTheClosestTakeDecides(t *testing.T) {
-	ann := Profile{ID: "a", Name: "Ann", Prints: [][]float32{{1, 0}, {0, 1}}}
-	bo := Profile{ID: "b", Name: "Bo", Prints: [][]float32{{0.7, 0.7}}}
+	ann := Profile{ID: "a", Name: "Ann", Threshold: Default, Prints: [][]float32{{1, 0}, {0, 1}}}
+	bo := Profile{ID: "b", Name: "Bo", Threshold: Default, Prints: [][]float32{{0.7, 0.7}}}
 	m, ok := best([]float32{0, 1}, []Profile{bo, ann})
 	if !ok || m.Profile.ID != "a" || m.Score < 0.99 {
 		t.Errorf("a clip matching one of Ann's takes gave %+v %v", m, ok)
@@ -35,7 +35,13 @@ func TestTheClosestTakeDecides(t *testing.T) {
 func TestProfilesSurviveARestart(t *testing.T) {
 	s := newService(t)
 	want := []Profile{
-		{ID: "a", Name: "Ann", Person: "person.ann", Prints: [][]float32{{1, 0}, {0, 1}}},
+		{
+			ID:        "a",
+			Name:      "Ann",
+			Person:    "person.ann",
+			Threshold: Default,
+			Prints:    [][]float32{{1, 0}, {0, 1}},
+		},
 	}
 	if err := s.SetProfiles(want); err != nil {
 		t.Fatal(err)
@@ -48,10 +54,13 @@ func TestProfilesSurviveARestart(t *testing.T) {
 
 func TestProfilesActionReplacesTheSet(t *testing.T) {
 	s := newService(t)
-	_ = s.SetProfiles([]Profile{{ID: "old", Name: "Old", Prints: [][]float32{{1}}}})
+	_ = s.SetProfiles(
+		[]Profile{{ID: "old", Name: "Old", Threshold: Default, Prints: [][]float32{{1}}}},
+	)
 	action := s.Actions()[0]
 	call, err := esphome.NewCall(map[string]any{
-		"profiles": `[{"id":"a","name":"Ann","prints":[[1,0]]},{"id":"b","name":"Bo","prints":[[0,1]]}]`,
+		"profiles": `[{"id":"a","name":"Ann","prints":[[1,0]],"threshold":0.5},` +
+			`{"id":"b","name":"Bo","prints":[[0,1]],"threshold":0.6}]`,
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -74,8 +83,8 @@ func TestProfilesActionReplacesTheSet(t *testing.T) {
 func TestLastSpeakerNamesTheClosestAboveTheThreshold(t *testing.T) {
 	s := newService(t)
 	_ = s.SetProfiles([]Profile{
-		{ID: "a", Name: "Ann", Prints: [][]float32{{1, 0}}},
-		{ID: "b", Name: "Bo", Prints: [][]float32{{0, 1}}},
+		{ID: "a", Name: "Ann", Threshold: Default, Prints: [][]float32{{1, 0}}},
+		{ID: "b", Name: "Bo", Threshold: Default, Prints: [][]float32{{0, 1}}},
 	})
 	s.heard([]int16{7}, []float32{0.1, 1})
 	if got := s.speaker.Get(); got != "Bo" {
@@ -135,8 +144,8 @@ func TestClaimOnlyWhileEnrolling(t *testing.T) {
 }
 
 func TestConfirmationNeedsTheNewProfileToWin(t *testing.T) {
-	ann := Profile{ID: "a", Name: "Ann", Prints: [][]float32{{1, 0}}}
-	bo := Profile{ID: "b", Name: "Bo", Prints: [][]float32{{0, 1}}}
+	ann := Profile{ID: "a", Name: "Ann", Threshold: Default, Prints: [][]float32{{1, 0}}}
+	bo := Profile{ID: "b", Name: "Bo", Threshold: Default, Prints: [][]float32{{0, 1}}}
 	if _, ok := confirmed([]float32{1, 0.1}, ann, []Profile{bo}); !ok {
 		t.Error("a clip close to the new profile should confirm")
 	}
@@ -149,7 +158,7 @@ func TestConfirmationNeedsTheNewProfileToWin(t *testing.T) {
 	if _, ok := confirmed(
 		[]float32{1, 0},
 		ann,
-		[]Profile{{ID: "a", Name: "Ann", Prints: [][]float32{{0, 1}}}},
+		[]Profile{{ID: "a", Name: "Ann", Threshold: Default, Prints: [][]float32{{0, 1}}}},
 	); !ok {
 		t.Error("re-enrolling should compare against the new profile, not the old copy")
 	}

@@ -16,6 +16,7 @@ import (
 	esphome "github.com/ygelfand/go-esphome-device"
 
 	"github.com/ygelfand/libcountertop/pkg/audio/capture"
+	"github.com/ygelfand/libcountertop/pkg/hook"
 	"github.com/ygelfand/libcountertop/pkg/inference/voiceprint"
 	"github.com/ygelfand/libcountertop/pkg/runtime/background"
 	"github.com/ygelfand/libcountertop/pkg/say"
@@ -25,7 +26,6 @@ const (
 	helpers     = 1
 	nice        = 10
 	clips       = 5
-	threshold   = 0.5
 	unknown     = "Unknown"
 	tries       = 3
 	waitForWake = 20 * time.Second
@@ -76,12 +76,16 @@ type Service struct {
 	speaker *esphome.TextSensor
 	score   *esphome.Sensor
 
+	Changed hook.Hook[Progress]
+
 	mu       sync.Mutex
 	embed    *voiceprint.Embedder
 	settled  bool
 	profiles []Profile
 	last     []int16
 	claims   chan time.Time
+	progress Progress
+	stop     context.CancelFunc
 }
 
 func (s *Service) Last() []int16 {
@@ -156,6 +160,11 @@ func (s *Service) Profiles() []Profile {
 }
 
 func (s *Service) SetProfiles(ps []Profile) error {
+	for _, p := range ps {
+		if err := p.Valid(); err != nil {
+			return err
+		}
+	}
 	raw, err := json.Marshal(ps)
 	if err != nil {
 		return err
@@ -192,7 +201,7 @@ func (s *Service) heard(clip []int16, print []float32) {
 		return
 	}
 	name := m.Profile.Name
-	if m.Score < threshold {
+	if m.Score < m.Profile.Threshold {
 		name = unknown
 	}
 	slog.Info("voice match", "speaker", name, "closest", m.Profile.Name, "score", m.Score)
@@ -259,7 +268,12 @@ func (s *Service) Enroll(
 	if err := errors.Join(errs...); err != nil {
 		return Profile{}, Match{}, err
 	}
-	profile := Profile{ID: id, Name: name, Person: person, Prints: prints}
+	profile := Profile{ID: id, Name: name, Person: person, Prints: prints, Threshold: Default}
+	for _, old := range s.Profiles() {
+		if old.ID == id {
+			profile.Threshold = old.Threshold
+		}
+	}
 	print, err := s.Embed(last)
 	if err != nil {
 		return Profile{}, Match{}, err
@@ -381,7 +395,7 @@ func confirmed(print []float32, profile Profile, existing []Profile) (Match, boo
 		func(p Profile) bool { return p.ID == profile.ID },
 	)
 	m, _ := best(print, append(others, profile))
-	return m, m.Profile.ID == profile.ID && m.Score >= threshold
+	return m, m.Profile.ID == profile.ID && m.Score >= profile.Threshold
 }
 
 func (s *Service) embedder(ctx context.Context) (*voiceprint.Embedder, error) {

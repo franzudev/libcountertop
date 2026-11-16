@@ -78,6 +78,7 @@ type BasicDependencies struct {
 	PowerPage, VisualPage func() shell.View
 	SyncPage              func() shell.View
 	Media                 MediaIdle
+	Player                PlayerStart
 	Home                  DashboardMode
 	HA                    HomeAccess
 	Marks                 ModeMarks

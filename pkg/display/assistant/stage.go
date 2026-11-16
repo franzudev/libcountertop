@@ -8,8 +8,8 @@ import (
 	"time"
 
 	voice "github.com/ygelfand/libcountertop/pkg/assistant/turn"
-	"github.com/ygelfand/libcountertop/pkg/display/geometry"
 	"github.com/ygelfand/libcountertop/pkg/display/gpu"
+	"github.com/ygelfand/libcountertop/pkg/display/livevisual"
 	"github.com/ygelfand/libcountertop/pkg/display/ui"
 	"github.com/ygelfand/libcountertop/pkg/display/visual"
 	"github.com/ygelfand/libcountertop/pkg/display/visualview"
@@ -26,14 +26,6 @@ const (
 	stageRetire = 3
 )
 
-type Layers interface {
-	OpenAt(w, h, depth int) (*gpu.Layer, error)
-}
-
-type Oriented interface {
-	Orientation() geometry.Orientation
-}
-
 type Visuals interface {
 	Hold() (release func())
 	Input() visual.Input
@@ -45,8 +37,8 @@ type WakeSettings interface {
 
 type StageDependencies struct {
 	Screen  *Assistant
-	GPU     Layers
-	Display Oriented
+	GPU     livevisual.Layers
+	Display livevisual.Oriented
 	Visuals Visuals
 	Wake    WakeSettings
 }
@@ -71,30 +63,6 @@ func stageOf(p voice.Phase) (schema.Stage, bool) {
 	return "", false
 }
 
-type slot struct {
-	layer  *gpu.Layer
-	vis    visual.Visual
-	kind   string
-	base   int
-	z      int
-	placed ui.Rect
-	rot    geometry.Orientation
-	fresh  bool
-	last   time.Time
-}
-
-func (sl *slot) close() {
-	if sl != nil && sl.layer != nil {
-		_ = sl.layer.Close()
-		sl.layer = nil
-	}
-}
-
-func (sl *slot) fits(w wanted) bool {
-	return sl.layer != nil && sl.layer.W == w.at.W && sl.layer.H == w.at.H && sl.base == w.z &&
-		sl.layer.Alive()
-}
-
 type wanted struct {
 	at     ui.Rect
 	z      int
@@ -116,9 +84,9 @@ type Stage struct {
 	seen    time.Time
 	running bool
 
-	cur      *slot
-	next     *slot
-	retiring *slot
+	cur      *livevisual.Slot
+	next     *livevisual.Slot
+	retiring *livevisual.Slot
 	retireIn int
 	broken   string
 	release  func()
@@ -208,7 +176,7 @@ func (s *Stage) frame(w wanted, hiding bool) {
 	if s.release == nil {
 		s.release = s.deps.Visuals.Hold()
 	}
-	if s.cur != nil && !s.cur.fits(w) {
+	if s.cur != nil && !s.cur.Fits(w.at, w.z) {
 		s.drop()
 	}
 	if s.cur == nil {
@@ -232,25 +200,25 @@ func (s *Stage) frame(w wanted, hiding bool) {
 	}
 	if s.retiring != nil {
 		if s.retireIn--; s.retireIn <= 0 {
-			s.retiring.close()
+			s.retiring.Close()
 			s.retiring = nil
 		}
 	}
 
-	if s.cur.kind == w.kind || w.kind == s.broken {
-		s.next.close()
+	if s.cur.Kind == w.kind || w.kind == s.broken {
+		s.next.Close()
 		s.next = nil
 		return
 	}
-	if s.next != nil && (s.next.kind != w.kind || !s.next.fits(w)) {
-		s.next.close()
+	if s.next != nil && (s.next.Kind != w.kind || !s.next.Fits(w.at, w.z)) {
+		s.next.Close()
 		s.next = nil
 	}
 	off := w.at
 	off.X += off.W * 2
 	if s.next == nil {
 		z := w.z
-		if s.cur.z == w.z {
+		if s.cur.Depth == w.z {
 			z = w.z + 1
 		}
 		if s.next = s.open(w, z, off); s.next == nil {
@@ -258,22 +226,22 @@ func (s *Stage) frame(w wanted, hiding bool) {
 		}
 	}
 	if !s.shade(s.next, off, w.at, in) {
-		s.next.close()
+		s.next.Close()
 		s.next = nil
 		return
 	}
 	if !s.place(s.next, w.at) {
-		s.next.close()
+		s.next.Close()
 		s.next = nil
 		return
 	}
-	s.retiring.close()
+	s.retiring.Close()
 	s.retiring, s.retireIn = s.cur, stageRetire
 	s.cur, s.next = s.next, nil
 }
 
-func (s *Stage) open(w wanted, z int, at ui.Rect) *slot {
-	l, err := s.deps.GPU.OpenAt(w.at.W, w.at.H, z)
+func (s *Stage) open(w wanted, z int, at ui.Rect) *livevisual.Slot {
+	sl, err := livevisual.Open(s.deps.GPU, w.kind, w.at, w.z, z)
 	if errors.Is(err, gpu.ErrNoHelper) {
 		return nil
 	}
@@ -282,69 +250,37 @@ func (s *Stage) open(w wanted, z int, at ui.Rect) *slot {
 		s.broken = w.kind
 		return nil
 	}
-	sl := &slot{
-		layer: l,
-		vis:   visual.New(visual.Kind(w.kind)),
-		kind:  w.kind,
-		base:  w.z,
-		z:     z,
-		fresh: true,
-	}
 	if !s.place(sl, at) {
-		sl.close()
+		sl.Close()
 		return nil
 	}
 	return sl
 }
 
-func (s *Stage) place(sl *slot, at ui.Rect) bool {
-	rot := s.deps.Display.Orientation()
-	if sl.placed == at && sl.rot == rot {
-		return true
-	}
-	if err := sl.layer.Place(at); err != nil {
+func (s *Stage) place(sl *livevisual.Slot, at ui.Rect) bool {
+	if err := sl.Place(s.deps.Display, at); err != nil {
 		slog.Error("assistant: placing the GPU layer", "err", err)
 		return false
 	}
-	sl.placed, sl.rot = at, rot
 	return true
 }
 
-func (s *Stage) shade(sl *slot, placed, area ui.Rect, in visual.Input) bool {
-	if !s.place(sl, placed) {
-		return false
-	}
-	now := time.Now()
-	if !sl.last.IsZero() {
-		in.Dt = now.Sub(sl.last)
-	}
-	sl.last = now
-	if err := sl.vis.Shade(sl.layer, sl.fresh, area, in); err != nil {
-		slog.Error(
-			"assistant: GPU visual failed",
-			"kind",
-			sl.kind,
-			"alive",
-			sl.layer.Alive(),
-			"fresh",
-			sl.fresh,
-			"err",
-			err,
-		)
-		if sl.layer.Alive() {
-			s.broken = sl.kind
+func (s *Stage) shade(sl *livevisual.Slot, placed, area ui.Rect, in visual.Input) bool {
+	if err := sl.Shade(s.deps.Display, placed, area, in); err != nil {
+		slog.Error("assistant: GPU visual failed", "kind", sl.Kind, "alive", sl.Alive(), "err", err)
+		if sl.Alive() {
+			s.broken = sl.Kind
 		}
 		return false
 	}
-	sl.fresh = false
 	return true
 }
 
 func (s *Stage) drop() {
 	s.shown.Store(false)
-	s.cur.close()
-	s.next.close()
-	s.retiring.close()
+	s.cur.Close()
+	s.next.Close()
+	s.retiring.Close()
 	s.cur, s.next, s.retiring = nil, nil, nil
 }
 
