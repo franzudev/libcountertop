@@ -90,12 +90,13 @@ func (v *View) Shown() bool {
 
 func (v *View) SetShown(shown bool) {
 	v.mu.Lock()
-	changed := v.hidden == shown
+	defer v.mu.Unlock()
+	if v.hidden != shown {
+		return
+	}
 	v.hidden = !shown
-	page := v.page
-	v.mu.Unlock()
-	if changed && page != nil {
-		show(page, shown)
+	if v.page != nil {
+		show(v.page, shown)
 	}
 }
 
@@ -379,9 +380,9 @@ func (v *View) session(ctx context.Context) error {
 
 	v.mu.Lock()
 	v.page, v.shown = page, v.address()
-	w, h, shown, hidden := v.w, v.h, v.shown, v.hidden
+	w, h, shown := v.w, v.h, v.shown
+	show(page, !v.hidden)
 	v.mu.Unlock()
-	show(page, !hidden)
 	defer func() {
 		v.mu.Lock()
 		if v.page == page {

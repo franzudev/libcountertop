@@ -684,6 +684,8 @@ media.entity.duck: Giảm âm nhạc
 media.group.media: Media
 media.setting.buttons: Nút âm lượng
 media.setting.duck: Độ giảm âm
+media.setting.mini: Trình phát thu nhỏ
+media.setting.player: Trình phát khi khởi động
 microphone.group.microphone: Micrô
 microphone.setting.cancel: Khử vọng micrô
 microphone.setting.denoise: Khử tiếng ồn
@@ -1005,6 +1007,8 @@ doorbell.video.connecting: Đang kết nối qua {{.Source}}
 doorbell.video.failed: "{{.Why}} ({{.Source}})"
 doorbell.tried: "{{.Source}} thất bại: {{.Why}}"
 doorbell.video.working: Hoạt động qua {{.Source}}
+doorbell.lock: Khóa
+doorbell.lock.confirm: Chạm lần nữa để mở khóa
 doorbell.looking: Đang tìm trong Home Assistant…
 doorbell.manual: Thủ công
 doorbell.needs: Nhập UID hoặc địa chỉ IP/tên máy chủ
@@ -1020,6 +1024,7 @@ doorbell.fellback: "{{.Line}} (Reolink thất bại)"
 doorbell.slot: Chuông cửa {{.N}}
 doorbell.watch: Xem
 doorbell.why.camera: Không có video trực tiếp cho chuông cửa này
+doorbell.why.lock: "Không thể thay đổi khóa: {{.Why}}"
 doorbell.why.lost: Mất kết nối chuông cửa, đang thử lại
 doorbell.why.talk: "Không thể nói chuyện: {{.Why}}"
 doorbell.why.fallback: Đang hiện video Home Assistant, không có nói chuyện
@@ -1140,9 +1145,11 @@ place.size: Kích thước
 place.vertical: Vị trí dọc
 player.ad: Quảng cáo
 player.ad_clip: Quảng cáo {{.Clip}} / {{.Clips}}
+player.full: Trình phát đầy đủ
 player.live: TRỰC TIẾP
 player.lyrics: Lời bài hát
 player.next: Tiếp theo
+player.none: Không có gì
 player.now: Đang phát
 music.app: Nhạc
 music.now: Đang phát
@@ -1361,6 +1368,7 @@ settings.debug: Tùy chọn nhà phát triển
 settings.display: Màn hình
 settings.features: Dịch vụ kết nối
 settings.language: Ngôn ngữ
+settings.media: Media
 settings.network: Mạng & internet
 settings.power: Khởi động lại
 settings.sync: Đồng bộ cấu hình
@@ -1704,6 +1712,27 @@ visual.synthwave: Synthwave
 visual.tesla: Tesla
 visual.thunderstorm: Giông bão
 voice.group.actions: Hành động
+voicematch.accept: Chấp nhận
+voicematch.add: Thêm giọng nói
+voicematch.again: Thử lại
+voicematch.cancel: Hủy
+voicematch.done: "Nhận diện giọng nói đã sẵn sàng cho {{.Name}}"
+voicematch.failed: Không thể thiết lập nhận diện giọng nói
+voicematch.finish: Xong
+voicematch.heard: Đã nghe
+voicematch.listening: Đang nghe…
+voicematch.missed: Chưa nghe rõ. Nói lại lần nữa.
+voicematch.pick: Chọn một người
+voicematch.preparing: Đang chuẩn bị…
+voicematch.redo: Ghi lại
+voicematch.remove: Xóa
+voicematch.say: "Nói “{{.Wake}}”, rồi"
+voicematch.say_plain: Nói từ đánh thức, rồi
+voicematch.similar: "Giọng này nghe rất giống {{.Name}}"
+voicematch.someone: Người khác
+voicematch.threshold: Ngưỡng nhận diện
+voicematch.title: Nhận diện giọng nói
+voicematch.unconfirmed: Giọng đó nghe không giống cùng một người
 voicematch.phrase.calendar: hôm nay tôi có gì trong lịch
 voicematch.phrase.door: khóa cửa trước
 voicematch.phrase.lights: bật đèn
