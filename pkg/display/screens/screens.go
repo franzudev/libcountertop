@@ -237,6 +237,7 @@ type App struct {
 	wallpaper *photoframe.Stage
 	papered   atomic.Bool
 	papering  bool
+	homeDrawn bool
 
 	mu sync.Mutex
 	w  *gogui.Window
