@@ -15,6 +15,7 @@ func Build(
 	d := New(Options{
 		Settings: settings,
 		Finder:   p.Controller,
+		Actions:  p.Controller,
 		States:   p.States,
 		DeviceID: p.Camera,
 		Chimes:   chimes,

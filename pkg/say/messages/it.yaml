@@ -1007,6 +1007,8 @@ doorbell.video.connecting: "Connessione via {{.Source}}"
 doorbell.video.failed: "{{.Why}} ({{.Source}})"
 doorbell.tried: "{{.Source}} non riuscito: {{.Why}}"
 doorbell.video.working: "Funziona via {{.Source}}"
+doorbell.lock: Serratura
+doorbell.lock.confirm: Tocca di nuovo per sbloccare
 doorbell.looking: Ricerca in Home Assistant…
 doorbell.manual: Manuale
 doorbell.needs: Inserisci un UID, un indirizzo IP o un nome host
@@ -1022,6 +1024,7 @@ doorbell.fellback: "{{.Line}} (Reolink non riuscito)"
 doorbell.slot: "Campanello {{.N}}"
 doorbell.watch: Guarda
 doorbell.why.camera: Nessun video dal vivo per questo campanello
+doorbell.why.lock: "Impossibile azionare la serratura: {{.Why}}"
 doorbell.why.lost: Campanello perso, nuovo tentativo
 doorbell.why.talk: "Impossibile parlare: {{.Why}}"
 doorbell.why.fallback: Video di Home Assistant, senza audio bidirezionale
