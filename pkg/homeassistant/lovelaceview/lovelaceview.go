@@ -82,6 +82,12 @@ type View struct {
 	hidden   bool
 }
 
+func (v *View) Shown() bool {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	return !v.hidden
+}
+
 func (v *View) SetShown(shown bool) {
 	v.mu.Lock()
 	changed := v.hidden == shown

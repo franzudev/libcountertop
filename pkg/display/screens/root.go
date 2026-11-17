@@ -16,9 +16,12 @@ import (
 )
 
 func (a *App) root(w *gogui.Window) gogui.View {
-	a.papering = false
+	a.papering, a.homeDrawn = false, false
 	v := a.compose(w)
 	a.papered.Store(a.papering)
+	if a.o.Lovelace != nil {
+		a.o.Lovelace.Home.SetShown(a.homeDrawn)
+	}
 	return v
 }
 
@@ -159,6 +162,7 @@ func (a *App) dashboard(w *gogui.Window) gogui.View {
 		if top := int(a.ui.Editor.Top); a.o.Lovelace.Home.Typing() && top > 0 && top < vh {
 			whole.H = top
 		}
+		a.homeDrawn = true
 		layers = []gogui.View{widgets.Placed(whole, a.o.Lovelace.Home.Draw(whole))}
 	case a.rings != nil && a.o.Home.Speaks() == schema.HomeRings:
 		whole := ui.Rect{W: vw, H: vh}

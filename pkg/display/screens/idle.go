@@ -48,12 +48,14 @@ func (a *App) idle(w *gogui.Window, v *idleview.View) gogui.View {
 		} else {
 			v.Close()
 			whole := ui.Rect{W: vw, H: vh}
+			page := l.Rest()
+			a.homeDrawn = page == l.Home
 			return gogui.Column(gogui.ContainerCfg{
 				ID:      "idle",
 				Sizing:  gogui.FillFill,
 				Padding: gogui.NoPadding,
 				Content: []gogui.View{
-					widgets.Placed(whole, l.Rest().Saver(whole, func() { a.o.Shell.Remove(v) })),
+					widgets.Placed(whole, page.Saver(whole, func() { a.o.Shell.Remove(v) })),
 				},
 			})
 		}
