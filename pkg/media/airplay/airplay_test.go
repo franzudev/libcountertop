@@ -43,6 +43,46 @@ func TestAnOversizedMessageIsRefused(t *testing.T) {
 	}
 }
 
+func readyBytes(raop, air string, raopTXT, airTXT []byte) []byte {
+	p := binary.LittleEndian.AppendUint32(nil, version)
+	p = binary.LittleEndian.AppendUint32(p, 7000)
+	for _, n := range []int{len(raop), len(air), len(raopTXT), len(airTXT)} {
+		p = binary.LittleEndian.AppendUint32(p, uint32(n))
+	}
+	p = append(p, raop...)
+	p = append(p, air...)
+	p = append(p, raopTXT...)
+	return append(p, airTXT...)
+}
+
+func TestReadyCarriesWhatToAnnounce(t *testing.T) {
+	raopTXT := []byte("\x05ch=02\x09pk=abcdef")
+	airTXT := []byte("\x14deviceid=AA:BB:CC:DD")
+	rd, err := readyOf(readyBytes(
+		"AABBCCDDEEFF@Kitchen._raop._tcp.local", "Kitchen._airplay._tcp.local", raopTXT, airTXT,
+	))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if rd.port != 7000 || rd.raop.instance != "AABBCCDDEEFF@Kitchen" ||
+		rd.airplay.instance != "Kitchen" {
+		t.Errorf("ready %+v", rd)
+	}
+	if len(rd.raop.text) != 2 || rd.raop.text[0] != "ch=02" || rd.raop.text[1] != "pk=abcdef" {
+		t.Errorf("raop text %q", rd.raop.text)
+	}
+	if len(rd.airplay.text) != 1 || rd.airplay.text[0] != "deviceid=AA:BB:CC:DD" {
+		t.Errorf("airplay text %q", rd.airplay.text)
+	}
+	bad := readyBytes("x._raop._tcp.local", "x._airplay._tcp.local", []byte("\x09ch=02"), nil)
+	if _, err := readyOf(bad); err == nil {
+		t.Error("a TXT entry longer than its record was read")
+	}
+	if _, err := readyOf(bad[:len(bad)-1]); err == nil {
+		t.Error("a short ready was read")
+	}
+}
+
 func TestSilenceKeepsToTheClock(t *testing.T) {
 	m := newMirror("mac", mirroring{}, 48000, 2, func() {})
 	pcm := make([]int16, 48000*2)

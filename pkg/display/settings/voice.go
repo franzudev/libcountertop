@@ -16,7 +16,7 @@ import (
 )
 
 const HACSLink = "https://my.home-assistant.io/redirect/hacs_repository/" +
-	"?owner=ygelfand&repository=echolocal-hacs&category=integration"
+	"?owner=ygelfand&repository=echolocal-ha&category=integration"
 
 type Integrated interface{ Integration() ha.Integration }
 

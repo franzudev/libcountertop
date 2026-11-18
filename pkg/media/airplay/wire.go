@@ -4,13 +4,14 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"strings"
 	"time"
 
 	"github.com/ygelfand/libcountertop/pkg/media/playback"
 )
 
 const (
-	version    = 4
+	version    = 5
 	maxPayload = 4 << 20
 
 	msgReady      = 'R'
@@ -64,13 +65,70 @@ func readMessage(r io.Reader) (message, error) {
 
 type ready struct {
 	version, port uint32
+	raop, airplay announced
 }
+
+type announced struct {
+	instance string
+	text     []string
+}
+
+const (
+	readyHead     = 24
+	raopSuffix    = "._raop._tcp.local"
+	airplaySuffix = "._airplay._tcp.local"
+)
 
 func readyOf(p []byte) (ready, error) {
 	if len(p) < 8 {
 		return ready{}, fmt.Errorf("airplay: %d byte ready", len(p))
 	}
-	return ready{binary.LittleEndian.Uint32(p[0:]), binary.LittleEndian.Uint32(p[4:])}, nil
+	r := ready{version: binary.LittleEndian.Uint32(p[0:]), port: binary.LittleEndian.Uint32(p[4:])}
+	if r.version != version {
+		return r, nil
+	}
+	if len(p) < readyHead {
+		return ready{}, fmt.Errorf("airplay: %d byte ready", len(p))
+	}
+	var sizes [4]int
+	total := readyHead
+	for i := range sizes {
+		sizes[i] = int(binary.LittleEndian.Uint32(p[8+4*i:]))
+		total += sizes[i]
+	}
+	if total != len(p) {
+		return ready{}, fmt.Errorf("airplay: ready says %d bytes, has %d", total, len(p))
+	}
+	var parts [4][]byte
+	at := readyHead
+	for i, n := range sizes {
+		parts[i] = p[at : at+n]
+		at += n
+	}
+	raopText, err := textOf(parts[2])
+	if err != nil {
+		return ready{}, err
+	}
+	airplayText, err := textOf(parts[3])
+	if err != nil {
+		return ready{}, err
+	}
+	r.raop = announced{strings.TrimSuffix(string(parts[0]), raopSuffix), raopText}
+	r.airplay = announced{strings.TrimSuffix(string(parts[1]), airplaySuffix), airplayText}
+	return r, nil
+}
+
+func textOf(wire []byte) ([]string, error) {
+	var out []string
+	for len(wire) > 0 {
+		n := int(wire[0])
+		if 1+n > len(wire) {
+			return nil, fmt.Errorf("airplay: TXT entry of %d bytes in %d", n, len(wire)-1)
+		}
+		out = append(out, string(wire[1:1+n]))
+		wire = wire[1+n:]
+	}
+	return out, nil
 }
 
 type mirroring struct {

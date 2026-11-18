@@ -234,6 +234,28 @@ dnssd_private_destroy(void *private)
 }
 
 int
+dnssd_build_records(dnssd_t *dnssd_public)
+{
+    return dnssd_build_raop_txt(dnssd_public) || dnssd_build_airplay_txt(dnssd_public);
+}
+
+const char *
+dnssd_get_raop_name(dnssd_t *dnssd_public)
+{
+    assert(dnssd_public);
+    assert(dnssd_public->dnssd_private);
+    return ((dnssd_private_t *) dnssd_public->dnssd_private)->raop_name;
+}
+
+const char *
+dnssd_get_airplay_name(dnssd_t *dnssd_public)
+{
+    assert(dnssd_public);
+    assert(dnssd_public->dnssd_private);
+    return ((dnssd_private_t *) dnssd_public->dnssd_private)->airplay_name;
+}
+
+int
 dnssd_register_raop(dnssd_t *dnssd_public, unsigned short port)
 {
     int ret;

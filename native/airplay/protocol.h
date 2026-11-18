@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-#define AIRPLAY_VERSION 4
+#define AIRPLAY_VERSION 5
 
 #define AIRPLAY_PORT 7000
 #define AIRPLAY_MIRROR_PORT 7100
@@ -31,6 +31,10 @@ struct airplay_header {
 struct airplay_ready {
     uint32_t version;
     uint32_t port;
+    uint32_t raop_name;
+    uint32_t airplay_name;
+    uint32_t raop_txt;
+    uint32_t airplay_txt;
 };
 
 struct airplay_mirror {

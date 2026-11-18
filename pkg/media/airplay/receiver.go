@@ -6,15 +6,19 @@ import (
 	"fmt"
 	"image"
 	"log/slog"
+	"net"
 	"os"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 
+	"github.com/libp2p/zeroconf/v2"
 	esphome "github.com/ygelfand/go-esphome-device"
 	"golang.org/x/sys/unix"
 
 	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/ygelfand/libcountertop/pkg/network/advertise"
 	"github.com/ygelfand/libcountertop/pkg/runtime/payload"
 	"github.com/ygelfand/libcountertop/pkg/runtime/service"
 	setting "github.com/ygelfand/libcountertop/pkg/settings"
@@ -25,6 +29,12 @@ import (
 var (
 	errVersion  = errors.New("airplay: helper speaks another protocol version")
 	errNoScreen = errors.New("airplay: screen size not known")
+)
+
+const (
+	raopService    = "_raop._tcp"
+	airplayService = "_airplay._tcp"
+	mdnsDomain     = "local."
 )
 
 type Options struct {
@@ -223,6 +233,11 @@ func (r *Receiver) session(ctx context.Context) error {
 		"size",
 		fmt.Sprintf("%dx%d", sentW, sentH),
 	)
+	var announcing sync.WaitGroup
+	defer announcing.Wait()
+	shown, unshow := context.WithCancel(live)
+	defer unshow()
+	announcing.Go(func() { r.announce(shown, rd) })
 
 	s := &screening{r: r, conn: ours, width: w, height: h, restart: restart}
 	r.mu.Lock()
@@ -246,6 +261,45 @@ func (r *Receiver) session(ctx context.Context) error {
 		}
 		s.handle(ctx, m)
 	}
+}
+
+func (r *Receiver) announce(ctx context.Context, rd ready) {
+	host := strings.ReplaceAll(
+		r.opts.Name(),
+		" ",
+		"-",
+	) + "-" + strings.ReplaceAll(
+		r.opts.MAC(),
+		":",
+		"",
+	)
+	advertise.Advertise(ctx, "airplay", func(ips []net.IP) (func(), error) {
+		addrs := advertise.Strings(ips)
+		raop, err := zeroconf.RegisterProxy(
+			rd.raop.instance, raopService, mdnsDomain, int(rd.port), host, addrs, rd.raop.text, nil,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("airplay: announcing raop: %w", err)
+		}
+		air, err := zeroconf.RegisterProxy(
+			rd.airplay.instance,
+			airplayService,
+			mdnsDomain,
+			int(rd.port),
+			host,
+			addrs,
+			rd.airplay.text,
+			nil,
+		)
+		if err != nil {
+			raop.Shutdown()
+			return nil, fmt.Errorf("airplay: announcing airplay: %w", err)
+		}
+		return func() {
+			raop.Shutdown()
+			air.Shutdown()
+		}, nil
+	})
 }
 
 type screening struct {

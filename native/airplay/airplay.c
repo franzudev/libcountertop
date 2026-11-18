@@ -287,14 +287,34 @@ int main(int argc, char **argv) {
     } else {
         dnssd_set_airplay_features(dnssd, 42, 1);
     }
-    if ((err = dnssd_register_raop(dnssd, port))) logw("register raop %d", err);
-    if ((err = dnssd_register_airplay(dnssd, port))) logw("register airplay %d", err);
+    if (dnssd_build_records(dnssd)) {
+        logw("building the announcement records failed");
+        return 1;
+    }
+    const char *raop_name = dnssd_get_raop_name(dnssd);
+    const char *airplay_name = dnssd_get_airplay_name(dnssd);
+    int raop_txt_len = 0, airplay_txt_len = 0;
+    const char *raop_txt = dnssd_get_raop_txt(dnssd, &raop_txt_len);
+    const char *airplay_txt = dnssd_get_airplay_txt(dnssd, &airplay_txt_len);
     logi("listening as \"%s\" on port %d", name, port);
 
-    struct airplay_ready r = {AIRPLAY_VERSION, port};
-    send_msg(MSG_READY, &r, sizeof(r), NULL, 0);
+    struct airplay_ready r = {
+        AIRPLAY_VERSION, port, (uint32_t)strlen(raop_name), (uint32_t)strlen(airplay_name),
+        (uint32_t)raop_txt_len, (uint32_t)airplay_txt_len,
+    };
+    uint32_t body_len = r.raop_name + r.airplay_name + r.raop_txt + r.airplay_txt;
+    char *body = malloc(body_len);
+    if (!body) return 1;
+    char *at = body;
+    memcpy(at, raop_name, r.raop_name);
+    at += r.raop_name;
+    memcpy(at, airplay_name, r.airplay_name);
+    at += r.airplay_name;
+    memcpy(at, raop_txt, r.raop_txt);
+    at += r.raop_txt;
+    memcpy(at, airplay_txt, r.airplay_txt);
+    send_msg(MSG_READY, &r, sizeof(r), body, body_len);
+    free(body);
     listen_daemon();
-    dnssd_unregister_airplay(dnssd);
-    dnssd_unregister_raop(dnssd);
     return 0;
 }
