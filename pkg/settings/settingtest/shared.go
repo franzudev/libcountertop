@@ -250,5 +250,9 @@ var Shared = Coverage{
 		"Time.Chosen":   "not wired yet",
 		"Cast.Oracle":   "Home Assistant's text entity",
 		"Cast.Bundle":   "Home Assistant's text entity",
+
+		"YouTubeAccounts.Device":   "the YouTube app's sign-in device id, made at the first sign-in",
+		"YouTubeAccounts.Chosen":   "the YouTube app's account picker",
+		"YouTubeAccounts.Accounts": "added by signing in on the YouTube app, removed there",
 	},
 }

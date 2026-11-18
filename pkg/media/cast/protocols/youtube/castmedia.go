@@ -51,15 +51,16 @@ func (s *station) publish(id string, t *track, state int) {
 	m := cast.Media{ContentID: id, ContentType: "x-youtube/video", StreamType: cast.StreamBuffered}
 	m.CustomData, _ = json.Marshal(map[string]any{"listId": list, "currentIndex": index})
 	if t != nil {
-		m.Metadata = cast.Metadata{Title: t.info.Title, Subtitle: t.info.Author}
+		info := t.Info()
+		m.Metadata = cast.Metadata{Title: info.Title, Subtitle: info.Author}
 		for _, i := range castThumbs {
 			i.URL = "https://i.ytimg.com/vi/" + id + "/" + i.URL
 			m.Metadata.Images = append(m.Metadata.Images, i)
 		}
-		if _, _, live := t.window(); live {
+		if _, _, live := t.Window(); live {
 			m.StreamType = cast.StreamLive
 		} else {
-			m.Duration = t.info.Duration.Seconds()
+			m.Duration = info.Duration.Seconds()
 		}
 	}
 

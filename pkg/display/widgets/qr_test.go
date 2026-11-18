@@ -9,7 +9,7 @@ import (
 func TestQRContentChangesInvalidateCanvas(t *testing.T) {
 	version := func(value string) uint64 {
 		w := gogui.SimpleWindow("qr", 128, 128, &struct{}{}, func(*gogui.Window) {})
-		view := QR(value, 128, 128, gogui.RGB(0, 0, 0))
+		view := QR(value, 128, 128)
 		layout := gogui.GenerateViewLayout(view, w)
 		if len(layout.Children) != 1 || layout.Children[0].Shape == nil {
 			t.Fatal("QR did not produce one canvas")

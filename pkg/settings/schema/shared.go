@@ -42,6 +42,8 @@ type Shared struct {
 	Voice      Voice      `json:"voice"`
 	Wake       Wake       `json:"wake"`
 	Weather    Weather    `json:"weather"`
+
+	YouTubeAccounts YouTubeAccounts `json:"youtube_accounts,omitzero"`
 }
 
 func DefaultShared() Shared {
@@ -95,6 +97,7 @@ func (s Shared) Clone() Shared {
 	s.Todo = s.Todo.Clone()
 	s.Radio = s.Radio.Clone()
 	s.Voice = s.Voice.Clone()
+	s.YouTubeAccounts = s.YouTubeAccounts.Clone()
 	return s
 }
 
@@ -138,6 +141,8 @@ type Sections[C any] struct {
 	AirPlay    storage.Binding[C, AirPlay]
 	Wake       storage.Binding[C, Wake]
 	Weather    storage.Binding[C, Weather]
+
+	YouTubeAccounts storage.Binding[C, YouTubeAccounts]
 }
 
 func NewSections[C any](store func() *storage.Store[C], shared func(*C) *Shared) Sections[C] {
@@ -185,6 +190,11 @@ func NewSections[C any](store func() *storage.Store[C], shared func(*C) *Shared)
 		AirPlay: bind(store, shared, func(s *Shared) *AirPlay { return &s.AirPlay }),
 		Wake:    bind(store, shared, func(s *Shared) *Wake { return &s.Wake }),
 		Weather: bind(store, shared, func(s *Shared) *Weather { return &s.Weather }),
+		YouTubeAccounts: bind(
+			store,
+			shared,
+			func(s *Shared) *YouTubeAccounts { return &s.YouTubeAccounts },
+		),
 	}
 }
 

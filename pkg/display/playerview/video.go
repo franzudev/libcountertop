@@ -18,6 +18,8 @@ import (
 const (
 	videoSkip  = 10 * time.Second
 	scrimAlpha = 170
+	nextUnits  = 3.2
+	flickSpeed = 300
 )
 
 var (
@@ -103,7 +105,29 @@ func (pv *Renderer) Video(w *gogui.Window, p *videoplayer.Page) gogui.View {
 		e.Consume()
 		e.Window.InvalidateLayout()
 	}
+	cfg.OnGesture = func(e gogui.EventCtx) { flick(e, look.Controls) }
 	return gogui.Column(cfg)
+}
+
+func flick(e gogui.EventCtx, c videoplayer.Controls) {
+	ev := e.Event
+	if c == nil || ev == nil || ev.GestureType != gogui.GestureSwipe {
+		return
+	}
+	vx, vy := ev.VelocityX, ev.VelocityY
+	if vy*vy <= vx*vx || vy*vy < flickSpeed*flickSpeed {
+		return
+	}
+	can := c.Now().Can
+	switch {
+	case vy < 0 && can.Has(nowplaying.CanNext):
+		c.Next()
+	case vy > 0 && can.Has(nowplaying.CanPrevious):
+		c.Previous()
+	default:
+		return
+	}
+	e.Consume()
 }
 
 func (pv *Renderer) railRoom() float32 {
@@ -270,6 +294,10 @@ func (pv *Renderer) videoBand(
 		},
 	}))
 
+	if len(now.Queue) > 0 {
+		rows = append(rows, pv.videoNext(w, p, now.Queue, quiet))
+	}
+
 	return gogui.Column(gogui.ContainerCfg{
 		ID:      "video-band",
 		Sizing:  gogui.FillFit,
@@ -280,6 +308,78 @@ func (pv *Renderer) videoBand(
 		OnClick: func(e gogui.EventCtx) {
 			p.Linger()
 			e.Consume()
+		},
+	})
+}
+
+func (pv *Renderer) videoNext(
+	w *gogui.Window,
+	p *videoplayer.Page,
+	queue []nowplaying.Track,
+	quiet gogui.TextStyle,
+) gogui.View {
+	cardW := reach() * nextUnits
+	cardH := cardW * 9 / 16
+	ink := gogui.CurrentTheme().TextStyleDef
+	ink.Color = videoInk
+	cards := make([]gogui.View, 0, len(queue))
+	for i, tr := range queue {
+		art := gogui.View(gogui.Column(gogui.ContainerCfg{
+			Width: cardW, Height: cardH, Sizing: gogui.FixedFixed, Padding: gogui.NoPadding,
+			Radius: gogui.RadiusMedium, Color: videoScrim,
+		}))
+		if img := ui.Picture(tr.Art, tr.ArtID); img != nil {
+			iw, ih := img.Size()
+			h := cardW * float32(ih) / float32(max(iw, 1))
+			art = gogui.Column(gogui.ContainerCfg{
+				Width:   cardW,
+				Height:  cardH,
+				Sizing:  gogui.FixedFixed,
+				Padding: gogui.NoPadding,
+				Radius:  gogui.RadiusMedium,
+				Clip:    true,
+				VAlign:  gogui.VAlignMiddle,
+				Content: []gogui.View{
+					gogui.Image(gogui.ImageCfg{Src: Still(img), Width: cardW, Height: h}),
+				},
+			})
+		}
+		play := tr.Play
+		cards = append(cards, pv.options.UI.Presses.Pressable(gogui.Column, gogui.ContainerCfg{
+			ID:      fmt.Sprintf("video-next-%d", i),
+			Width:   cardW,
+			Sizing:  gogui.FixedFit,
+			Padding: gogui.NoPadding,
+			Spacing: gogui.SpacingSmall,
+			Content: []gogui.View{
+				art,
+				gogui.Label(widgets.Ellipsize(w, tr.Title, ink, cardW), ink),
+				gogui.Label(widgets.Ellipsize(w, tr.Artist, quiet, cardW), quiet),
+			},
+		}, func(gogui.EventCtx) {
+			p.Linger()
+			if play != nil {
+				play()
+			}
+		}))
+	}
+	return gogui.Column(gogui.ContainerCfg{
+		Sizing:  gogui.FillFit,
+		Padding: gogui.NoPadding,
+		Spacing: gogui.SpacingSmall,
+		Content: []gogui.View{
+			gogui.Label(say.T("player.next"), quiet),
+			gogui.Row(gogui.ContainerCfg{
+				ID:         "video-next",
+				Sizing:     gogui.FillFit,
+				Padding:    gogui.NoPadding,
+				Spacing:    gogui.SpacingMedium,
+				Scrollable: true,
+				ScrollMode: gogui.ScrollHorizontalOnly,
+				Clip:       true,
+				OnGesture:  pv.options.UI.HoldStill,
+				Content:    cards,
+			}),
 		},
 	})
 }

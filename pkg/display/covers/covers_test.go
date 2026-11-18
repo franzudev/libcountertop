@@ -46,6 +46,50 @@ func TestABiggerAskGetsANewImage(t *testing.T) {
 	}
 }
 
+func TestPicturesOnScreenOutliveOnesScrolledPast(t *testing.T) {
+	var buf bytes.Buffer
+	if err := png.Encode(&buf, image.NewNRGBA(image.Rect(0, 0, 32, 18))); err != nil {
+		t.Fatal(err)
+	}
+	gets := map[string]int{}
+	var mu sync.Mutex
+	c := New(
+		Options{
+			Prefix: "screen",
+			Shape:  Wide,
+			Keep:   8,
+			Get: func(_ context.Context, url string) ([]byte, error) {
+				mu.Lock()
+				gets[url]++
+				mu.Unlock()
+				return buf.Bytes(), nil
+			},
+		},
+	)
+	const onScreen = 5
+	shown := 0
+	for frame := range 40 {
+		shown = 0
+		for i := range onScreen {
+			if c.Src(fmt.Sprintf("https://example.com/screen/%d", i), 32) != "" {
+				shown++
+			}
+		}
+		c.Src(fmt.Sprintf("https://example.com/past/%d", frame), 32)
+		time.Sleep(2 * time.Millisecond)
+	}
+	if shown != onScreen {
+		t.Errorf("%d of %d pictures on screen showing", shown, onScreen)
+	}
+	mu.Lock()
+	defer mu.Unlock()
+	for i := range onScreen {
+		if n := gets[fmt.Sprintf("https://example.com/screen/%d", i)]; n != 1 {
+			t.Errorf("picture %d on screen downloaded %d times", i, n)
+		}
+	}
+}
+
 func TestOnlyAFewPicturesDownloadAtOnce(t *testing.T) {
 	var (
 		running, most atomic.Int32

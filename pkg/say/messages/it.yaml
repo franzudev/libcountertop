@@ -1842,6 +1842,13 @@ wifi.timeout: "Nessuna connessione entro {{.Minutes}} minuti"
 wifi.title: Wi-Fi
 wifi.unreachable: Riprova
 wifi.unsupported: "{{.Security}}, non supportata"
+youtube.account: Account YouTube
+youtube.accounts: Account
+youtube.add: Aggiungi account
+youtube.again: Nuovo codice
+youtube.app: YouTube
+youtube.asking: Richiesta del codice…
+youtube.cancel: Annulla
 youtube.category.filler: Riempitivo
 youtube.category.hook: Gancio
 youtube.category.interaction: Promemoria interazione
@@ -1851,14 +1858,28 @@ youtube.category.outro: Outro
 youtube.category.preview: Anteprima
 youtube.category.selfpromo: Autopromozione
 youtube.category.sponsor: Sponsor
+youtube.empty: Ancora niente qui
+youtube.enter: e inserisci
 youtube.entity.lounge: YouTube lounge
+youtube.expired: Il codice è scaduto
+youtube.failed: Impossibile raggiungere YouTube
+youtube.go: Sul telefono o sul computer, vai su
 youtube.group.cast: Cast
+youtube.history: Cronologia
+youtube.home: Home
+youtube.later: Guarda più tardi
 youtube.option.lounge.always: Sempre
 youtube.option.lounge.demand: Su richiesta
+youtube.refused: Accesso rifiutato
+youtube.search: Cerca
 youtube.setting.lounge: YouTube lounge
+youtube.shorts: Shorts
+youtube.signin: Accedi a YouTube
 youtube.skip: Salta segmenti
 youtube.skip.none: Nessuno
 youtube.skip.some: "{{.N}} tipi"
+youtube.subscriptions: Iscrizioni
+youtube.waiting: In attesa di conferma…
 zone.title: Fuso orario
 
 feedback.group.feedback: Suoni di feedback

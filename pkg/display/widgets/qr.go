@@ -7,14 +7,14 @@ import (
 	"rsc.io/qr"
 )
 
-func QR(url string, w, h float32, ink gogui.Color) gogui.View {
+func QR(url string, w, h float32) gogui.View {
 	code, err := qr.Encode(url, qr.M)
 	if err != nil {
 		return gogui.Column(gogui.ContainerCfg{Width: w, Height: h, Sizing: gogui.FixedFixed})
 	}
 	side := min(w, h)
 	scale := max(float32(int(side*0.88/float32(code.Size))), 1)
-	quiet := scale * 3
+	quiet := scale * 4
 	drawn := float32(code.Size)*scale + 2*quiet
 	version := fnv.New64a()
 	_, _ = version.Write([]byte(url)) // Hash writes always succeed.
@@ -38,7 +38,7 @@ func QR(url string, w, h float32, ink gogui.Color) gogui.View {
 								quiet+float32(y)*scale,
 								scale,
 								scale,
-								ink,
+								gogui.RGB(0, 0, 0),
 							)
 						}
 					}

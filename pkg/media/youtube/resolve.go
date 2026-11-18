@@ -16,7 +16,7 @@ import (
 	yt "github.com/kkdai/youtube/v2"
 
 	"github.com/ygelfand/libcountertop/pkg/fetch"
-	"github.com/ygelfand/libcountertop/pkg/media/cast/preferences"
+	"github.com/ygelfand/libcountertop/pkg/media/playback"
 )
 
 var visionOS = yt.ClientInfo{
@@ -28,7 +28,7 @@ var visionOS = yt.ClientInfo{
 
 var useClient sync.Once
 
-type Track struct {
+type Info struct {
 	ID        string
 	Title     string
 	Author    string
@@ -42,8 +42,10 @@ const (
 	chunkTime  = 15 * time.Second
 	chunkFloor = 64 << 10
 	ahead      = 2
+	videoAhead = 4
 	lead       = 30 * time.Second
 	retryAfter = 5 * time.Second
+	plainVP9   = `video/webm; codecs="vp9"`
 )
 
 func rateOf(f *yt.Format) int64 {
@@ -61,53 +63,65 @@ func chunkFor(f *yt.Format) int64 {
 type Resolver struct {
 	client   yt.Client
 	http     *http.Client
+	target   func() playback.Target
 	Resample func(from int) func(stereo []int16) []int16
-
-	Preferences preferences.Provider
 }
 
 type Live struct {
-	Track Track
-	HLS   string
+	Info Info
+	HLS  string
 }
 
-func (l *Live) Error() string { return fmt.Sprintf("youtube: %s is a live stream", l.Track.ID) }
+func (l *Live) Error() string { return fmt.Sprintf("youtube: %s is a live stream", l.Info.ID) }
 
-func NewResolver(c *http.Client) *Resolver {
+func NewResolver(c *http.Client, target func() playback.Target) *Resolver {
 	useClient.Do(func() { yt.DefaultClient = visionOS })
-	return &Resolver{client: yt.Client{HTTPClient: c}, http: c}
+	return &Resolver{client: yt.Client{HTTPClient: c}, http: c, target: target}
 }
 
-func (r *Resolver) Info(ctx context.Context, id string) (Track, error) {
+func (r *Resolver) Info(ctx context.Context, id string) (Info, error) {
 	v, err := r.client.GetVideoContext(ctx, id)
 	if err != nil {
-		return Track{}, fmt.Errorf("youtube: resolving %s: %w", id, err)
+		return Info{}, fmt.Errorf("youtube: resolving %s: %w", id, err)
 	}
-	t := Track{ID: id, Title: v.Title, Author: v.Author, Duration: v.Duration}
-	if len(v.Thumbnails) > 0 {
-		t.Thumbnail = v.Thumbnails[len(v.Thumbnails)-1].URL
-	}
-	return t, nil
+	return infoOf(id, v), nil
 }
 
 func live(v *yt.Video) bool { return v.HLSManifestURL != "" && v.Duration == 0 }
 
-func (r *Resolver) Audio(ctx context.Context, id string) (Track, io.ReadCloser, error) {
-	t, stream, err := r.open(ctx, id)
+func (r *Resolver) Audio(ctx context.Context, id string) (Info, io.ReadCloser, error) {
+	t, stream, err := r.open(ctx, id, "opus audio", bestOpus, ahead)
 	t.Codec = "opus"
 	return t, stream, err
 }
 
-func (r *Resolver) open(ctx context.Context, id string) (Track, io.ReadCloser, error) {
+func (r *Resolver) Video(ctx context.Context, id string) (Info, io.ReadCloser, error) {
+	t, stream, err := r.open(
+		ctx,
+		id,
+		"vp9 video",
+		func(f yt.FormatList) *yt.Format { return bestVP9(f, r.limits()) },
+		videoAhead,
+	)
+	t.Codec = "vp9"
+	return t, stream, err
+}
+
+func (r *Resolver) open(
+	ctx context.Context,
+	id, what string,
+	pick func(yt.FormatList) *yt.Format,
+	ahead int,
+) (Info, io.ReadCloser, error) {
 	v, err := r.client.GetVideoContext(ctx, id)
 	if err != nil {
-		return Track{}, nil, fmt.Errorf("youtube: resolving %s: %w", id, err)
+		return Info{}, nil, fmt.Errorf("youtube: resolving %s: %w", id, err)
 	}
 	if live(v) {
-		return Track{}, nil, &Live{Track: trackOf(id, v), HLS: v.HLSManifestURL}
+		return Info{}, nil, &Live{Info: infoOf(id, v), HLS: v.HLSManifestURL}
 	}
 
-	f := bestOpus(v.Formats)
+	f := pick(v.Formats)
 	if f == nil {
 		offered := make([]string, 0, len(v.Formats))
 		for _, c := range v.Formats {
@@ -117,6 +131,8 @@ func (r *Resolver) open(ctx context.Context, id string) (Track, io.ReadCloser, e
 			"youtube formats without a pick",
 			"video",
 			id,
+			"want",
+			what,
 			"duration",
 			v.Duration,
 			"hls",
@@ -124,7 +140,7 @@ func (r *Resolver) open(ctx context.Context, id string) (Track, io.ReadCloser, e
 			"offered",
 			strings.Join(offered, " "),
 		)
-		return Track{}, nil, fmt.Errorf("youtube: %s has no opus audio", id)
+		return Info{}, nil, fmt.Errorf("youtube: %s has no %s", id, what)
 	}
 	for i := range v.Formats {
 		c := &v.Formats[i]
@@ -139,6 +155,8 @@ func (r *Resolver) open(ctx context.Context, id string) (Track, io.ReadCloser, e
 			"youtube format",
 			"video",
 			id,
+			"what",
+			what,
 			"chosen",
 			c == f,
 			"itag",
@@ -163,6 +181,8 @@ func (r *Resolver) open(ctx context.Context, id string) (Track, io.ReadCloser, e
 		"youtube stream",
 		"video",
 		id,
+		"what",
+		what,
 		"itag",
 		f.ItagNo,
 		"chunk",
@@ -176,17 +196,17 @@ func (r *Resolver) open(ctx context.Context, id string) (Track, io.ReadCloser, e
 	)
 	url, err := r.client.GetStreamURLContext(ctx, v, f)
 	if err != nil {
-		return Track{}, nil, fmt.Errorf("youtube: opening %s: %w", id, err)
+		return Info{}, nil, fmt.Errorf("youtube: opening %s: %w", id, err)
 	}
 	renew := func(ctx context.Context) (string, error) {
 		fresh, err := r.client.GetVideoContext(ctx, id)
 		if err != nil {
 			return "", err
 		}
-		if f := bestOpus(fresh.Formats); f != nil {
+		if f := pick(fresh.Formats); f != nil {
 			return r.client.GetStreamURLContext(ctx, fresh, f)
 		}
-		return "", fmt.Errorf("youtube: %s has no opus audio", id)
+		return "", fmt.Errorf("youtube: %s has no %s", id, what)
 	}
 	stream := fetch.NewRanged(
 		ctx,
@@ -204,11 +224,11 @@ func (r *Resolver) open(ctx context.Context, id string) (Track, io.ReadCloser, e
 		},
 	)
 
-	return trackOf(id, v), stream, nil
+	return infoOf(id, v), stream, nil
 }
 
-func trackOf(id string, v *yt.Video) Track {
-	t := Track{ID: id, Title: v.Title, Author: v.Author, Duration: v.Duration}
+func infoOf(id string, v *yt.Video) Info {
+	t := Info{ID: id, Title: v.Title, Author: v.Author, Duration: v.Duration}
 	if len(v.Thumbnails) > 0 {
 		t.Thumbnail = v.Thumbnails[len(v.Thumbnails)-1].URL
 	}
@@ -218,6 +238,39 @@ func trackOf(id string, v *yt.Video) Track {
 func ask(req *http.Request) {
 	req.Header.Set("User-Agent", visionOS.UserAgent)
 	req.Header.Set("Origin", "https://youtube.com")
+}
+
+func (r *Resolver) limits() playback.Target {
+	if r.target == nil {
+		return playback.Target{}
+	}
+	return r.target()
+}
+
+func within(v, most int) bool { return most <= 0 || v <= most }
+
+func bestVP9(formats yt.FormatList, limits playback.Target) *yt.Format {
+	var found []*yt.Format
+	for i := range formats {
+		f := &formats[i]
+		if f.MimeType == plainVP9 && within(f.Height, limits.Tallest) {
+			found = append(found, f)
+		}
+	}
+	if len(found) == 0 {
+		return nil
+	}
+	sort.Slice(found, func(i, j int) bool {
+		a, b := found[i], found[j]
+		if within(a.FPS, limits.Fastest) != within(b.FPS, limits.Fastest) {
+			return within(a.FPS, limits.Fastest)
+		}
+		if a.Height != b.Height {
+			return a.Height > b.Height
+		}
+		return a.Bitrate > b.Bitrate
+	})
+	return found[0]
 }
 
 func bestOpus(formats yt.FormatList) *yt.Format {

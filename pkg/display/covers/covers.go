@@ -1,6 +1,7 @@
 package covers
 
 import (
+	"container/list"
 	"context"
 	"errors"
 	"image"
@@ -43,24 +44,26 @@ type Covers struct {
 
 	mu      sync.Mutex
 	byURL   map[string]*cover
-	order   []string
+	order   *list.List
 	loading int
 }
 
 type cover struct {
+	url    string
 	raw    []byte
 	src    string
 	key    string
 	side   int
 	busy   bool
 	failed time.Time
+	place  *list.Element
 }
 
 func New(o Options) *Covers {
 	if o.Keep <= 0 {
 		o.Keep = keep
 	}
-	return &Covers{o: o, byURL: map[string]*cover{}}
+	return &Covers{o: o, byURL: map[string]*cover{}, order: list.New()}
 }
 
 func (c *Covers) Src(url string, side int) string {
@@ -70,9 +73,13 @@ func (c *Covers) Src(url string, side int) string {
 	c.mu.Lock()
 	k := c.byURL[url]
 	if k == nil {
-		k = &cover{}
-		c.add(url, k)
+		k = &cover{url: url}
+		k.place = c.order.PushBack(k)
+		c.byURL[url] = k
+	} else {
+		c.order.MoveToBack(k.place)
 	}
+	c.trim()
 	if k.src != "" && !gogui.HasImage(k.key) {
 		k.src, k.side = "", 0
 	}
@@ -90,22 +97,22 @@ func (c *Covers) Src(url string, side int) string {
 	return src
 }
 
-func (c *Covers) add(url string, k *cover) {
-	if len(c.order) >= c.o.Keep {
-		old := c.order[0]
-		c.order = c.order[1:]
-		if gone := c.byURL[old]; gone != nil && gone.key != "" {
+func (c *Covers) trim() {
+	for c.order.Len() > c.o.Keep {
+		oldest := c.order.Front()
+		gone := oldest.Value.(*cover)
+		c.order.Remove(oldest)
+		delete(c.byURL, gone.url)
+		if gone.key != "" {
 			gogui.DropImage(gone.key)
 		}
-		delete(c.byURL, old)
 	}
-	c.byURL[url] = k
-	c.order = append(c.order, url)
 }
 
 func (c *Covers) load(url string, k *cover, raw []byte, side int) {
 	var err error
 	if raw == nil {
+		slog.Debug("cover download", "prefix", c.o.Prefix, "url", url)
 		ctx, cancel := context.WithTimeout(context.Background(), askTime)
 		raw, err = c.o.Get(ctx, url)
 		cancel()

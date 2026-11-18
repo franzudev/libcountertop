@@ -183,7 +183,7 @@ func (editor *Editor) Keyboard(w *gogui.Window, opts KeyboardOptions) (ui.Rect, 
 			if editor.pairError != "" {
 				qr = gogui.Label(editor.pairError, gogui.CurrentTheme().Cfg.TextStyleDef)
 			} else if time.Now().Before(editor.pairUntil) {
-				qr = QR(editor.pairURL, side, side, gogui.RGB(0, 0, 0))
+				qr = QR(editor.pairURL, side, side)
 			} else {
 				qr = gogui.Label(
 					say.T("keyboard.code_expired"),

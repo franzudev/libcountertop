@@ -14,6 +14,7 @@ import (
 	"github.com/ygelfand/libcountertop/pkg/media/cast"
 	"github.com/ygelfand/libcountertop/pkg/media/playback"
 	"github.com/ygelfand/libcountertop/pkg/media/sponsorblock"
+	"github.com/ygelfand/libcountertop/pkg/media/youtube"
 )
 
 // The player states a screen reports, from a captured session.
@@ -27,7 +28,7 @@ const (
 type station struct {
 	theme   string
 	env     cast.Env
-	resolve *Resolver
+	resolve *youtube.Resolver
 	ctx     context.Context
 
 	mu      sync.Mutex
@@ -46,7 +47,7 @@ type station struct {
 
 	prev, next *Entry
 	upcoming   []queued
-	known      map[string]Track
+	known      map[string]youtube.Info
 
 	asked, lastHeard time.Time
 	commanded        bool
@@ -88,9 +89,8 @@ func (s *station) quiet(d time.Duration) bool {
 }
 
 func newStation(ctx context.Context, theme string, env cast.Env) *station {
-	r := NewResolver(env.HTTP)
+	r := youtube.NewResolver(env.HTTP, env.Video)
 	r.Resample = env.Resample
-	r.Preferences = env.Preferences
 	s := &station{
 		theme:   theme,
 		env:     env,
@@ -141,7 +141,7 @@ func (s *station) attend() {
 		return
 	}
 	s.env.Output.Attend(
-		&playback.Session{Label: label, Logo: s.logo()},
+		&playback.Session{Label: label, Logo: s.logo(), Pictured: s.pictured()},
 	)
 }
 
@@ -185,7 +185,7 @@ func (s *station) around() (prev, next bool) {
 }
 
 type queued struct {
-	Track
+	youtube.Info
 	index int
 }
 
@@ -215,7 +215,7 @@ func (s *station) coming() []playback.Upcoming {
 }
 
 func (s *station) describe(ctx context.Context, ids []string, from, to int) []queued {
-	found := make([]*Track, to-from)
+	found := make([]*youtube.Info, to-from)
 	var wg sync.WaitGroup
 	for k := range found {
 		id := ids[from+k]
@@ -245,7 +245,7 @@ func (s *station) describe(ctx context.Context, ids []string, from, to int) []qu
 	}
 	s.mu.Lock()
 	if s.known == nil {
-		s.known = map[string]Track{}
+		s.known = map[string]youtube.Info{}
 	}
 	for id := range s.known {
 		if !keep[id] {
@@ -258,7 +258,7 @@ func (s *station) describe(ctx context.Context, ids []string, from, to int) []qu
 			continue
 		}
 		s.known[ids[from+k]] = *f
-		out = append(out, queued{Track: *f, index: from + k})
+		out = append(out, queued{Info: *f, index: from + k})
 	}
 	s.mu.Unlock()
 	return out
@@ -415,7 +415,7 @@ func (s *station) open(pos Position, at time.Duration, held bool) {
 		s.mu.Lock()
 		if ctx.Err() != nil {
 			s.mu.Unlock()
-			t.close()
+			t.Close()
 			return
 		}
 		s.cur = t
@@ -429,7 +429,7 @@ func (s *station) open(pos Position, at time.Duration, held bool) {
 			"video",
 			id,
 			"title",
-			t.info.Title,
+			t.Info().Title,
 			"at",
 			at,
 			"since asked",
@@ -446,7 +446,7 @@ func (s *station) open(pos Position, at time.Duration, held bool) {
 		switch {
 		case held:
 			s.report(statePaused)
-		default:
+		case !t.Pictured() || s.env.Output == nil:
 			s.report(statePlaying)
 		}
 		s.lookAround(ctx, t, pos)
@@ -483,7 +483,7 @@ func (s *station) lookAround(ctx context.Context, t *track, pos Position) {
 		}
 		if next != nil {
 			if info, err := s.resolve.Info(ctx, next.ID); err == nil {
-				up = []queued{{Track: info, index: -1}}
+				up = []queued{{Info: info, index: -1}}
 			}
 		}
 	default:
@@ -521,7 +521,7 @@ func (s *station) end(handoff bool) {
 				s.env.Output.Stop(cur)
 			}
 		}
-		cur.close()
+		cur.Close()
 	}
 }
 
@@ -578,7 +578,7 @@ func (s *station) seek(at time.Duration) {
 	cur, held := s.cur, s.held
 	switch {
 	case cur != nil:
-		pos = Position{Video: cur.info.ID, List: s.list, Index: s.index, Params: s.params}
+		pos = Position{Video: cur.Info().ID, List: s.list, Index: s.index, Params: s.params}
 	case s.opening != nil:
 		pos = s.want
 	default:
@@ -606,7 +606,7 @@ func (s *station) skipWhenHeard(t *track, seg sponsorblock.Segment) {
 		}
 		time.Sleep(skipPoll)
 	}
-	slog.Info("youtube sponsorblock skip", "video", t.info.ID, "from", seg.From, "to", seg.To)
+	slog.Info("youtube sponsorblock skip", "video", t.Info().ID, "from", seg.From, "to", seg.To)
 	s.seek(seg.To)
 }
 
@@ -699,7 +699,7 @@ func (s *station) state() int {
 
 func (s *station) heard(t *track) time.Duration {
 	if s.env.Output == nil {
-		return t.elapsed()
+		return t.Elapsed()
 	}
 	at, _ := s.env.Output.Position(t)
 	return at
@@ -744,13 +744,14 @@ func (s *station) report(state int) {
 	s.mu.Unlock()
 
 	heard := s.heard(t)
-	at, length, from := secs(heard), secs(t.info.Duration), "0"
-	if oldest, edge, ok := t.window(); ok && !t.base.IsZero() {
-		at, length, from = epoch(t.base.Add(heard)), epoch(edge), epoch(oldest)
+	info := t.Info()
+	at, length, from := secs(heard), secs(info.Duration), "0"
+	if oldest, edge, ok := t.Window(); ok && !t.Base().IsZero() {
+		at, length, from = epoch(t.Base().Add(heard)), epoch(edge), epoch(oldest)
 	}
 	st := strconv.Itoa(state)
 	playing := map[string]string{
-		"videoId": t.info.ID, "currentTime": at, "duration": length, "loadedTime": length,
+		"videoId": info.ID, "currentTime": at, "duration": length, "loadedTime": length,
 		"seekableStartTime": from, "seekableEndTime": length, "state": st,
 		"listId": list, "currentIndex": strconv.Itoa(index),
 	}
@@ -765,7 +766,7 @@ func (s *station) report(state int) {
 		}},
 		Out{Name: "onHasPreviousNextChanged", Fields: s.navigation()},
 	)
-	s.publish(t.info.ID, t, state)
+	s.publish(info.ID, t, state)
 }
 
 func (s *station) volume() {

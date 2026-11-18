@@ -163,7 +163,7 @@ func TestAVideoPlaysThroughToItsEnd(t *testing.T) {
 	if !errors.Is(out.err, io.EOF) {
 		t.Errorf("the source ended with %v, want the end of the stream", out.err)
 	}
-	got := time.Duration(out.samples/channels) * time.Second / rate
+	got := time.Duration(out.samples/2) * time.Second / 48000
 	if got < 172*time.Second || got > 174*time.Second {
 		t.Errorf("played %s, want about 2m53s", got)
 	}

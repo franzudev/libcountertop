@@ -46,7 +46,7 @@ func (a *App) onboard(w *gogui.Window, addr string) gogui.View {
 			Spacing: gogui.SpacingPx(gap),
 			VAlign:  gogui.VAlignMiddle,
 			Content: []gogui.View{
-				qrCode(web.AdoptURL, half, room, brand),
+				widgets.QR(web.AdoptURL, half, room),
 				a.onboardWords(w, addr, inner[0]-half-gap, short, brand),
 			},
 		})
@@ -56,7 +56,7 @@ func (a *App) onboard(w *gogui.Window, addr string) gogui.View {
 			Sizing:  gogui.FillFill,
 			Padding: gogui.NoPadding,
 			Content: []gogui.View{
-				qrCode(web.AdoptURL, inner[0], part, brand),
+				widgets.QR(web.AdoptURL, inner[0], part),
 				a.onboardWords(w, addr, inner[0], short, brand),
 			},
 		})
@@ -102,10 +102,6 @@ func (a *App) onboard(w *gogui.Window, addr string) gogui.View {
 		VAlign:  gogui.VAlignMiddle,
 		Content: []gogui.View{card},
 	})
-}
-
-func qrCode(url string, w, h float32, brand theme.Theme) gogui.View {
-	return widgets.QR(url, w, h, widgets.Color(brand.Text))
 }
 
 func (a *App) onboardHead(w *gogui.Window, wide, short float32, brand theme.Theme) gogui.View {

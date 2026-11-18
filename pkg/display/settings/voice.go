@@ -106,7 +106,7 @@ func HACSPage() *shell.Page {
 		Side: func(w *gogui.Window) gogui.View {
 			vw, vh := w.WindowSize()
 			side := min(float32(vw), float32(vh)) * 0.45
-			return widgets.QR(HACSLink, side, side, gogui.RGB(0, 0, 0))
+			return widgets.QR(HACSLink, side, side)
 		},
 	}
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/ygelfand/libcountertop/pkg/media/sponsorblock"
 )
 
-func (s *station) segments(ctx context.Context, r *Resolver, id string) []sponsorblock.Segment {
+func (s *station) segments(ctx context.Context, id string) []sponsorblock.Segment {
 	if s == nil || s.theme != ThemeYouTube {
 		return nil
 	}
@@ -20,10 +20,10 @@ func (s *station) segments(ctx context.Context, r *Resolver, id string) []sponso
 
 	segs, err := sponsorblock.Segments(
 		ctx,
-		r.http,
+		s.env.HTTP,
 		sponsorblock.URL,
 		id,
-		r.Preferences.Settings().YouTube.Skip,
+		s.env.Preferences.Settings().YouTube.Skip,
 	)
 	if err != nil {
 		slog.Warn("youtube sponsorblock", "video", id, "err", err)

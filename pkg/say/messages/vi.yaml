@@ -1842,6 +1842,13 @@ wifi.timeout: Không kết nối trong {{.Minutes}} phút
 wifi.title: Wi-Fi
 wifi.unreachable: Thử lại
 wifi.unsupported: "{{.Security}}, không được hỗ trợ"
+youtube.account: Tài khoản YouTube
+youtube.accounts: Tài khoản
+youtube.add: Thêm tài khoản
+youtube.again: Mã mới
+youtube.app: YouTube
+youtube.asking: Đang lấy mã…
+youtube.cancel: Hủy
 youtube.category.filler: Nội dung phụ
 youtube.category.hook: Mở đầu thu hút
 youtube.category.interaction: Nhắc tương tác
@@ -1851,14 +1858,28 @@ youtube.category.outro: Kết thúc
 youtube.category.preview: Xem trước
 youtube.category.selfpromo: Tự quảng bá
 youtube.category.sponsor: Nhà tài trợ
+youtube.empty: Chưa có gì ở đây
+youtube.enter: và nhập
 youtube.entity.lounge: Phòng chờ YouTube
+youtube.expired: Mã đã hết hạn
+youtube.failed: Không kết nối được YouTube
+youtube.go: Trên điện thoại hoặc máy tính, truy cập
 youtube.group.cast: Cast
+youtube.history: Lịch sử
+youtube.home: Trang chủ
+youtube.later: Xem sau
 youtube.option.lounge.always: Luôn luôn
 youtube.option.lounge.demand: Theo yêu cầu
+youtube.refused: Đăng nhập bị từ chối
+youtube.search: Tìm kiếm
 youtube.setting.lounge: Phòng chờ YouTube
+youtube.shorts: Shorts
+youtube.signin: Đăng nhập YouTube
 youtube.skip: Bỏ qua phân đoạn
 youtube.skip.none: Không
 youtube.skip.some: "{{.N}} loại"
+youtube.subscriptions: Kênh đăng ký
+youtube.waiting: Đang chờ xác nhận…
 zone.title: Múi giờ
 feedback.group.feedback: Âm thanh phản hồi
 feedback.setting.chime: Chuông thiết bị
