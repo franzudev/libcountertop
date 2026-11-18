@@ -68,10 +68,37 @@ func TestAPartlyWatchedVideoResumesWhereItWasLeft(t *testing.T) {
 
 type changes struct {
 	playback.Output
-	n int
+	n       int
+	handed  []playback.Source
+	stopped []playback.Source
 }
 
-func (c *changes) Changed(playback.Source) { c.n++ }
+func (c *changes) Changed(playback.Source)   { c.n++ }
+func (c *changes) Handoff(s playback.Source) { c.handed = append(c.handed, s) }
+func (c *changes) Stop(s playback.Source)    { c.stopped = append(c.stopped, s) }
+
+func TestStoppingAHandedOffVideoClosesItsCard(t *testing.T) {
+	out := &changes{}
+	p := NewPlayer(t.Context(), PlayerOptions{Output: out})
+	old := &source{p: p, Track: &Track{}}
+	cur := &source{p: p, Track: &Track{}}
+	p.cur = cur
+	p.end(true)
+	if len(out.handed) != 1 || out.handed[0] != cur {
+		t.Fatalf("handed %v", out.handed)
+	}
+	p.stop(old)
+	if len(out.stopped) != 0 {
+		t.Fatalf("a stale video's stop reached the output: %v", out.stopped)
+	}
+	p.stop(cur)
+	if len(out.stopped) != 1 || out.stopped[0] != cur {
+		t.Errorf("stopping the handed-off video stopped %v", out.stopped)
+	}
+	if _, ok := p.Playing(); ok {
+		t.Error("the player still plays after stopping")
+	}
+}
 
 func TestAStreamFetchesMoreOnlyNearItsEnd(t *testing.T) {
 	out := &changes{}

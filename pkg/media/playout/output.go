@@ -828,8 +828,17 @@ func (c *card) Playing() (playing, paused bool) {
 	return !paused, paused
 }
 
-func (c *card) Kind() nowplaying.Kind { return nowplaying.FromCast }
-func (c *card) Label() string         { return c.p.src.Label() }
+type kinded interface {
+	Kind() nowplaying.Kind
+}
+
+func (c *card) Kind() nowplaying.Kind {
+	if k, ok := c.p.src.(kinded); ok {
+		return k.Kind()
+	}
+	return nowplaying.FromCast
+}
+func (c *card) Label() string { return c.p.src.Label() }
 
 func (c *card) Play()  { c.p.src.Play() }
 func (c *card) Pause() { c.p.src.Pause() }

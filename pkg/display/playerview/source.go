@@ -83,6 +83,8 @@ func (p *Renderer) kindMark(l look, side float32) gogui.View {
 		return glyphMark("mdi:bluetooth", side, l.body.Color)
 	case nowplaying.FromCast:
 		return glyphMark("mdi:cast", side, l.body.Color)
+	case nowplaying.FromApp:
+		return glyphMark("mdi:apps", side, l.body.Color)
 	}
 	return nil
 }

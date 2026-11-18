@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
 	"github.com/ygelfand/libcountertop/pkg/media/playback"
 )
 
@@ -343,5 +344,19 @@ func TestAnAttachedSenderKeepsTheCardAfterAStop(t *testing.T) {
 	o.Attend(nil)
 	if _, held := testPlayer.Sourced(); held {
 		t.Error("the last sender left and the card stayed")
+	}
+}
+
+type fromApp struct{ ending }
+
+func (*fromApp) Kind() nowplaying.Kind { return nowplaying.FromApp }
+
+func TestTheCardTakesItsSourcesKind(t *testing.T) {
+	o := newOutput()
+	if k := (&card{o: o, p: &playing{src: &ending{}}}).Kind(); k != nowplaying.FromCast {
+		t.Errorf("a source without a kind showed as %v", k)
+	}
+	if k := (&card{o: o, p: &playing{src: &fromApp{}}}).Kind(); k != nowplaying.FromApp {
+		t.Errorf("an app's source showed as %v", k)
 	}
 }

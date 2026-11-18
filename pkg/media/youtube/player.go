@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
 	"github.com/ygelfand/libcountertop/pkg/media/playback"
 	"github.com/ygelfand/libcountertop/pkg/media/sponsorblock"
 	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
@@ -40,6 +41,7 @@ type Player struct {
 
 	mu      sync.Mutex
 	cur     *source
+	handed  *source
 	opening context.CancelFunc
 	list    []Video
 	index   int
@@ -192,7 +194,7 @@ func (p *Player) open(v Video, at time.Duration, held bool) {
 			if ctx.Err() == nil {
 				slog.Warn("youtube playback", "video", v.ID, "err", err)
 				p.mu.Lock()
-				p.opening = nil
+				p.opening, p.handed = nil, nil
 				p.mu.Unlock()
 				p.o.Output.Failed(err)
 				p.changed()
@@ -206,7 +208,7 @@ func (p *Player) open(v Video, at time.Duration, held bool) {
 			t.Close()
 			return
 		}
-		p.cur, p.opening = s, nil
+		p.cur, p.opening, p.handed = s, nil, nil
 		p.mu.Unlock()
 
 		slog.Info("youtube playing", "video", v.ID, "title", t.Info().Title, "at", at)
@@ -263,21 +265,38 @@ func (p *Player) extend(ctx context.Context, s *source, got []Video) {
 
 func (p *Player) end(handoff bool) {
 	p.mu.Lock()
-	cur, opening := p.cur, p.opening
+	cur, handed, opening := p.cur, p.handed, p.opening
 	p.cur, p.opening = nil, nil
+	switch {
+	case handoff && cur != nil:
+		p.handed = cur
+	case !handoff:
+		p.handed = nil
+	}
 	p.mu.Unlock()
 	if opening != nil {
 		opening()
 	}
-	if cur == nil {
-		return
-	}
-	if handoff {
+	switch {
+	case handoff && cur != nil:
 		p.o.Output.Handoff(cur)
-	} else {
+	case !handoff && cur != nil:
 		p.o.Output.Stop(cur)
+	case !handoff && handed != nil:
+		p.o.Output.Stop(handed)
 	}
-	cur.Close()
+	if cur != nil {
+		cur.Close()
+	}
+}
+
+func (p *Player) stop(s *source) {
+	p.mu.Lock()
+	ours := s == p.cur || s == p.handed
+	p.mu.Unlock()
+	if ours {
+		p.Stop()
+	}
 }
 
 func (p *Player) current() *source {
@@ -357,10 +376,12 @@ func (s *source) Showing() playback.Showing {
 
 func (s *source) Label() string { return s.p.o.Label }
 
+func (s *source) Kind() nowplaying.Kind { return nowplaying.FromApp }
+
 func (s *source) Logo() string { return s.p.o.Logo }
 
 func (s *source) Play()     { s.p.o.Output.Resume(s) }
 func (s *source) Pause()    { s.p.o.Output.Pause(s) }
-func (s *source) Stop()     { go s.p.Stop() }
+func (s *source) Stop()     { go s.p.stop(s) }
 func (s *source) Next()     { go s.p.step(1) }
 func (s *source) Previous() { go s.p.step(-1) }

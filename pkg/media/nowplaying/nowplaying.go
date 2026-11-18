@@ -118,6 +118,7 @@ const (
 	FromBluetooth
 	FromGroup
 	FromCast
+	FromApp
 )
 
 type Brand uint8
