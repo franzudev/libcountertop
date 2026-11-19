@@ -163,6 +163,7 @@ type Showing struct {
 
 	HasNext, HasPrevious bool
 	NoPause              bool
+	Short                bool
 
 	Upcoming []Upcoming
 }
