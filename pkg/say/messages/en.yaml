@@ -682,6 +682,7 @@ look.title: Visuals
 media.entity.buttons: Volume buttons
 media.entity.duck: Music ducking
 media.group.media: Media
+media.setting.autoplay: Autoplay
 media.setting.background: Background play
 media.setting.buttons: Volume buttons
 media.setting.duck: Ducking depth

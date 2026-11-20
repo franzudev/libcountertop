@@ -17,8 +17,8 @@ import (
 
 func TestMessagesRoundTrip(t *testing.T) {
 	var b bytes.Buffer
-	head := binary.LittleEndian.AppendUint64(nil, 1500)
-	if err := writeMessage(&b, msgFrame, append(head, 0, 0, 0, 1, 0x65)); err != nil {
+	sent := frameMessage(1500, 1066, 800, 0, 0, 0, 1, 0x65)
+	if err := writeMessage(&b, sent.kind, sent.payload); err != nil {
 		t.Fatalf("writeMessage: %v", err)
 	}
 	m, err := readMessage(&b)
@@ -29,9 +29,16 @@ func TestMessagesRoundTrip(t *testing.T) {
 	if err != nil {
 		t.Fatalf("frameOf: %v", err)
 	}
-	if m.kind != msgFrame || f.at != 1500*time.Microsecond ||
+	if m.kind != msgFrame || f.at != 1500*time.Microsecond || f.width != 1066 || f.height != 800 ||
 		!bytes.Equal(f.data, []byte{0, 0, 0, 1, 0x65}) {
-		t.Errorf("got kind %q at %v data %x", rune(m.kind), f.at, f.data)
+		t.Errorf(
+			"got kind %q at %v size %dx%d data %x",
+			rune(m.kind),
+			f.at,
+			f.width,
+			f.height,
+			f.data,
+		)
 	}
 }
 
@@ -181,6 +188,13 @@ func screeningRig(t *testing.T) (*screening, *output, *os.File) {
 
 func mirrorMessage(w, h uint32) message { return codecMirrorMessage(codecH264, w, h) }
 
+func frameMessage(us uint64, w, h uint32, data ...byte) message {
+	p := binary.LittleEndian.AppendUint64(nil, us)
+	p = binary.LittleEndian.AppendUint32(p, w)
+	p = binary.LittleEndian.AppendUint32(p, h)
+	return message{kind: msgFrame, payload: append(p, data...)}
+}
+
 func codecMirrorMessage(codec, w, h uint32) message {
 	p := binary.LittleEndian.AppendUint32(nil, codec)
 	p = binary.LittleEndian.AppendUint32(p, w)
@@ -234,10 +248,18 @@ func TestAMirrorPlaysUntilTheSenderEndsIt(t *testing.T) {
 		t.Errorf("showing %q", got)
 	}
 
-	s.handle(ctx, message{kind: msgFrame, payload: binary.LittleEndian.AppendUint64(nil, 7)})
+	s.handle(ctx, frameMessage(7, 1920, 1080))
 	p, _ := src.(playback.Live).Live(ctx)
 	if _, at, err := p.Next(ctx); err != nil || at != 0 {
 		t.Errorf("first frame at %v (%v)", at, err)
+	}
+
+	s.handle(ctx, frameMessage(40007, 1066, 800))
+	if _, _, err := p.Next(ctx); err != nil {
+		t.Fatalf("second frame: %v", err)
+	}
+	if w, h := p.Size(); w != 1066 || h != 800 {
+		t.Errorf("after the sender resized, size %dx%d, want 1066x800", w, h)
 	}
 
 	s.handle(ctx, message{kind: msgEnded})
@@ -346,7 +368,7 @@ func TestClosingThePictureDisconnectsTheSender(t *testing.T) {
 	if _, err := src.Read(ctx, pcm); !errors.Is(err, io.EOF) {
 		t.Errorf("Read after the picture closed = %v, want EOF", err)
 	}
-	s.handle(ctx, message{kind: msgFrame, payload: binary.LittleEndian.AppendUint64(nil, 7)})
+	s.handle(ctx, frameMessage(7, 1920, 1080))
 }
 
 func TestHeardAudioPlaysBeforeSilence(t *testing.T) {

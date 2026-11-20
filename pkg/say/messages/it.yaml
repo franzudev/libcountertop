@@ -682,6 +682,7 @@ look.title: Grafica
 media.entity.buttons: Pulsanti volume
 media.entity.duck: Abbassamento musica
 media.group.media: Contenuti multimediali
+media.setting.autoplay: Riproduzione automatica
 media.setting.background: Riproduzione in background
 media.setting.buttons: Pulsanti volume
 media.setting.duck: Livello abbassamento

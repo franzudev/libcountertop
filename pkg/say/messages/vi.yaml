@@ -682,6 +682,7 @@ look.title: Hiệu ứng
 media.entity.buttons: Nút âm lượng
 media.entity.duck: Giảm âm nhạc
 media.group.media: Media
+media.setting.autoplay: Tự động phát
 media.setting.background: Phát trong nền
 media.setting.buttons: Nút âm lượng
 media.setting.duck: Độ giảm âm

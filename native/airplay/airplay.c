@@ -53,11 +53,13 @@ static uint64_t mono_us(void) {
     return (uint64_t)ts.tv_sec * 1000000u + (uint64_t)ts.tv_nsec / 1000u;
 }
 
+static struct airplay_mirror mirror;
+
 static void video_process(void *cls, raop_ntp_t *ntp, video_decode_struct *d) {
     (void)cls;
     (void)ntp;
     if (d->data_len <= 0) return;
-    struct airplay_frame f = {mono_us()};
+    struct airplay_frame f = {mono_us(), mirror.width, mirror.height};
     send_msg(MSG_FRAME, &f, sizeof(f), d->data, (uint32_t)d->data_len);
 }
 
@@ -80,8 +82,6 @@ static void audio_process(void *cls, raop_ntp_t *ntp, audio_decode_struct *d) {
     }
     aac_decode(d->data, d->data_len, d->rtp_time);
 }
-
-static struct airplay_mirror mirror;
 
 static void video_report_size(void *cls, float *ws, float *hs, float *w, float *h) {
     (void)cls;

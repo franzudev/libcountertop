@@ -25,6 +25,33 @@ func TestBusClearsAndCountsOneStreamAlone(t *testing.T) {
 	}
 }
 
+func TestBusAtDoubleSpeedPlaysTwoQueuedFramesInEach(t *testing.T) {
+	var b Bus
+	b.Push(schema.StreamMedia, []int16{100, -100, 300, -300, 10, 20, 30, 40, 7, 7})
+	b.SetSpeed(schema.StreamMedia, 2, 2)
+
+	out := make([]int32, 4)
+	queued, _ := b.Next(0, out)
+
+	if want := []int32{200, -200, 20, 30}; !slices.Equal(out, want) {
+		t.Errorf("played %v, want each pair of stereo frames averaged %v", out, want)
+	}
+	if queued != 4 {
+		t.Errorf("played %d samples, want 4", queued)
+	}
+	if got := b.StreamLen(schema.StreamMedia); got != 2 {
+		t.Errorf("%d samples left queued, want 2", got)
+	}
+
+	b.SetSpeed(schema.StreamMedia, 1, 2)
+	b.Push(schema.StreamMedia, []int16{1, 2})
+	out = make([]int32, 4)
+	b.Next(0, out)
+	if want := []int32{7, 7, 1, 2}; !slices.Equal(out, want) {
+		t.Errorf("back at normal speed played %v, want %v", out, want)
+	}
+}
+
 func TestBusScalesEachStreamByItsOwnGain(t *testing.T) {
 	var b Bus
 	b.SetGain(schema.StreamMedia, 0.5)

@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	version    = 5
+	version    = 6
 	maxPayload = 4 << 20
 
 	msgReady      = 'R'
@@ -157,16 +157,24 @@ func (m mirroring) picture() (uint32, bool) {
 }
 
 type frame struct {
-	at   time.Duration
-	data []byte
+	at            time.Duration
+	width, height int
+	data          []byte
 }
 
+const frameHead = 16
+
 func frameOf(p []byte) (frame, error) {
-	if len(p) < 8 {
+	if len(p) < frameHead {
 		return frame{}, fmt.Errorf("airplay: %d byte frame", len(p))
 	}
 	us := binary.LittleEndian.Uint64(p[0:])
-	return frame{at: time.Duration(us) * time.Microsecond, data: p[8:]}, nil
+	return frame{
+		at:     time.Duration(us) * time.Microsecond,
+		width:  int(binary.LittleEndian.Uint32(p[8:])),
+		height: int(binary.LittleEndian.Uint32(p[12:])),
+		data:   p[frameHead:],
+	}, nil
 }
 
 type audio struct {

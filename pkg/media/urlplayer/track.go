@@ -454,6 +454,8 @@ func (t *track) Fail(err error) {
 func (t *track) Next()     {}
 func (t *track) Previous() {}
 
+func (t *track) Fast() {}
+
 func (t *track) Seek(to time.Duration) {
 	if r := t.player.o.Remote; r != nil {
 		if pr, offset, programmed := t.player.programmed(); programmed {

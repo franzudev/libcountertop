@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 
-#define AIRPLAY_VERSION 5
+#define AIRPLAY_VERSION 6
 
 #define AIRPLAY_PORT 7000
 #define AIRPLAY_MIRROR_PORT 7100
@@ -51,4 +51,6 @@ struct airplay_audio {
 
 struct airplay_frame {
     uint64_t at_us;
+    uint32_t width;
+    uint32_t height;
 };

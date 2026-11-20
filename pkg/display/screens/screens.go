@@ -23,7 +23,6 @@ import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 
 	"github.com/ygelfand/libcountertop/pkg/assistant/timer"
-	"github.com/ygelfand/libcountertop/pkg/audio/volume"
 	"github.com/ygelfand/libcountertop/pkg/display/appearance"
 	"github.com/ygelfand/libcountertop/pkg/display/assistant"
 	"github.com/ygelfand/libcountertop/pkg/display/dashboard"
@@ -204,7 +203,6 @@ type Options struct {
 	PlayerPage       func() shell.View
 	BluetoothSources func() shell.View
 	Lyrics           playerview.Lyrics
-	MediaVolume      volume.Channel
 	Volume           Volume
 	Streams          []schema.Stream
 
@@ -285,7 +283,6 @@ func New(o Options) *App {
 	a.player = playerview.New(playerview.Dependencies{
 		Player:           o.Player,
 		Lyrics:           o.Lyrics,
-		Volume:           o.MediaVolume,
 		Shell:            o.Shell,
 		UI:               o.UI,
 		Dock:             func() schema.Edge { return o.Settings().Screen.Drawer },
