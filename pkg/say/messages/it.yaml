@@ -665,6 +665,7 @@ keyboard.code_expired: Codice scaduto
 message.close: Chiudi
 keyboard.compact: Compatta
 keyboard.enter: Invio
+keyboard.full_width: Larghezza intera
 keyboard.hide: Nascondi
 keyboard.large: Grande
 keyboard.refresh: Aggiorna
