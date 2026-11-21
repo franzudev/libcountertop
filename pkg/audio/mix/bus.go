@@ -170,15 +170,22 @@ func (b *Bus) gather(at uint64, n int) (queued int, rendered bool) {
 	b.parts = b.parts[:0]
 	now := time.Now()
 	b.mu.Lock()
+	silent := b.held(schema.StreamMain).muted
+	level := func(l *lane) float32 {
+		if silent {
+			return 0
+		}
+		return l.level()
+	}
 	for s, l := range b.lanes {
 		chunk := l.next(n)
 		queued = max(queued, len(chunk))
 		if len(chunk) > 0 {
-			b.parts = append(b.parts, Part{Stream: s, Samples: chunk, Level: l.level()})
+			b.parts = append(b.parts, Part{Stream: s, Samples: chunk, Level: level(l)})
 			l.heard = now
 		}
 	}
-	src, media := b.src, b.held(schema.StreamMedia).level()
+	src, media := b.src, level(b.held(schema.StreamMedia))
 	if src != nil {
 		b.held(schema.StreamMedia).heard = now
 	}

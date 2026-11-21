@@ -31,6 +31,7 @@ type Dependencies struct {
 	UI               *widgets.UI
 	Dock             func() schema.Edge
 	Loud             func()
+	Muted            func() bool
 	BluetoothSources func() shell.View
 	Mini             func() bool
 }

@@ -141,6 +141,26 @@ func TestBusMuteSilencesOneStreamAndKeepsItsGain(t *testing.T) {
 	}
 }
 
+func TestBusMutingMainSilencesEveryStream(t *testing.T) {
+	var b Bus
+	b.Mute(schema.StreamMain, true)
+	b.Push(schema.StreamMedia, []int16{1000, 1000})
+	b.Push(schema.StreamAlerts, []int16{100, 100})
+
+	out := make([]int32, 2)
+	b.Next(0, out)
+	if want := []int32{0, 0}; !slices.Equal(out, want) {
+		t.Errorf("mix with main muted %v, want %v", out, want)
+	}
+
+	b.Mute(schema.StreamMain, false)
+	b.Push(schema.StreamAlerts, []int16{100, 100})
+	b.Next(0, out)
+	if want := []int32{100, 100}; !slices.Equal(out, want) {
+		t.Errorf("mix with main unmuted %v, want %v", out, want)
+	}
+}
+
 func TestBusTakeReturnsSamplesUnscaled(t *testing.T) {
 	var b Bus
 	b.SetGain(schema.StreamMedia, 0.5)

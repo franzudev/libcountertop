@@ -123,6 +123,8 @@ type Mixer interface {
 	Picked() (schema.Stream, bool)
 	Level(schema.Stream) int
 	Set(schema.Stream, int)
+	Muted(schema.Stream) bool
+	Mute(schema.Stream, bool)
 }
 
 type Popup interface {
@@ -287,6 +289,7 @@ func New(o Options) *App {
 		UI:               o.UI,
 		Dock:             func() schema.Edge { return o.Settings().Screen.Drawer },
 		Loud:             func() { o.Volume.Show(schema.StreamMedia) },
+		Muted:            func() bool { return o.Volume.Muted(schema.StreamMedia) },
 		BluetoothSources: o.BluetoothSources,
 		Mini:             func() bool { return o.Settings().Media.Mini },
 	})
