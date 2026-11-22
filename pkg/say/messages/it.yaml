@@ -1065,8 +1065,13 @@ photos.entity.immich.memories: Prima i ricordi Immich
 photos.entity.immich.people: Persone Immich
 photos.entity.immich.server: Server Immich
 photos.entity.immich.tags: Tag Immich
+photos.entity.photoprism.albums: Album PhotoPrism
+photos.entity.photoprism.enabled: Foto PhotoPrism
+photos.entity.photoprism.key: Chiave API PhotoPrism
+photos.entity.photoprism.server: Server PhotoPrism
 photos.entity.status: "Stato foto {{.Source}}"
 photos.group.immich: Immich
+photos.group.photoprism: PhotoPrism
 photos.google: Google Photos
 photos.group.google: Google Photos
 photos.setting.google.enabled: Abilita
@@ -1119,7 +1124,10 @@ photos.example.immich.albums: Famiglia, Estate 2026
 photos.example.immich.people: Alex, Sam
 photos.example.immich.server: https://photos.example.com
 photos.example.immich.tags: cucina, preferiti
+photos.example.photoprism.albums: Famiglia, Estate 2026
+photos.example.photoprism.server: https://photos.example.com
 photos.immich: Immich
+photos.photoprism: PhotoPrism
 photos.page: Foto
 photos.sources: Sorgenti
 photos.status: Stato
@@ -1131,6 +1139,10 @@ photos.setting.immich.memories: Prima i ricordi
 photos.setting.immich.people: Persone
 photos.setting.immich.server: Server
 photos.setting.immich.tags: Tag
+photos.setting.photoprism.albums: Album
+photos.setting.photoprism.enabled: Attiva
+photos.setting.photoprism.key: Chiave API
+photos.setting.photoprism.server: Server
 photos.status.off: "Off"
 photos.status.connecting: Connessione…
 photos.status.empty: Nessuna foto corrispondente

@@ -110,7 +110,7 @@ func New(o Options) *Library {
 		o.Now = time.Now
 	}
 	if o.Providers == nil {
-		o.Providers = []Provider{Immich(), Google(o.Most)}
+		o.Providers = []Provider{Immich(), Google(o.Most), Photoprism()}
 	}
 	if o.BytesMost <= 0 {
 		o.BytesMost = bytesMost

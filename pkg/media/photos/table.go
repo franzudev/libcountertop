@@ -9,9 +9,10 @@ import (
 )
 
 const (
-	Group       setting.Group = "Photos"
-	ImmichGroup setting.Group = "Immich"
-	GoogleGroup setting.Group = "Google"
+	Group           setting.Group = "Photos"
+	ImmichGroup     setting.Group = "Immich"
+	GoogleGroup     setting.Group = "Google"
+	PhotoprismGroup setting.Group = "Photoprism"
 )
 
 const (
@@ -87,6 +88,25 @@ func NewTable() *Table {
 			func(c *schema.Photos) *schema.ImmichQuality { return &c.Immich.Quality },
 		),
 		setting.Flag(
+			Setting{Name: "photoprism.enabled", Group: PhotoprismGroup, Icon: "mdi:image-multiple"},
+			func(c *schema.Photos) *bool { return &c.Photoprism.Enabled },
+		),
+		setting.Words(
+			Setting{Name: "photoprism.server", Group: PhotoprismGroup, Icon: "mdi:server"},
+			textMost,
+			func(c *schema.Photos) *string { return &c.Photoprism.Server },
+		),
+		setting.Words(
+			Setting{Name: "photoprism.key", Group: PhotoprismGroup, Icon: "mdi:key"},
+			textMost,
+			func(c *schema.Photos) *string { return &c.Photoprism.Key },
+		),
+		setting.Words(
+			Setting{Name: "photoprism.albums", Group: PhotoprismGroup, Icon: "mdi:image-album"},
+			listMost,
+			func(c *schema.Photos) *string { return &c.Photoprism.Albums },
+		),
+		setting.Flag(
 			Setting{Name: "google.enabled", Group: GoogleGroup, Icon: "mdi:google-photos"},
 			func(c *schema.Photos) *bool { return &c.Google.Enabled },
 		),
@@ -106,6 +126,9 @@ func NewTable() *Table {
 			}, func(c *schema.Photos) *int { return &album(c).Weight }),
 		)
 	}
-	return setting.NewTable("photos", []setting.Group{Group, ImmichGroup, GoogleGroup}, rows,
+	photoprismKey := rows[len(rows)-2]
+	photoprismKey.Kind = setting.Secret
+	return setting.NewTable("photos",
+		[]setting.Group{Group, ImmichGroup, GoogleGroup, PhotoprismGroup}, rows,
 		setting.Messages{Text: say.T, Missing: say.Missing})
 }

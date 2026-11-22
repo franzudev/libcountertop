@@ -1065,8 +1065,13 @@ photos.entity.immich.memories: Ký ức Immich trước
 photos.entity.immich.people: Người trong Immich
 photos.entity.immich.server: Máy chủ Immich
 photos.entity.immich.tags: Thẻ Immich
+photos.entity.photoprism.albums: PhotoPrism albums
+photos.entity.photoprism.enabled: PhotoPrism photos
+photos.entity.photoprism.key: PhotoPrism API key
+photos.entity.photoprism.server: PhotoPrism server
 photos.entity.status: Trạng thái ảnh {{.Source}}
 photos.group.immich: Immich
+photos.group.photoprism: PhotoPrism
 photos.google: Google Photos
 photos.group.google: Google Photos
 photos.setting.google.enabled: Bật
@@ -1119,7 +1124,10 @@ photos.example.immich.albums: Gia đình, Mùa hè 2026
 photos.example.immich.people: Alex, Sam
 photos.example.immich.server: https://photos.example.com
 photos.example.immich.tags: nhà bếp, yêu thích
+photos.example.photoprism.albums: Family, Summer 2026
+photos.example.photoprism.server: https://photos.example.com
 photos.immich: Immich
+photos.photoprism: PhotoPrism
 photos.page: Ảnh
 photos.sources: Nguồn
 photos.status: Trạng thái
@@ -1131,6 +1139,10 @@ photos.setting.immich.memories: Ký ức trước
 photos.setting.immich.people: Người
 photos.setting.immich.server: Máy chủ
 photos.setting.immich.tags: Thẻ
+photos.setting.photoprism.albums: Albums
+photos.setting.photoprism.enabled: Enable
+photos.setting.photoprism.key: API key
+photos.setting.photoprism.server: Server
 photos.status.off: Tắt
 photos.status.connecting: Đang kết nối…
 photos.status.empty: Không có ảnh phù hợp

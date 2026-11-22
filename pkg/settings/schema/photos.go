@@ -6,11 +6,12 @@ import (
 )
 
 type Photos struct {
-	AppEvery  Delay           `json:"app_every"`
-	AppFit    PhotoFit        `json:"app_fit"`
-	AppChange PhotoTransition `json:"app_transition"`
-	Immich    Immich          `json:"immich"`
-	Google    Google          `json:"google"`
+	AppEvery   Delay           `json:"app_every"`
+	AppFit     PhotoFit        `json:"app_fit"`
+	AppChange  PhotoTransition `json:"app_transition"`
+	Immich     Immich          `json:"immich"`
+	Google     Google          `json:"google"`
+	Photoprism Photoprism      `json:"photoprism"`
 }
 
 const (
@@ -39,6 +40,13 @@ type Immich struct {
 	Favorites bool          `json:"favorites"`
 	Memories  bool          `json:"memories"`
 	Quality   ImmichQuality `json:"quality"`
+}
+
+type Photoprism struct {
+	Enabled bool   `json:"enabled"`
+	Server  string `json:"server"`
+	Key     string `json:"key"`
+	Albums  string `json:"albums"`
 }
 
 func DefaultPhotos() Photos {
