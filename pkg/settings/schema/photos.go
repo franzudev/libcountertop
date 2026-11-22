@@ -54,7 +54,6 @@ func DefaultPhotos() Photos {
 		AppEvery:  Delay15s,
 		AppFit:    FitKenBurns,
 		AppChange: TransitionFade,
-		Immich:    Immich{Memories: true, Quality: ImmichPreview},
 	}
 	for i := range p.Google.Albums {
 		p.Google.Albums[i].Weight = GoogleWeightStart

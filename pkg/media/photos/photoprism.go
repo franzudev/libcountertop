@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"log/slog"
 	"math/rand/v2"
+	"slices"
+	"strings"
 	"time"
 
 	"github.com/franzudev/libcountertop/pkg/media/photoprism"
@@ -70,6 +72,31 @@ func (s *photoprismSession) Fetch(ctx context.Context, id string) ([]byte, error
 		return nil, fmt.Errorf("%w: %w", ErrGone, err)
 	}
 	return data, err
+}
+
+// match resolves wanted names to IDs against a list of items, matching an
+// item's ID exactly or any of its names case-insensitively; an unknown name
+// yields a MissingError. This was immich.go's helper, kept for photoprism.go's
+// collect.
+func match[T any](wants []string, all []T, of func(T) (string, []string)) ([]string, error) {
+	var ids []string
+	for _, want := range wants {
+		found := ""
+		for _, item := range all {
+			id, names := of(item)
+			if id == want || slices.ContainsFunc(names, func(n string) bool {
+				return strings.EqualFold(n, want)
+			}) {
+				found = id
+				break
+			}
+		}
+		if found == "" {
+			return nil, &MissingError{Name: want}
+		}
+		ids = append(ids, found)
+	}
+	return ids, nil
 }
 
 // collect resolves the wanted album names to UIDs and gathers their photos
