@@ -10,8 +10,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/states"
 )
 
 const (

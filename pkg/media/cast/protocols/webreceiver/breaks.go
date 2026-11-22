@@ -4,7 +4,7 @@ import (
 	"slices"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
 )
 
 type castBreaks struct {

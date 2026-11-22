@@ -18,8 +18,8 @@ import (
 	"github.com/mewkiz/flac/frame"
 	"github.com/mewkiz/flac/meta"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
 )
 
 func ramp(frames int) []int16 {

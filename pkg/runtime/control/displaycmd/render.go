@@ -11,10 +11,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/display/visual"
-	"github.com/ygelfand/libcountertop/pkg/runtime/control/screencmd"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/visual"
+	"github.com/franzudev/libcountertop/pkg/runtime/control/screencmd"
 )
 
 const (

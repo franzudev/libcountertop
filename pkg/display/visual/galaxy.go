@@ -6,8 +6,8 @@ import (
 	"image/color"
 	"math"
 
-	fx "github.com/ygelfand/libcountertop/pkg/display/glow"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	fx "github.com/franzudev/libcountertop/pkg/display/glow"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 // Ported from anchorapp100/ha-visualisations src/15-galaxy.js (MIT).

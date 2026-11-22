@@ -3,8 +3,8 @@ package videopage
 import (
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
 )
 
 type Controls interface {

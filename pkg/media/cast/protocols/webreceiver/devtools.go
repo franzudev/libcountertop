@@ -6,7 +6,7 @@ import (
 	"log/slog"
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast/engine"
+	"github.com/franzudev/libcountertop/pkg/media/cast/engine"
 )
 
 func logged(e engine.Event) {

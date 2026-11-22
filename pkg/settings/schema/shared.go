@@ -1,6 +1,6 @@
 package schema
 
-import "github.com/ygelfand/libcountertop/pkg/settings/storage"
+import "github.com/franzudev/libcountertop/pkg/settings/storage"
 
 type Shared struct {
 	Access     Access     `json:"access"`

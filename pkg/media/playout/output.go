@@ -14,14 +14,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
-	"github.com/ygelfand/libcountertop/pkg/audio/ducking"
-	"github.com/ygelfand/libcountertop/pkg/fetch"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/media/pcm"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
+	"github.com/franzudev/libcountertop/pkg/audio/ducking"
+	"github.com/franzudev/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/media/pcm"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 const Queued = time.Minute

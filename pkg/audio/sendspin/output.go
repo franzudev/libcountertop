@@ -10,7 +10,7 @@ import (
 
 	ssync "github.com/Sendspin/sendspin-go/pkg/sync"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/ducking"
+	"github.com/franzudev/libcountertop/pkg/audio/ducking"
 )
 
 const holdMax = 60 * Rate

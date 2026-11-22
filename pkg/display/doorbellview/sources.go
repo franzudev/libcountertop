@@ -6,13 +6,13 @@ import (
 	"log/slog"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/doorbell"
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/camera/doorbell"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type sensorKind struct {

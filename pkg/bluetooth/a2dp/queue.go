@@ -5,10 +5,10 @@ import (
 	"log/slog"
 	"time"
 
-	bt "github.com/ygelfand/libcountertop/pkg/bluetooth"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/avrcp"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/l2cap"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
+	bt "github.com/franzudev/libcountertop/pkg/bluetooth"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/avrcp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/l2cap"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
 )
 
 const listing = 50

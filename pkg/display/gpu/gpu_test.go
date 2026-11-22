@@ -3,8 +3,8 @@ package gpu
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/geometry"
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/display/geometry"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
 )
 
 func TestAFullScreenLayerIsPlacedUnturnedInEveryOrientation(t *testing.T) {

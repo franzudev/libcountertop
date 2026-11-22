@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/media/webm"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/webm"
 )
 
 func TestAVideoStreamIsVP9(t *testing.T) {

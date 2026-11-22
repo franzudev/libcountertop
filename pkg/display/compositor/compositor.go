@@ -10,9 +10,9 @@ import (
 	"slices"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wayland"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
-	"github.com/ygelfand/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wayland"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
+	"github.com/franzudev/libcountertop/pkg/hook"
 )
 
 type Options struct {

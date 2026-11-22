@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/states"
 )
 
 const partsTemplate = `{%- set panel = device_id(ENTITY) -%}

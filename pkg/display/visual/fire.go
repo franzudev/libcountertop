@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 func init() { register(Fire, func() Visual { return &fire{r: seeded(1666)} }) }

@@ -10,8 +10,8 @@ import (
 
 	"charm.land/lipgloss/v2"
 
-	"github.com/ygelfand/libcountertop/pkg/host/prompt"
-	"github.com/ygelfand/libcountertop/pkg/network/wpa"
+	"github.com/franzudev/libcountertop/pkg/host/prompt"
+	"github.com/franzudev/libcountertop/pkg/network/wpa"
 )
 
 const joinTimeout = 45 * time.Second

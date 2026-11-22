@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
 )
 
 func TestAReplacedTrackCannotPauseItsSuccessor(t *testing.T) {

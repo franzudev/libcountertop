@@ -4,9 +4,9 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	"github.com/ygelfand/libcountertop/pkg/tessera"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/tessera"
 )
 
 func timestamped(domain string) bool {

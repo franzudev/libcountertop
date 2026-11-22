@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
 )
 
 type stalling struct{ first string }

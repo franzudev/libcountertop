@@ -7,7 +7,7 @@ import (
 	"log/slog"
 	"sync/atomic"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/alsa"
+	"github.com/franzudev/libcountertop/pkg/audio/alsa"
 )
 
 func Send(ctx context.Context, to io.Writer, buf []byte, underruns *atomic.Uint64) error {

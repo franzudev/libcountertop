@@ -3,9 +3,9 @@ package mediacard
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type testSource struct {

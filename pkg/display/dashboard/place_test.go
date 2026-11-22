@@ -3,7 +3,7 @@ package dashboard
 import (
 	"testing"
 
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestTheClockSitsWhereItIsPut(t *testing.T) {

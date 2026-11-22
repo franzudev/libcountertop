@@ -3,8 +3,8 @@ package videostream
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
 )
 
 func TestAKeptDecoderServesAnySizeOfTheSameCodecAndSession(t *testing.T) {

@@ -13,12 +13,12 @@ import (
 	"github.com/ygelfand/go-esphome-device/api"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/hci"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/hci"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/say"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 const Features = esphome.BluetoothPassiveScan | esphome.BluetoothRawAdvertisements | esphome.BluetoothStateAndMode

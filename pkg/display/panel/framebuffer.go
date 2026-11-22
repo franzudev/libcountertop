@@ -8,9 +8,9 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/ygelfand/libcountertop/pkg/display/geometry"
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
-	"github.com/ygelfand/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/display/geometry"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/hook"
 )
 
 // MDSS video-mode panels reject write(2) with ENODEV and stay lit only while the fd is held open.

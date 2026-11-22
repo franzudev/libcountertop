@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-const schemaPkg = "github.com/ygelfand/libcountertop/pkg/settings/schema"
+const schemaPkg = "github.com/franzudev/libcountertop/pkg/settings/schema"
 
 type Coverage struct {
 	Rows   map[string]string

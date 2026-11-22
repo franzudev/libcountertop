@@ -1,6 +1,6 @@
 package widgets
 
-import "github.com/ygelfand/libcountertop/pkg/tessera"
+import "github.com/franzudev/libcountertop/pkg/tessera"
 
 const routeMost = 8
 

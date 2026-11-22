@@ -4,13 +4,13 @@ import (
 	"github.com/go-gui-org/go-glyph"
 	gui "github.com/go-gui-org/go-gui/gui"
 
-	backend "github.com/ygelfand/libcountertop/pkg/display/gogui"
-	"github.com/ygelfand/libcountertop/pkg/display/style"
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
-	"github.com/ygelfand/libcountertop/pkg/runtime/startup"
+	backend "github.com/franzudev/libcountertop/pkg/display/gogui"
+	"github.com/franzudev/libcountertop/pkg/display/style"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/runtime/startup"
 )
 
 func Split(w, h int) (logo, list ui.Rect) {

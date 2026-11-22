@@ -1,6 +1,6 @@
 package schema
 
-import "github.com/ygelfand/libcountertop/pkg/say"
+import "github.com/franzudev/libcountertop/pkg/say"
 
 type AlertStyle string
 

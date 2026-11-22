@@ -4,9 +4,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/camerafeed"
-	"github.com/ygelfand/libcountertop/pkg/camera/onvif"
-	"github.com/ygelfand/libcountertop/pkg/camera/session"
+	"github.com/franzudev/libcountertop/pkg/camera/camerafeed"
+	"github.com/franzudev/libcountertop/pkg/camera/onvif"
+	"github.com/franzudev/libcountertop/pkg/camera/session"
 )
 
 type sizes []session.Size

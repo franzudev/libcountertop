@@ -1,10 +1,10 @@
 package a2dp
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
-	"github.com/ygelfand/libcountertop/pkg/audio/ducking"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/avrcp"
-	"github.com/ygelfand/libcountertop/pkg/media/pcm"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
+	"github.com/franzudev/libcountertop/pkg/audio/ducking"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/avrcp"
+	"github.com/franzudev/libcountertop/pkg/media/pcm"
 )
 
 var _ pcm.Producer = (*Sink)(nil)

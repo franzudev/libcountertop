@@ -6,9 +6,9 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	"github.com/ygelfand/libcountertop/pkg/network/wpa"
-	"github.com/ygelfand/libcountertop/pkg/runtime/startup"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/network/wpa"
+	"github.com/franzudev/libcountertop/pkg/runtime/startup"
 )
 
 type Options struct {

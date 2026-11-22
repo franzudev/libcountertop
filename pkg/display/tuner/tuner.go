@@ -9,17 +9,17 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/apps"
-	"github.com/ygelfand/libcountertop/pkg/display/icons"
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	"github.com/ygelfand/libcountertop/pkg/display/navigation"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/display/style"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/radio"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/apps"
+	"github.com/franzudev/libcountertop/pkg/display/icons"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/display/navigation"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/display/style"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/radio"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const page = "radio"

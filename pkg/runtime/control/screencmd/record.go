@@ -11,8 +11,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/display/panel"
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/display/panel"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
 )
 
 type recording interface {

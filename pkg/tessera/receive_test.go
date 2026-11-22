@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/component"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/runtime/component"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func screen() *Screen { return kept("") }

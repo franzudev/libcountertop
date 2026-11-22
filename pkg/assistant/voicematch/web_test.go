@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/people"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/people"
 )
 
 func TestThePageListsVoicesAndPeople(t *testing.T) {

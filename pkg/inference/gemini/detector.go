@@ -6,7 +6,7 @@ import (
 
 	"github.com/zserge/microwakeword/audiofrontend"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/tflite"
+	"github.com/franzudev/libcountertop/pkg/inference/tflite"
 )
 
 // Frontend settings carried in the model's own header.

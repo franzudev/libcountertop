@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 func TestAFreshDeviceIdlesIntoAWanderingClock(t *testing.T) {

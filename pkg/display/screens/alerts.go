@@ -3,9 +3,9 @@ package screens
 import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/alertview"
-	"github.com/ygelfand/libcountertop/pkg/display/message"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/alertview"
+	"github.com/franzudev/libcountertop/pkg/display/message"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const priorityAlert = 30

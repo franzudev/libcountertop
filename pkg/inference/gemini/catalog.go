@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
-	"github.com/ygelfand/libcountertop/pkg/network/releases"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/network/releases"
 )
 
 const (

@@ -5,7 +5,7 @@ import (
 	"image"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 func init() { register(Thunderstorm, func() Visual { return &thunder{r: seeded(1752)} }) }

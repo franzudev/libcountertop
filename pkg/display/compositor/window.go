@@ -6,10 +6,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wayland"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/xdg"
-	"github.com/ygelfand/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wayland"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/xdg"
+	"github.com/franzudev/libcountertop/pkg/hook"
 )
 
 // Frame pixels are wl_shm ARGB8888: B, G, R, A in memory.

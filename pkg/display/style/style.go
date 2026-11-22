@@ -11,7 +11,7 @@ import (
 	"golang.org/x/image/font/gofont/gomonobold"
 	"golang.org/x/image/font/gofont/goregular"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 const (

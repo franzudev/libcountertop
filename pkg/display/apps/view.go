@@ -5,13 +5,13 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/icons"
-	"github.com/ygelfand/libcountertop/pkg/display/navigation"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/display/style"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/display/icons"
+	"github.com/franzudev/libcountertop/pkg/display/navigation"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/display/style"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 const (

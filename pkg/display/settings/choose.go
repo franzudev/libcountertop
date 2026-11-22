@@ -3,8 +3,8 @@ package settings
 import (
 	"slices"
 
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
 )
 
 func Choose[T interface {

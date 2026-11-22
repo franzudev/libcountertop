@@ -3,7 +3,7 @@ package radarview
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/voice"
+	"github.com/franzudev/libcountertop/pkg/voice"
 )
 
 func TestSpokenRadar(t *testing.T) {

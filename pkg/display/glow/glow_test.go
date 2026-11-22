@@ -5,8 +5,8 @@ import (
 	"image/color"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 var rgbGrey = theme.Color{R: 50, G: 50, B: 50}

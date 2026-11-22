@@ -6,7 +6,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
 )
 
 // Server serves the Wayland protocol.

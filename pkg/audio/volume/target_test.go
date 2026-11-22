@@ -4,7 +4,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type screen schema.Stream

@@ -11,8 +11,8 @@ import (
 
 	"golang.org/x/image/font/opentype"
 
-	fx "github.com/ygelfand/libcountertop/pkg/display/glow"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	fx "github.com/franzudev/libcountertop/pkg/display/glow"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 // Ported from anchorapp100/ha-visualisations src/11-vu.js (MIT).

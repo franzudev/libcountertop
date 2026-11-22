@@ -3,8 +3,8 @@ package clockview
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/say"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestEveryFaceIsNamedOnceAndLabelled(t *testing.T) {

@@ -3,7 +3,7 @@ package homecontrol
 import (
 	"testing"
 
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestLightsAndSwitchesAreApps(t *testing.T) {

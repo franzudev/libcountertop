@@ -11,10 +11,10 @@ import (
 	"github.com/ygelfand/reolinkproxy/pkg/baichuan"
 	"github.com/ygelfand/reolinkproxy/pkg/codec"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/resample"
-	"github.com/ygelfand/libcountertop/pkg/audio/upsample"
-	"github.com/ygelfand/libcountertop/pkg/media/rtsp"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/audio/resample"
+	"github.com/franzudev/libcountertop/pkg/audio/upsample"
+	"github.com/franzudev/libcountertop/pkg/media/rtsp"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const (

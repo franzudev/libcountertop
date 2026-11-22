@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 var house = []homeassistant.Entity{

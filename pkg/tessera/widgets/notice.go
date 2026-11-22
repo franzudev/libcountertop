@@ -5,7 +5,7 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 //go:embed mark.svg

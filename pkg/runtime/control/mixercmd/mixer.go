@@ -8,8 +8,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/alsa"
-	"github.com/ygelfand/libcountertop/pkg/runtime/control"
+	"github.com/franzudev/libcountertop/pkg/audio/alsa"
+	"github.com/franzudev/libcountertop/pkg/runtime/control"
 )
 
 func Command(card int) *cobra.Command {

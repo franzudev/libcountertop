@@ -12,11 +12,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/fetch"
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 var errIdle = errors.New("urlplayer: nothing is loaded")

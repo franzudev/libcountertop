@@ -3,7 +3,7 @@ package thermostatview
 import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	kit "github.com/ygelfand/libcountertop/pkg/display/panelkit"
+	kit "github.com/franzudev/libcountertop/pkg/display/panelkit"
 )
 
 type sheet struct {

@@ -6,11 +6,11 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/camerafeed"
-	"github.com/ygelfand/libcountertop/pkg/camera/onvif"
-	"github.com/ygelfand/libcountertop/pkg/camera/session"
-	"github.com/ygelfand/libcountertop/pkg/media/rtsp"
-	"github.com/ygelfand/libcountertop/pkg/network/digest"
+	"github.com/franzudev/libcountertop/pkg/camera/camerafeed"
+	"github.com/franzudev/libcountertop/pkg/camera/onvif"
+	"github.com/franzudev/libcountertop/pkg/camera/session"
+	"github.com/franzudev/libcountertop/pkg/media/rtsp"
+	"github.com/franzudev/libcountertop/pkg/network/digest"
 )
 
 var paths = [...]string{"main", "sub"}

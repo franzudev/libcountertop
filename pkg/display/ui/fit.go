@@ -3,7 +3,7 @@ package ui
 import (
 	"image"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 func DrawImageFit(s Surface, img image.Image, r Rect, on theme.Color) {

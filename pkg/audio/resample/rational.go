@@ -3,7 +3,7 @@ package resample
 import (
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/vec"
+	"github.com/franzudev/libcountertop/pkg/inference/vec"
 )
 
 const ratioTaps = 16

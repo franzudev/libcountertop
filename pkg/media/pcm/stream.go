@@ -15,11 +15,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/background"
-	"github.com/ygelfand/libcountertop/pkg/audio/ducking"
-	"github.com/ygelfand/libcountertop/pkg/audio/noise"
-	"github.com/ygelfand/libcountertop/pkg/fetch"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/audio/background"
+	"github.com/franzudev/libcountertop/pkg/audio/ducking"
+	"github.com/franzudev/libcountertop/pkg/audio/noise"
+	"github.com/franzudev/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const (

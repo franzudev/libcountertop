@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/photos"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/media/photos"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func jpegOf(w, h int, c color.RGBA) []byte {

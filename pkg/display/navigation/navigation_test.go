@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
 )
 
 type view struct{}

@@ -7,7 +7,7 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 type pane struct {

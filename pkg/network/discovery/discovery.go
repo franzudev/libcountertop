@@ -12,10 +12,10 @@ import (
 
 	"github.com/libp2p/zeroconf/v2"
 
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	mdns "github.com/ygelfand/libcountertop/pkg/network/advertise"
-	sharedpeer "github.com/ygelfand/libcountertop/pkg/network/peer"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	mdns "github.com/franzudev/libcountertop/pkg/network/advertise"
+	sharedpeer "github.com/franzudev/libcountertop/pkg/network/peer"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const (

@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/say"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/say"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type Setting = setting.Setting[config.Home]

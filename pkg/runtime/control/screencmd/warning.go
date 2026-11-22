@@ -9,7 +9,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/nws"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/nws"
 )
 
 const warningSpan = 0.15

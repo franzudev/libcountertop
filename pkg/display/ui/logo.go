@@ -6,7 +6,7 @@ import (
 	_ "image/png"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 type Logo struct {

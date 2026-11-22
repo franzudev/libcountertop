@@ -3,7 +3,7 @@ package widgets
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 func TestEnergyRows(t *testing.T) {

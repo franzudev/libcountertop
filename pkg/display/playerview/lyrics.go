@@ -5,8 +5,8 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/media/lyrics"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/media/lyrics"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
 )
 
 type pane uint8

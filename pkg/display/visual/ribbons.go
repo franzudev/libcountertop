@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 // Ported from anchorapp100/ha-visualisations src/14-ribbons.js (MIT).

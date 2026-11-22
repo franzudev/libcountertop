@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func darkRig(t *testing.T, mode schema.Night, after schema.Delay) (*rig, *float64) {

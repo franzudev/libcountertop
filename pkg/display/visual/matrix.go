@@ -8,8 +8,8 @@ import (
 	"image/png"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 const AmbientMatrix Kind = "ambient-matrix"

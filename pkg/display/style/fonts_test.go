@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/image/font/sfnt"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestEveryFontIsEmbeddedInRegularAndBold(t *testing.T) {

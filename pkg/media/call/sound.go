@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/tone"
-	"github.com/ygelfand/libcountertop/pkg/media/rtc"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/audio/tone"
+	"github.com/franzudev/libcountertop/pkg/media/rtc"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const (

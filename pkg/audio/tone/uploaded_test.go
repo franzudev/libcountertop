@@ -6,9 +6,9 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/tone"
-	"github.com/ygelfand/libcountertop/pkg/audio/tones"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/audio/tone"
+	"github.com/franzudev/libcountertop/pkg/audio/tones"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type feedbackSection struct{ at schema.Feedback }

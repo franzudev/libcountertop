@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/message"
-	"github.com/ygelfand/libcountertop/pkg/tessera"
+	"github.com/franzudev/libcountertop/pkg/display/message"
+	"github.com/franzudev/libcountertop/pkg/tessera"
 )
 
 func TestAlerterReportsHowAlertsEnd(t *testing.T) {

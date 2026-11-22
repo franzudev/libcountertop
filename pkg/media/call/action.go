@@ -6,10 +6,10 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/actions"
-	"github.com/ygelfand/libcountertop/pkg/match"
-	discovery "github.com/ygelfand/libcountertop/pkg/network/peer"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/actions"
+	"github.com/franzudev/libcountertop/pkg/match"
+	discovery "github.com/franzudev/libcountertop/pkg/network/peer"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 func (c *Calls) Action(peers func() []discovery.Peer, video bool) actions.Action {

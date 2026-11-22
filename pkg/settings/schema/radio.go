@@ -3,7 +3,7 @@ package schema
 import (
 	"slices"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 type Station struct {

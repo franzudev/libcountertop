@@ -6,10 +6,10 @@ import (
 
 	gui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/interaction"
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	"github.com/ygelfand/libcountertop/pkg/display/style"
-	"github.com/ygelfand/libcountertop/pkg/input/textentry"
+	"github.com/franzudev/libcountertop/pkg/display/interaction"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/display/style"
+	"github.com/franzudev/libcountertop/pkg/input/textentry"
 )
 
 type FieldStyle interface {

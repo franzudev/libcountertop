@@ -1,6 +1,6 @@
 package setting
 
-import "github.com/ygelfand/libcountertop/pkg/settings/storage"
+import "github.com/franzudev/libcountertop/pkg/settings/storage"
 
 func Store[T any](at storage.Section[T], s Setting[T], v string) error {
 	probe := at.Read()

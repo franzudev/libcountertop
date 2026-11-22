@@ -16,8 +16,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/fetch"
-	"github.com/ygelfand/libcountertop/pkg/network/digest"
+	"github.com/franzudev/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/network/digest"
 )
 
 const (

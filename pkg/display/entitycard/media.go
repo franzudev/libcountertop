@@ -7,8 +7,8 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/style"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/display/style"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
 )
 
 func playTime(seconds float64) string {

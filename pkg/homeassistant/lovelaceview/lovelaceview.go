@@ -15,16 +15,16 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor"
-	backend "github.com/ygelfand/libcountertop/pkg/display/gogui"
-	"github.com/ygelfand/libcountertop/pkg/display/icons"
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
-	"github.com/ygelfand/libcountertop/pkg/media/cast/engine"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
-	"github.com/ygelfand/libcountertop/pkg/runtime/service"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/display/compositor"
+	backend "github.com/franzudev/libcountertop/pkg/display/gogui"
+	"github.com/franzudev/libcountertop/pkg/display/icons"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/media/cast/engine"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/runtime/service"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 //go:embed bridge.js

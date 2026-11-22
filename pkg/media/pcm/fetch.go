@@ -12,8 +12,8 @@ import (
 
 	gomp3 "github.com/hajimehoshi/go-mp3"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/resample"
-	"github.com/ygelfand/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/audio/resample"
+	"github.com/franzudev/libcountertop/pkg/fetch"
 )
 
 const Tail = 250

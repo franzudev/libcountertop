@@ -6,8 +6,8 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	kit "github.com/ygelfand/libcountertop/pkg/display/panelkit"
-	"github.com/ygelfand/libcountertop/pkg/display/style"
+	kit "github.com/franzudev/libcountertop/pkg/display/panelkit"
+	"github.com/franzudev/libcountertop/pkg/display/style"
 )
 
 var wheelLook = look{

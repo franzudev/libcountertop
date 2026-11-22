@@ -3,7 +3,7 @@ package widgets
 import (
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/tessera"
+	"github.com/franzudev/libcountertop/pkg/tessera"
 )
 
 type route int

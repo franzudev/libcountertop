@@ -14,7 +14,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
 )
 
 const URL = "https://sponsor.ajay.app/api/skipSegments"

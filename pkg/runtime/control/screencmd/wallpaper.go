@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/display/poster"
+	"github.com/franzudev/libcountertop/pkg/display/poster"
 )
 
 func Wallpaper(wallpaper func() *poster.Poster) *cobra.Command {

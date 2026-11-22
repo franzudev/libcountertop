@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
 )
 
 func ids(vs []Video) []string {

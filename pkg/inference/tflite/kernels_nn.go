@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/vec"
+	"github.com/franzudev/libcountertop/pkg/inference/vec"
 )
 
 func conv2D(s Splitter, o *OpDesc, in, out []*Tensor) error {

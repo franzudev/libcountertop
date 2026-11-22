@@ -5,9 +5,9 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 type settingsHit struct {

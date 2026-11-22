@@ -5,7 +5,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
 )
 
 type fakeSlots struct {

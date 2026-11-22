@@ -3,9 +3,9 @@ package playout
 import (
 	"fmt"
 
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/media/ownership"
-	"github.com/ygelfand/libcountertop/pkg/media/pcm"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/media/ownership"
+	"github.com/franzudev/libcountertop/pkg/media/pcm"
 )
 
 type fakePlayer struct {

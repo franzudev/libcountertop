@@ -10,10 +10,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/pryon"
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/inference/pryon"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const Hold = 300 * time.Millisecond

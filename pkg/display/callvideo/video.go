@@ -7,11 +7,11 @@ import (
 	"sync"
 	"time"
 
-	display "github.com/ygelfand/libcountertop/pkg/display/geometry"
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
-	"github.com/ygelfand/libcountertop/pkg/media/call"
-	"github.com/ygelfand/libcountertop/pkg/media/rtc"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	display "github.com/franzudev/libcountertop/pkg/display/geometry"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/media/call"
+	"github.com/franzudev/libcountertop/pkg/media/rtc"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const (

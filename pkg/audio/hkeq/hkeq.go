@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/dsp"
+	"github.com/franzudev/libcountertop/pkg/audio/dsp"
 )
 
 const Rate = 48000

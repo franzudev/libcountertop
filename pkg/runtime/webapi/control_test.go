@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/input/textentry"
+	"github.com/franzudev/libcountertop/pkg/input/textentry"
 )
 
 func controlFixture(t *testing.T) (*API, *memory) {

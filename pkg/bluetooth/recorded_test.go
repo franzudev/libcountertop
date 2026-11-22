@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/l2cap"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/l2cap"
 )
 
 func TestARealPhoneOpensTheStream(t *testing.T) {

@@ -6,8 +6,8 @@ import (
 
 	"github.com/libp2p/zeroconf/v2"
 
-	core "github.com/ygelfand/libcountertop/pkg/audio/sendspin"
-	network "github.com/ygelfand/libcountertop/pkg/network/advertise"
+	core "github.com/franzudev/libcountertop/pkg/audio/sendspin"
+	network "github.com/franzudev/libcountertop/pkg/network/advertise"
 )
 
 // The path record is required by the Sendspin spec.

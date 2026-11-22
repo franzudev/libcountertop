@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/ygelfand/libcountertop/pkg/display/geometry"
+	"github.com/franzudev/libcountertop/pkg/display/geometry"
 )
 
 type overlay interface {

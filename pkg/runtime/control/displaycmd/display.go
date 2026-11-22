@@ -10,12 +10,12 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/display/gpu"
-	"github.com/ygelfand/libcountertop/pkg/display/message"
-	"github.com/ygelfand/libcountertop/pkg/display/panel"
-	"github.com/ygelfand/libcountertop/pkg/runtime/control"
-	"github.com/ygelfand/libcountertop/pkg/runtime/control/screencmd"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/gpu"
+	"github.com/franzudev/libcountertop/pkg/display/message"
+	"github.com/franzudev/libcountertop/pkg/display/panel"
+	"github.com/franzudev/libcountertop/pkg/runtime/control"
+	"github.com/franzudev/libcountertop/pkg/runtime/control/screencmd"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const (

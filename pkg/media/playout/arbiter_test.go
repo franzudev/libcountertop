@@ -3,8 +3,8 @@ package playout
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/background"
-	"github.com/ygelfand/libcountertop/pkg/media/pcm"
+	"github.com/franzudev/libcountertop/pkg/audio/background"
+	"github.com/franzudev/libcountertop/pkg/media/pcm"
 )
 
 type noise struct{ down bool }

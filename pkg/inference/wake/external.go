@@ -15,8 +15,8 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/fetch"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 // Home Assistant serves custom_wake_words statically; an offer's hash and size are the model's.

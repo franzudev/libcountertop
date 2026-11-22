@@ -3,7 +3,7 @@ package tone
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type section struct{ at schema.Feedback }

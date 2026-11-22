@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 var errNoPage = errors.New("webreceiver: no cast page is open")

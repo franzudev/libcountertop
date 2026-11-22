@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/states"
 )
 
 // Lock states Home Assistant reports for a lock entity.

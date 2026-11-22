@@ -3,7 +3,7 @@ package ringsview
 import (
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type box struct{ x, y, w, h float32 }

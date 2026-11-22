@@ -6,7 +6,7 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/android/logd"
+	"github.com/franzudev/libcountertop/pkg/android/logd"
 )
 
 // The transport caps a message at 65515 bytes.

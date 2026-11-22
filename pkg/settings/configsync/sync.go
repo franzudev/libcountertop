@@ -10,9 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/peer"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/network/peer"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 const (

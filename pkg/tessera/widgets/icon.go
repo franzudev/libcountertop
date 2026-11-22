@@ -1,8 +1,8 @@
 package widgets
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/display/icons"
-	"github.com/ygelfand/libcountertop/pkg/tessera"
+	"github.com/franzudev/libcountertop/pkg/display/icons"
+	"github.com/franzudev/libcountertop/pkg/tessera"
 )
 
 var weatherIcons = map[string]rune{

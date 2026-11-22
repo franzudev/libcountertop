@@ -8,10 +8,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/network/releases"
-	harness "github.com/ygelfand/libcountertop/pkg/runtime/control"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/system/firmware"
+	"github.com/franzudev/libcountertop/pkg/network/releases"
+	harness "github.com/franzudev/libcountertop/pkg/runtime/control"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/system/firmware"
 )
 
 type source struct {

@@ -3,8 +3,8 @@ package a2dp
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/pair"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/sbc"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/pair"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/sbc"
 )
 
 func TestMonoIsSentToBothEars(t *testing.T) {

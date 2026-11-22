@@ -3,7 +3,7 @@ package bt
 import (
 	"encoding/binary"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/sdp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/sdp"
 )
 
 // Some hosts, including macOS, search for handles before reading attributes.

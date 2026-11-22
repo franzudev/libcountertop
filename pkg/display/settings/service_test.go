@@ -3,8 +3,8 @@ package settings
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 type service struct {

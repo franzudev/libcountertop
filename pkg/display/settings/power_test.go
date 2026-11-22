@@ -3,7 +3,7 @@ package settings
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
 )
 
 func TestTheExplainingRowDoesNothing(t *testing.T) {

@@ -18,9 +18,9 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/media/urlplayer"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/urlplayer"
 )
 
 type sent struct {

@@ -19,11 +19,11 @@ import (
 	"github.com/pion/webrtc/v4"
 	"github.com/pion/webrtc/v4/pkg/media"
 
-	"github.com/ygelfand/libcountertop/pkg/display/geometry"
-	"github.com/ygelfand/libcountertop/pkg/display/panel"
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
-	"github.com/ygelfand/libcountertop/pkg/input/textentry"
-	"github.com/ygelfand/libcountertop/pkg/input/touch"
+	"github.com/franzudev/libcountertop/pkg/display/geometry"
+	"github.com/franzudev/libcountertop/pkg/display/panel"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/input/textentry"
+	"github.com/franzudev/libcountertop/pkg/input/touch"
 )
 
 const (

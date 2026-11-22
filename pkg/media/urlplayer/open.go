@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/fetch"
 )
 
 const (

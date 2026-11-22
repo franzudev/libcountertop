@@ -11,7 +11,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/network/digest"
+	"github.com/franzudev/libcountertop/pkg/network/digest"
 )
 
 func token(user, password string) string {

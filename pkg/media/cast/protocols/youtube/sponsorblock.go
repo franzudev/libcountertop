@@ -4,7 +4,7 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/ygelfand/libcountertop/pkg/media/sponsorblock"
+	"github.com/franzudev/libcountertop/pkg/media/sponsorblock"
 )
 
 func (s *station) segments(ctx context.Context, id string) []sponsorblock.Segment {

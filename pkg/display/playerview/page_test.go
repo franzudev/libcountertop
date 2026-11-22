@@ -10,12 +10,12 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	backend "github.com/ygelfand/libcountertop/pkg/display/gogui"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	backend "github.com/franzudev/libcountertop/pkg/display/gogui"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type screenSection struct{ s schema.Screen }

@@ -3,7 +3,7 @@ package tessera
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/component"
+	"github.com/franzudev/libcountertop/pkg/runtime/component"
 )
 
 func TestOnlyTheLatestPictureLinkIsKept(t *testing.T) {

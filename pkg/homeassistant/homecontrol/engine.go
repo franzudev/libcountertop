@@ -6,13 +6,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	ha "github.com/ygelfand/libcountertop/pkg/homeassistant"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	ha "github.com/franzudev/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/states"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 type Client interface {

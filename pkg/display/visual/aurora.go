@@ -9,8 +9,8 @@ import (
 	"github.com/tfriedel6/canvas"
 	"github.com/tfriedel6/canvas/backend/softwarebackend"
 
-	fx "github.com/ygelfand/libcountertop/pkg/display/glow"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	fx "github.com/franzudev/libcountertop/pkg/display/glow"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 // Ported from anchorapp100/ha-visualisations src/12-aurora.js (MIT).

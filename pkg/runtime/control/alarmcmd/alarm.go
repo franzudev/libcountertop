@@ -8,8 +8,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/assistant/alarm"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/assistant/alarm"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const alarmUsage = "alarm SECONDS [sunrise|ember|white] [silent] | alarm snooze | alarm stop"

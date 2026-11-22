@@ -7,8 +7,8 @@ import (
 	"math"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/fft"
-	"github.com/ygelfand/libcountertop/pkg/inference/vec"
+	"github.com/franzudev/libcountertop/pkg/audio/fft"
+	"github.com/franzudev/libcountertop/pkg/inference/vec"
 )
 
 const (

@@ -4,9 +4,9 @@ import (
 	"image"
 	"image/draw"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/display/visual"
-	"github.com/ygelfand/libcountertop/pkg/runtime/startup"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/visual"
+	"github.com/franzudev/libcountertop/pkg/runtime/startup"
 )
 
 type Moment = startup.Moment

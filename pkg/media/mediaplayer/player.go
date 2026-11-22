@@ -8,13 +8,13 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/sound"
-	"github.com/ygelfand/libcountertop/pkg/audio/upsample"
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/media/ownership"
-	"github.com/ygelfand/libcountertop/pkg/media/pcm"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/audio/sound"
+	"github.com/franzudev/libcountertop/pkg/audio/upsample"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/media/ownership"
+	"github.com/franzudev/libcountertop/pkg/media/pcm"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 type Speaker interface {

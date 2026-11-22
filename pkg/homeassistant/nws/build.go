@@ -1,10 +1,10 @@
 package nws
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/runtime/product"
-	"github.com/ygelfand/libcountertop/pkg/runtime/remember"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/runtime/product"
+	"github.com/franzudev/libcountertop/pkg/runtime/remember"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 func Build(

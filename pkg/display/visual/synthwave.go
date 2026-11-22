@@ -5,9 +5,9 @@ import (
 	"image"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
-	fx "github.com/ygelfand/libcountertop/pkg/display/glow"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
+	fx "github.com/franzudev/libcountertop/pkg/display/glow"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 // Ported from anchorapp100/ha-visualisations src/24-synthwave.js (MIT).

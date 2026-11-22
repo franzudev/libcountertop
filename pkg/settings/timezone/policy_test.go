@@ -4,9 +4,9 @@ import (
 	"errors"
 	"testing"
 
-	tz "github.com/ygelfand/libcountertop/pkg/timezone"
+	tz "github.com/franzudev/libcountertop/pkg/timezone"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestOverrideSurvivesServerChangesAndCanFollowAgain(t *testing.T) {

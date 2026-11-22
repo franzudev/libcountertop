@@ -3,7 +3,7 @@ package screencmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/lovelaceview"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/lovelaceview"
 )
 
 func Reload(dashboards func() *lovelaceview.Feature) *cobra.Command {

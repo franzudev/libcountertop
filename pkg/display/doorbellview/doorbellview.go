@@ -11,17 +11,17 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/doorbell"
-	"github.com/ygelfand/libcountertop/pkg/display/apps"
-	"github.com/ygelfand/libcountertop/pkg/display/callvideo"
-	"github.com/ygelfand/libcountertop/pkg/display/interaction"
-	"github.com/ygelfand/libcountertop/pkg/display/message"
-	"github.com/ygelfand/libcountertop/pkg/display/navigation"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/camera/doorbell"
+	"github.com/franzudev/libcountertop/pkg/display/apps"
+	"github.com/franzudev/libcountertop/pkg/display/callvideo"
+	"github.com/franzudev/libcountertop/pkg/display/interaction"
+	"github.com/franzudev/libcountertop/pkg/display/message"
+	"github.com/franzudev/libcountertop/pkg/display/navigation"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 const (

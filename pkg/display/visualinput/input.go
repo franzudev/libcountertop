@@ -10,11 +10,11 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
-	"github.com/ygelfand/libcountertop/pkg/display/visual"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
+	"github.com/franzudev/libcountertop/pkg/display/visual"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 const (

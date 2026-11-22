@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	call "github.com/ygelfand/libcountertop/pkg/media/call"
-	"github.com/ygelfand/libcountertop/pkg/network/peer"
+	call "github.com/franzudev/libcountertop/pkg/media/call"
+	"github.com/franzudev/libcountertop/pkg/network/peer"
 )
 
 func Dial(c *call.Calls, peers []peer.Peer, args []string) (string, error) {

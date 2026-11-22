@@ -1,8 +1,8 @@
 package lyrics
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/fetch"
-	"github.com/ygelfand/libcountertop/pkg/runtime/product"
+	"github.com/franzudev/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/runtime/product"
 )
 
 func Build(p product.Context) *Finder {

@@ -3,8 +3,8 @@ package playercmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/runtime/control"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/runtime/control"
 )
 
 type Player interface {

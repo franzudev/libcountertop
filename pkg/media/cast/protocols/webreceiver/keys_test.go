@@ -6,7 +6,7 @@ import (
 	"encoding/binary"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
 )
 
 var playReady = [16]byte{

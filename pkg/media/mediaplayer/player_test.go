@@ -4,10 +4,10 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/sound"
-	"github.com/ygelfand/libcountertop/pkg/audio/tone"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/audio/sound"
+	"github.com/franzudev/libcountertop/pkg/audio/tone"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type (

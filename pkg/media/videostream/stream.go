@@ -3,7 +3,7 @@ package videostream
 import (
 	"encoding/binary"
 
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
 )
 
 func Split(stream []byte) (codec, width, height uint32, units [][]byte) {

@@ -10,10 +10,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
-	"github.com/ygelfand/libcountertop/pkg/media/cenc"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/cenc"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const (

@@ -5,11 +5,11 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/gpu"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/display/visual"
-	"github.com/ygelfand/libcountertop/pkg/display/visualview"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/gpu"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/visual"
+	"github.com/franzudev/libcountertop/pkg/display/visualview"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const shadeEvery = time.Second / 60

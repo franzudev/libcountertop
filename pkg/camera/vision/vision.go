@@ -10,8 +10,8 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/card"
-	"github.com/ygelfand/libcountertop/pkg/camera/session"
+	"github.com/franzudev/libcountertop/pkg/camera/card"
+	"github.com/franzudev/libcountertop/pkg/camera/session"
 )
 
 const (

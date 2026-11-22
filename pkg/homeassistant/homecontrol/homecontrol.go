@@ -6,12 +6,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/say"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type Selection struct {

@@ -11,7 +11,7 @@ import (
 
 	"github.com/libp2p/zeroconf/v2"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const (

@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 const (

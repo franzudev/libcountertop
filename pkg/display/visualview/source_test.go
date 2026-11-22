@@ -3,10 +3,10 @@ package visualview
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
 
-	"github.com/ygelfand/libcountertop/pkg/display/visual"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/visual"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func heard() visual.Input {

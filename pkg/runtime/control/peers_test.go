@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/peer"
+	"github.com/franzudev/libcountertop/pkg/network/peer"
 )
 
 func TestNoPeersSaysNone(t *testing.T) {

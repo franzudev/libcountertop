@@ -1,8 +1,8 @@
 package boot
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 func Version(s ui.Surface, p theme.Theme, version string) {

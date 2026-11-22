@@ -3,7 +3,7 @@ package mix
 import (
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/tone"
+	"github.com/franzudev/libcountertop/pkg/audio/tone"
 )
 
 func Chime(rate, channels int, level float64, notes ...tone.Note) []int16 {

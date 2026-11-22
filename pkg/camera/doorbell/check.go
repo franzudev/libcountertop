@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/onvif"
-	"github.com/ygelfand/libcountertop/pkg/media/rtsp"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/camera/onvif"
+	"github.com/franzudev/libcountertop/pkg/media/rtsp"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func Check(ctx context.Context, door schema.DoorbellDoor) ([]byte, error) {

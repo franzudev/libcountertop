@@ -7,7 +7,7 @@ import (
 	"log/slog"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/pair"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/pair"
 )
 
 const (

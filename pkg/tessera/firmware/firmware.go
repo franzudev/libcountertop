@@ -10,8 +10,8 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/payload"
-	"github.com/ygelfand/libcountertop/pkg/runtime/service"
+	"github.com/franzudev/libcountertop/pkg/runtime/payload"
+	"github.com/franzudev/libcountertop/pkg/runtime/service"
 )
 
 type Options struct {

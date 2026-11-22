@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
-	wlc "github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wlclient"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/xdgclient"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
+	wlc "github.com/franzudev/libcountertop/pkg/display/compositor/internal/wlclient"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/xdgclient"
 )
 
 type globals map[string]uint32

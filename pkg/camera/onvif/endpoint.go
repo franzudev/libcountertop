@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/ygelfand/libcountertop/pkg/network/digest"
+	"github.com/franzudev/libcountertop/pkg/network/digest"
 )
 
 const SnapshotPath = "/onvif/snapshot.jpg"

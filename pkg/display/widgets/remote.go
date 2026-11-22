@@ -7,7 +7,7 @@ import (
 
 	gui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/input/textentry"
+	"github.com/franzudev/libcountertop/pkg/input/textentry"
 )
 
 func validateEdit(v textentry.View, r textentry.Request) error {

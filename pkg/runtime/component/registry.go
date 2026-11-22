@@ -8,7 +8,7 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/service"
+	"github.com/franzudev/libcountertop/pkg/runtime/service"
 )
 
 type Registry[T any] struct {

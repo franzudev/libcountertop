@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
 )
 
 func TestAnnexBSplitsAtAccessUnitDelimiters(t *testing.T) {

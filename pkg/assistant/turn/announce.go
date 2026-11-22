@@ -4,11 +4,11 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/ygelfand/libcountertop/pkg/media/pcm"
+	"github.com/franzudev/libcountertop/pkg/media/pcm"
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 func (t *Conversation) announce(a esphome.Announce) {

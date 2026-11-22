@@ -9,7 +9,7 @@ import (
 	esphome "github.com/ygelfand/go-esphome-device"
 	"github.com/ygelfand/go-esphome-device/api"
 
-	"github.com/ygelfand/libcountertop/pkg/assistant/timer"
+	"github.com/franzudev/libcountertop/pkg/assistant/timer"
 )
 
 const harnessTimer = "ctl"

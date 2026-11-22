@@ -7,10 +7,10 @@ import (
 
 	gui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/style"
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/style"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 
-	"github.com/ygelfand/libcountertop/pkg/input/textentry"
+	"github.com/franzudev/libcountertop/pkg/input/textentry"
 )
 
 func TestRemoteFieldRejectsStaleEdits(t *testing.T) {

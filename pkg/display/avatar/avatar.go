@@ -16,9 +16,9 @@ import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 	xdraw "golang.org/x/image/draw"
 
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/people"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/people"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const (

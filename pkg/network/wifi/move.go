@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/wpa"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/network/wpa"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const MoveWindow = 2 * time.Minute

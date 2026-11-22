@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/session"
-	"github.com/ygelfand/libcountertop/pkg/media/rtsp"
+	"github.com/franzudev/libcountertop/pkg/camera/session"
+	"github.com/franzudev/libcountertop/pkg/media/rtsp"
 )
 
 const linger = 15 * time.Second

@@ -1,8 +1,8 @@
 package bt
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/l2cap"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/sdp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/l2cap"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/sdp"
 )
 
 const (

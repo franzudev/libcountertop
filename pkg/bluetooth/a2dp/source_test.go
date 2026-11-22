@@ -3,8 +3,8 @@ package a2dp
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/avrcp"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/avrcp"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
 )
 
 func TestWhatThePlayerIsShown(t *testing.T) {

@@ -3,7 +3,7 @@ package poster
 import (
 	"time"
 
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 var posterConfig config.Poster

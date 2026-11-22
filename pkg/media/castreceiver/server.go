@@ -14,13 +14,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/fetch"
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
-	"github.com/ygelfand/libcountertop/pkg/media/cast/preferences"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/media/urlplayer"
-	mdns "github.com/ygelfand/libcountertop/pkg/network/advertise"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/cast/preferences"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/urlplayer"
+	mdns "github.com/franzudev/libcountertop/pkg/network/advertise"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const describeWait = 5 * time.Second

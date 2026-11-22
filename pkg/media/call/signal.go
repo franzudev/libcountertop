@@ -10,9 +10,9 @@ import (
 	"strconv"
 	"time"
 
-	discovery "github.com/ygelfand/libcountertop/pkg/network/peer"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	discovery "github.com/franzudev/libcountertop/pkg/network/peer"
+	"github.com/franzudev/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const postWait = 5 * time.Second

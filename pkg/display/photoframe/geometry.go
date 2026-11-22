@@ -6,9 +6,9 @@ import (
 	"math"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/media/photos"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/media/photos"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const (

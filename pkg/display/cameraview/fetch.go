@@ -18,7 +18,7 @@ import (
 
 	xdraw "golang.org/x/image/draw"
 
-	"github.com/ygelfand/libcountertop/pkg/display/picture"
+	"github.com/franzudev/libcountertop/pkg/display/picture"
 )
 
 const (

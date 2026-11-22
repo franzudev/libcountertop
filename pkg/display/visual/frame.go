@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
 )
 
 const (

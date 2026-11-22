@@ -10,8 +10,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/control"
-	"github.com/ygelfand/libcountertop/pkg/system/i2c"
+	"github.com/franzudev/libcountertop/pkg/runtime/control"
+	"github.com/franzudev/libcountertop/pkg/system/i2c"
 )
 
 func Command() *cobra.Command {

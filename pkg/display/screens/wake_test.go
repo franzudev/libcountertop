@@ -3,8 +3,8 @@ package screens
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/input/touch"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/input/touch"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestEveryWakeGestureCanBeMade(t *testing.T) {

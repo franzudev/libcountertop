@@ -16,7 +16,7 @@ import (
 
 	"filippo.io/cpace"
 
-	"github.com/ygelfand/libcountertop/pkg/network/peer"
+	"github.com/franzudev/libcountertop/pkg/network/peer"
 )
 
 const (

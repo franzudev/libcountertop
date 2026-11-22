@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/display/apps"
+	"github.com/franzudev/libcountertop/pkg/display/apps"
 )
 
 func App(list func() []apps.App) *cobra.Command {

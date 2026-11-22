@@ -74,11 +74,11 @@ func TestDownloadRefusesAnAssetOverTheLimit(t *testing.T) {
 
 func TestAssetURL(t *testing.T) {
 	got := Asset(
-		"https://github.com/ygelfand/libcountertop/",
+		"https://github.com/franzudev/libcountertop/",
 		"cast-engine-1",
 		"cast-engine-armhf.tar.xz",
 	)
-	want := "https://github.com/ygelfand/libcountertop/releases/download/cast-engine-1/cast-engine-armhf.tar.xz"
+	want := "https://github.com/franzudev/libcountertop/releases/download/cast-engine-1/cast-engine-armhf.tar.xz"
 	if got != want {
 		t.Fatalf("Asset = %q, want %q", got, want)
 	}

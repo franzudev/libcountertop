@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/sdp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/sdp"
 )
 
 func TestMacServiceDiscovery(t *testing.T) {

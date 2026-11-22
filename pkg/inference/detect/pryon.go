@@ -5,8 +5,8 @@ import (
 	"log/slog"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/pryon"
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/inference/pryon"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
 )
 
 type pryonBackend struct {

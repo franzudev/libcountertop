@@ -8,8 +8,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/display/homealarmview"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/homealarm"
+	"github.com/franzudev/libcountertop/pkg/display/homealarmview"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/homealarm"
 )
 
 var errNoView = errors.New("the home alarm screen is not running")

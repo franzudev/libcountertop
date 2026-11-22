@@ -10,7 +10,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/pair"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/pair"
 )
 
 // Connection is an attached Bluetooth Classic peer. The address identifies the

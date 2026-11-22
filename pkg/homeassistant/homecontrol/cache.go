@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
 )
 
 const (

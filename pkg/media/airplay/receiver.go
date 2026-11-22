@@ -17,13 +17,13 @@ import (
 	esphome "github.com/ygelfand/go-esphome-device"
 	"golang.org/x/sys/unix"
 
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/network/advertise"
-	"github.com/ygelfand/libcountertop/pkg/runtime/payload"
-	"github.com/ygelfand/libcountertop/pkg/runtime/service"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/network/advertise"
+	"github.com/franzudev/libcountertop/pkg/runtime/payload"
+	"github.com/franzudev/libcountertop/pkg/runtime/service"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 var (

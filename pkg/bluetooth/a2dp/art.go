@@ -7,11 +7,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	bt "github.com/ygelfand/libcountertop/pkg/bluetooth"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/l2cap"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/obex"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/sdp"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	bt "github.com/franzudev/libcountertop/pkg/bluetooth"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/l2cap"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/obex"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/sdp"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 type session struct {

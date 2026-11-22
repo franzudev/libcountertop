@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	ha "github.com/ygelfand/libcountertop/pkg/homeassistant"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	ha "github.com/franzudev/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/states"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type homeStore struct {

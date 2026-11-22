@@ -6,7 +6,7 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/interaction"
+	"github.com/franzudev/libcountertop/pkg/display/interaction"
 )
 
 const (

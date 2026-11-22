@@ -12,7 +12,7 @@ import (
 	"github.com/bluenviron/mediacommon/v2/pkg/formats/mp4/codecs"
 	"github.com/bluenviron/mediacommon/v2/pkg/formats/pmp4"
 
-	"github.com/ygelfand/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/fetch"
 )
 
 type mp4Track struct {

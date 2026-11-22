@@ -5,8 +5,8 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/thermostat"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/thermostat"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 const easeFor = 450 * time.Millisecond

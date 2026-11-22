@@ -4,8 +4,8 @@ import (
 	"slices"
 	"testing"
 
-	ha "github.com/ygelfand/libcountertop/pkg/homeassistant"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	ha "github.com/franzudev/libcountertop/pkg/homeassistant"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func none(string, string) (string, bool) { return "", false }

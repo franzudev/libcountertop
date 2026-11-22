@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/system/metrics"
+	"github.com/franzudev/libcountertop/pkg/system/metrics"
 )
 
 const streamDepth = 256

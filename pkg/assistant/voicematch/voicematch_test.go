@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/capture"
-	"github.com/ygelfand/libcountertop/pkg/inference/voiceprint"
+	"github.com/franzudev/libcountertop/pkg/audio/capture"
+	"github.com/franzudev/libcountertop/pkg/inference/voiceprint"
 )
 
 type clipEmbedder struct{ clips chan []int16 }

@@ -7,7 +7,7 @@ import (
 	"image/png"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 func pngOf(t *testing.T, w, h int, c color.Color) []byte {

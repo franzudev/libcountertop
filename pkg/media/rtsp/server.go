@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/digest"
+	"github.com/franzudev/libcountertop/pkg/network/digest"
 )
 
 const idle = 60 * time.Second

@@ -6,7 +6,7 @@ import (
 
 	"golang.org/x/exp/shiny/materialdesign/icons"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 func empty() {

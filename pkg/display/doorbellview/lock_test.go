@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/doorbell"
-	"github.com/ygelfand/libcountertop/pkg/display/icons"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/camera/doorbell"
+	"github.com/franzudev/libcountertop/pkg/display/icons"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
 )
 
 func TestUnlockingTakesTwoTaps(t *testing.T) {

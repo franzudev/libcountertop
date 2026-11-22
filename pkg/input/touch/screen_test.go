@@ -8,7 +8,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/geometry"
+	"github.com/franzudev/libcountertop/pkg/display/geometry"
 )
 
 const (

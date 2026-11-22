@@ -3,8 +3,8 @@ package sendspin
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/ducking"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/audio/ducking"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type fakeSink struct {

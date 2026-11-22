@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/homealarm"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/homealarm"
 )
 
 type rehearsal struct {

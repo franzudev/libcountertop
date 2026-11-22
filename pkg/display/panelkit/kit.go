@@ -9,8 +9,8 @@ import (
 	"github.com/go-gui-org/go-glyph"
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/icons"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/display/icons"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
 )
 
 func Hex(v uint32) gogui.Color { return gogui.RGB(uint8(v>>16), uint8(v>>8), uint8(v)) }

@@ -3,7 +3,7 @@ package homeassistant
 import (
 	"errors"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/states"
 )
 
 var (

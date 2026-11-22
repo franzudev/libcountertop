@@ -5,7 +5,7 @@ import (
 	"slices"
 	"strings"
 
-	ha "github.com/ygelfand/libcountertop/pkg/homeassistant"
+	ha "github.com/franzudev/libcountertop/pkg/homeassistant"
 )
 
 type Person struct {

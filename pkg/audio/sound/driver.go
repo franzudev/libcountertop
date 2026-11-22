@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/background"
-	"github.com/ygelfand/libcountertop/pkg/audio/mix"
-	"github.com/ygelfand/libcountertop/pkg/audio/tone"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/audio/background"
+	"github.com/franzudev/libcountertop/pkg/audio/mix"
+	"github.com/franzudev/libcountertop/pkg/audio/tone"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type Player interface {

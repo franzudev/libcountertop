@@ -7,9 +7,9 @@ import (
 	aacpcm "github.com/tphakala/go-aac/pcm"
 	"github.com/ygelfand/reolinkproxy/pkg/codec"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/resample"
-	"github.com/ygelfand/libcountertop/pkg/media/rtc"
-	"github.com/ygelfand/libcountertop/pkg/media/rtsp"
+	"github.com/franzudev/libcountertop/pkg/audio/resample"
+	"github.com/franzudev/libcountertop/pkg/media/rtc"
+	"github.com/franzudev/libcountertop/pkg/media/rtsp"
 )
 
 const (

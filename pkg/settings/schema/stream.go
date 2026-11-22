@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 type Stream string

@@ -5,7 +5,7 @@ import (
 	"image/color"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 type Stop struct {

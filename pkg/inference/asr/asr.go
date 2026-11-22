@@ -12,10 +12,10 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/vad"
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	"github.com/ygelfand/libcountertop/pkg/runtime/payload"
-	"github.com/ygelfand/libcountertop/pkg/runtime/service"
+	"github.com/franzudev/libcountertop/pkg/audio/vad"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/runtime/payload"
+	"github.com/franzudev/libcountertop/pkg/runtime/service"
 )
 
 type Source interface {

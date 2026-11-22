@@ -1,8 +1,8 @@
 package schema
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/audio/ducking"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/audio/ducking"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 type Media struct {

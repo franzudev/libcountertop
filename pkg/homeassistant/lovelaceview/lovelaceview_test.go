@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor"
+	"github.com/franzudev/libcountertop/pkg/display/compositor"
 )
 
 const (

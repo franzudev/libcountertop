@@ -5,8 +5,8 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	tz "github.com/ygelfand/libcountertop/pkg/timezone"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	tz "github.com/franzudev/libcountertop/pkg/timezone"
 )
 
 const FollowHome = "Home Assistant"

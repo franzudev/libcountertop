@@ -8,9 +8,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/a2dp"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/avrcp"
-	"github.com/ygelfand/libcountertop/pkg/runtime/control"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/a2dp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/avrcp"
+	"github.com/franzudev/libcountertop/pkg/runtime/control"
 )
 
 type Sink interface {

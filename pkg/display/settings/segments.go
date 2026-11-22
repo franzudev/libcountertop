@@ -3,7 +3,7 @@ package settings
 import (
 	"slices"
 
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
 )
 
 type labeled interface {

@@ -3,7 +3,7 @@ package cameraview
 import (
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 const unknownShape = 16.0 / 9.0

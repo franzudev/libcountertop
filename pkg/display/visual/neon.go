@@ -11,8 +11,8 @@ import (
 	"github.com/tfriedel6/canvas/backend/softwarebackend"
 	"golang.org/x/image/font/gofont/gomonobold"
 
-	"github.com/ygelfand/libcountertop/pkg/display/glow"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/glow"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 func init() { register(NeonSign, func() Visual { return &neon{r: seeded(1927)} }) }

@@ -11,8 +11,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/peer"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/network/peer"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 type store struct {

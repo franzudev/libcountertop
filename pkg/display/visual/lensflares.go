@@ -4,7 +4,7 @@ import (
 	_ "embed"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 func init() { register(LensFlares, func() Visual { return &lensFlares{tint: [3]float64{1, 1, 1}} }) }

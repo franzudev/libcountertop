@@ -9,10 +9,10 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/actions"
-	"github.com/ygelfand/libcountertop/pkg/match"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/actions"
+	"github.com/franzudev/libcountertop/pkg/match"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 const ActionName = "youtube_tv"

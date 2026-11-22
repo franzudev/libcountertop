@@ -3,7 +3,7 @@ package homealarmview
 import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
 )
 
 func minimalLook(f *face) (gogui.View, skin) {

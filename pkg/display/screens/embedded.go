@@ -1,9 +1,9 @@
 package screens
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/lovelaceview"
-	"github.com/ygelfand/libcountertop/pkg/tessera/firmwareview"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/lovelaceview"
+	"github.com/franzudev/libcountertop/pkg/tessera/firmwareview"
 )
 
 func standby(v *firmwareview.View) func() bool {

@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/geometry"
+	"github.com/franzudev/libcountertop/pkg/display/geometry"
 )
 
 type helper struct {

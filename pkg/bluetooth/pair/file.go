@@ -12,7 +12,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 type File struct {

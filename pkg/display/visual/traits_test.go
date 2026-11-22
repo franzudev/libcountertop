@@ -3,7 +3,7 @@ package visual
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 func TestEveryKindDeclaresItsTraits(t *testing.T) {

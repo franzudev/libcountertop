@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/avdtp"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/avrcp"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/l2cap"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/sbc"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/sdp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/avdtp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/avrcp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/l2cap"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/sbc"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/sdp"
 )
 
 // AVDTP signalling and media are two channels on PSM 0x0019, told apart by order.

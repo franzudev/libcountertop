@@ -4,8 +4,8 @@ package xdgclient
 
 import (
 	"fmt"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
-	wl "github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wlclient"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
+	wl "github.com/franzudev/libcountertop/pkg/display/compositor/internal/wlclient"
 )
 
 const (

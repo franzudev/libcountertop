@@ -3,7 +3,7 @@ package tone
 import (
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const Level = 0.3

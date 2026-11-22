@@ -4,9 +4,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/icons"
-	"github.com/ygelfand/libcountertop/pkg/system/metrics"
-	"github.com/ygelfand/libcountertop/pkg/tessera"
+	"github.com/franzudev/libcountertop/pkg/display/icons"
+	"github.com/franzudev/libcountertop/pkg/system/metrics"
+	"github.com/franzudev/libcountertop/pkg/tessera"
 )
 
 const (

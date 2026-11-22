@@ -7,7 +7,7 @@ import (
 
 	"github.com/ygelfand/reolinkproxy/pkg/baichuan"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type link struct {

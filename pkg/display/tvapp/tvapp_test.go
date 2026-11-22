@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/yttv"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/yttv"
 )
 
 func names(cs []yttv.Channel) string {

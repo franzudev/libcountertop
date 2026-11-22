@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/xsync/internal/list"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/xsync/internal/list"
 )
 
 // A Queue concurrently collects values and returns them in FIFO

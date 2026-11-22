@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/remember"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/runtime/remember"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type weatherSection struct{ v schema.Weather }

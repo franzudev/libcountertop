@@ -7,13 +7,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	voice "github.com/ygelfand/libcountertop/pkg/assistant/turn"
-	"github.com/ygelfand/libcountertop/pkg/display/gpu"
-	"github.com/ygelfand/libcountertop/pkg/display/livevisual"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/display/visual"
-	"github.com/ygelfand/libcountertop/pkg/display/visualview"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	voice "github.com/franzudev/libcountertop/pkg/assistant/turn"
+	"github.com/franzudev/libcountertop/pkg/display/gpu"
+	"github.com/franzudev/libcountertop/pkg/display/livevisual"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/visual"
+	"github.com/franzudev/libcountertop/pkg/display/visualview"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const (

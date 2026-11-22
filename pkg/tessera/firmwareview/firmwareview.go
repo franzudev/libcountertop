@@ -13,12 +13,12 @@ import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	backend "github.com/ygelfand/libcountertop/pkg/display/gogui"
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/tessera/firmware"
-	"github.com/ygelfand/libcountertop/pkg/tessera/firmwarerelay"
+	backend "github.com/franzudev/libcountertop/pkg/display/gogui"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/tessera/firmware"
+	"github.com/franzudev/libcountertop/pkg/tessera/firmwarerelay"
 )
 
 type Options struct {

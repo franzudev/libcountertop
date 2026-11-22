@@ -5,8 +5,8 @@ import (
 	"image"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
 )
 
 type Controls interface {

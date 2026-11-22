@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/wpa"
+	"github.com/franzudev/libcountertop/pkg/network/wpa"
 )
 
 type moves struct {

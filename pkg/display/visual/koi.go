@@ -5,8 +5,8 @@ import (
 	"image"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/display/glow"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/glow"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 func init() { register(KoiPond, func() Visual { return newKoi() }) }

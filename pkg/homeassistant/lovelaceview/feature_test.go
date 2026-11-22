@@ -3,7 +3,7 @@ package lovelaceview
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
 )
 
 func TestANewHomeAssistantVersionReloadsTheDashboard(t *testing.T) {

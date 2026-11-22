@@ -14,8 +14,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	discovery "github.com/ygelfand/libcountertop/pkg/network/peer"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	discovery "github.com/franzudev/libcountertop/pkg/network/peer"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const (

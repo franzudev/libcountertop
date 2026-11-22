@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/visual"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/visual"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestFailedSaveRestoresActiveSettings(t *testing.T) {

@@ -11,7 +11,7 @@ import (
 
 	xdraw "golang.org/x/image/draw"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 type Thumbs struct {

@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/background"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/l2cap"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/pair"
+	"github.com/franzudev/libcountertop/pkg/audio/background"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/l2cap"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/pair"
 )
 
 func connectTestSources(t *testing.T) (*Sink, *connections) {

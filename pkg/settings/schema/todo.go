@@ -5,7 +5,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 type Todo struct {

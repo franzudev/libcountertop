@@ -5,7 +5,7 @@ import (
 	"slices"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/hook"
 )
 
 type Tab struct {

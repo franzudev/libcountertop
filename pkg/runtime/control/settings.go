@@ -5,7 +5,7 @@ import (
 	"slices"
 	"strings"
 
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 type Setting[T any] struct {

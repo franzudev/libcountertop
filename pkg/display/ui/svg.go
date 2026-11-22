@@ -11,7 +11,7 @@ import (
 	"github.com/srwiley/rasterx"
 	"golang.org/x/exp/shiny/iconvg"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 var vgMagic = []byte{0x89, 'I', 'V', 'G'}

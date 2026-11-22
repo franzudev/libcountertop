@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/media/photoprism"
+	"github.com/franzudev/libcountertop/pkg/media/photoprism"
 )
 
 func fake(t *testing.T, key string) (*photoprism.Client, *photoprism.Client, *counts) {

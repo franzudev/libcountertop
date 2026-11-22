@@ -6,7 +6,7 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/noise"
+	"github.com/franzudev/libcountertop/pkg/audio/noise"
 )
 
 type fakeStream struct {

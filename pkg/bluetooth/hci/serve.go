@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/pair"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/pair"
 )
 
 type Classic interface {

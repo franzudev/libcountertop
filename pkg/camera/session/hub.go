@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/camerafeed"
+	"github.com/franzudev/libcountertop/pkg/camera/camerafeed"
 )
 
 var ErrMuted = errors.New("livecam: the camera is off while the microphones are muted")

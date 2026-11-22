@@ -5,9 +5,9 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/states"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type memorySection struct{ cfg schema.Doorbell }

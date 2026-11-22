@@ -9,7 +9,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/people"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/people"
 )
 
 const pictureMost = 4 << 20

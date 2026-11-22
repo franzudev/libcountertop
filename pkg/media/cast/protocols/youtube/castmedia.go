@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
 )
 
 const castCommands = 311299

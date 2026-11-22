@@ -3,7 +3,7 @@ package ui
 import (
 	"image"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 func Shift(s Surface, dx, dy int) Surface { return shifted{to: s, dx: dx, dy: dy} }

@@ -21,7 +21,7 @@ import (
 	"github.com/mdlayher/wifi"
 	"golang.org/x/sys/unix"
 
-	sharedwifi "github.com/ygelfand/libcountertop/pkg/network/wifi"
+	sharedwifi "github.com/franzudev/libcountertop/pkg/network/wifi"
 )
 
 const (

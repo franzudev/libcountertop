@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/clockview"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/clockview"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestTheRingEmptiesClockwiseFromTwelve(t *testing.T) {

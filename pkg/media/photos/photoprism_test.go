@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/photoprism"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/media/photoprism"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestPhotoprismStatusGates(t *testing.T) {

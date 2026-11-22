@@ -1,8 +1,8 @@
 package idleview
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/display/drawer"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/display/drawer"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 func (i *Idle) Rail() drawer.Entry {

@@ -7,9 +7,9 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
-	"github.com/ygelfand/libcountertop/pkg/inference/wakeassets"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/inference/wakeassets"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const StopSlot = 100

@@ -11,7 +11,7 @@ import (
 
 	"github.com/ulikunitz/xz"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
 )
 
 func TestIDsAndPhrasesComeFromTheModelFolder(t *testing.T) {

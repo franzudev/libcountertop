@@ -5,7 +5,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
 )
 
 const music = "2DB7CC49"

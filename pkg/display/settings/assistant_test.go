@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/say"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type wakeMemory struct{ wake config.Wake }

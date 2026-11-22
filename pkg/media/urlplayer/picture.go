@@ -14,8 +14,8 @@ import (
 	"github.com/bluenviron/mediacommon/v2/pkg/codecs/h264"
 	"github.com/bluenviron/mediacommon/v2/pkg/codecs/h265"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cenc"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/cenc"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
 )
 
 const (

@@ -4,10 +4,10 @@ import (
 	"math"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	ha "github.com/ygelfand/libcountertop/pkg/homeassistant"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/homecontrol"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	ha "github.com/franzudev/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/homecontrol"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func tree() *homecontrol.Ring {

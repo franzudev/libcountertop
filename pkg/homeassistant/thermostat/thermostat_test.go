@@ -10,9 +10,9 @@ import (
 
 	"github.com/ygelfand/go-esphome-device/api"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/states"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/states"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type section struct {

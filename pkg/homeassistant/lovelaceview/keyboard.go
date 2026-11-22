@@ -3,7 +3,7 @@ package lovelaceview
 import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast/engine"
+	"github.com/franzudev/libcountertop/pkg/media/cast/engine"
 )
 
 type key struct {

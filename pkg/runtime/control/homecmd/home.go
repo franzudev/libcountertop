@@ -8,8 +8,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
-	harness "github.com/ygelfand/libcountertop/pkg/runtime/control"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
+	harness "github.com/franzudev/libcountertop/pkg/runtime/control"
 )
 
 const haWait = 10 * time.Second

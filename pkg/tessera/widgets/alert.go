@@ -1,9 +1,9 @@
 package widgets
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/display/message"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/tessera"
+	"github.com/franzudev/libcountertop/pkg/display/message"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/tessera"
 )
 
 func Alerter(m *message.Messages) (show func(tessera.Alert), clear func()) {

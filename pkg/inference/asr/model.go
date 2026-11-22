@@ -6,12 +6,12 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ygelfand/libcountertop/pkg/network/releases"
-	"github.com/ygelfand/libcountertop/pkg/runtime/payload"
+	"github.com/franzudev/libcountertop/pkg/network/releases"
+	"github.com/franzudev/libcountertop/pkg/runtime/payload"
 )
 
 const (
-	repo   = "https://github.com/ygelfand/libcountertop"
+	repo   = "https://github.com/franzudev/libcountertop"
 	tag    = "kroko-en-1"
 	asset  = "kroko-en-q24-v1.bin"
 	sum    = "52673e74be9b44948640c6652ce8fd5b2b1b1faa4a66f3f8e43105405a38ce9f"

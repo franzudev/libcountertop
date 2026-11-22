@@ -10,12 +10,12 @@ import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 	_ "golang.org/x/image/webp"
 
-	"github.com/ygelfand/libcountertop/pkg/display/picture"
-	"github.com/ygelfand/libcountertop/pkg/display/style"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	"github.com/ygelfand/libcountertop/pkg/media/photos"
+	"github.com/franzudev/libcountertop/pkg/display/picture"
+	"github.com/franzudev/libcountertop/pkg/display/style"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/media/photos"
 )
 
 const (

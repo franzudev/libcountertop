@@ -3,9 +3,9 @@ package homecontrol
 import (
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/apps"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/apps"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type Full struct{ Sel Selection }

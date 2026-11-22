@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/input/textentry"
+	"github.com/franzudev/libcountertop/pkg/input/textentry"
 
-	"github.com/ygelfand/libcountertop/pkg/input/touch"
+	"github.com/franzudev/libcountertop/pkg/input/touch"
 )
 
 func TestKeyboardDataUsesExistingInputChannel(t *testing.T) {

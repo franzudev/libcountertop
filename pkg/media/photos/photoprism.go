@@ -8,9 +8,9 @@ import (
 	"math/rand/v2"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/photoprism"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/media/photoprism"
+	"github.com/franzudev/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type photoprismSource struct{}

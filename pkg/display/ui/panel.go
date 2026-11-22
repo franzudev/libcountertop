@@ -3,10 +3,10 @@ package ui
 import (
 	"image"
 
-	"github.com/ygelfand/libcountertop/pkg/display/geometry"
-	display "github.com/ygelfand/libcountertop/pkg/display/panel"
+	"github.com/franzudev/libcountertop/pkg/display/geometry"
+	display "github.com/franzudev/libcountertop/pkg/display/panel"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 type panel struct{ p *display.Panel }

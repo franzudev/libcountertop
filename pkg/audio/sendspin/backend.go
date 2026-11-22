@@ -5,10 +5,10 @@ import (
 
 	"github.com/Sendspin/sendspin-go/pkg/protocol"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/background"
-	"github.com/ygelfand/libcountertop/pkg/audio/volume"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/audio/background"
+	"github.com/franzudev/libcountertop/pkg/audio/volume"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 const Rate = 48000

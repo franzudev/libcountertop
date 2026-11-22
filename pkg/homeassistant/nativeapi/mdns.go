@@ -6,7 +6,7 @@ import (
 
 	"github.com/ygelfand/go-esphome-device/mdns"
 
-	"github.com/ygelfand/libcountertop/pkg/network/advertise"
+	"github.com/franzudev/libcountertop/pkg/network/advertise"
 )
 
 // The mdns library advertises loopback when given no addresses.

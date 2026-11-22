@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/voiceprint"
+	"github.com/franzudev/libcountertop/pkg/inference/voiceprint"
 )
 
 const (

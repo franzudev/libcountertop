@@ -3,7 +3,7 @@ package idleview
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
 )
 
 func TestCloseJoinsAndAllowsReopen(t *testing.T) {

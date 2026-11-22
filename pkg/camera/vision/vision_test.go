@@ -9,7 +9,7 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/session"
+	"github.com/franzudev/libcountertop/pkg/camera/session"
 )
 
 func red(w, h int) []byte {

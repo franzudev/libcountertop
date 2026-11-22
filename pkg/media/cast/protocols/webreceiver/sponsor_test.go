@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/sponsorblock"
+	"github.com/franzudev/libcountertop/pkg/media/sponsorblock"
 )
 
 func TestTheVideoIsReadFromThePagesAddress(t *testing.T) {

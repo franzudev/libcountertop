@@ -10,8 +10,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/capture"
-	"github.com/ygelfand/libcountertop/pkg/inference/asr"
+	"github.com/franzudev/libcountertop/pkg/audio/capture"
+	"github.com/franzudev/libcountertop/pkg/inference/asr"
 )
 
 const (

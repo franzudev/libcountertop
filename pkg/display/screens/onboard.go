@@ -4,12 +4,12 @@ import (
 	"github.com/go-gui-org/go-glyph"
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/web"
+	"github.com/franzudev/libcountertop/pkg/runtime/web"
 
-	"github.com/ygelfand/libcountertop/pkg/display/clockview"
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/display/clockview"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 const (

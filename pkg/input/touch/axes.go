@@ -3,7 +3,7 @@ package touch
 import (
 	"os"
 
-	"github.com/ygelfand/libcountertop/pkg/input"
+	"github.com/franzudev/libcountertop/pkg/input"
 )
 
 type span struct{ lo, hi int32 }

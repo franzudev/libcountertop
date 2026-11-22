@@ -3,7 +3,7 @@ package callvideo
 import (
 	"testing"
 
-	display "github.com/ygelfand/libcountertop/pkg/display/geometry"
+	display "github.com/franzudev/libcountertop/pkg/display/geometry"
 )
 
 func inside(r, box display.Rect) bool {

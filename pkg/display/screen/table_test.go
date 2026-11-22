@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func table() *Table { return NewTable(func() string { return schema.UISizeLarge }) }

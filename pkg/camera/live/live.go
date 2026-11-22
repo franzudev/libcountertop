@@ -9,12 +9,12 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/camerafeed"
-	"github.com/ygelfand/libcountertop/pkg/camera/card"
-	"github.com/ygelfand/libcountertop/pkg/camera/session"
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/camera/camerafeed"
+	"github.com/franzudev/libcountertop/pkg/camera/card"
+	"github.com/franzudev/libcountertop/pkg/camera/session"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const (

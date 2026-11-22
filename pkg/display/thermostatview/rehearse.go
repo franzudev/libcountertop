@@ -3,7 +3,7 @@ package thermostatview
 import (
 	"slices"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/thermostat"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/thermostat"
 )
 
 func (v *View) Rehearse(n int) {

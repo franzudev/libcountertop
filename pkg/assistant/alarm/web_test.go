@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 func TestTheWebPageAddsEnablesAndDeletesAlarms(t *testing.T) {

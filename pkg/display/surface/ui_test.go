@@ -1,5 +1,5 @@
 package surface
 
-import "github.com/ygelfand/libcountertop/pkg/display/gogui"
+import "github.com/franzudev/libcountertop/pkg/display/gogui"
 
 var _ gogui.Sink = UILayer{}

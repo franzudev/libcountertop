@@ -8,8 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/display/panel"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/display/panel"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
 )
 
 func Shot(d *panel.Driver, path string) error {

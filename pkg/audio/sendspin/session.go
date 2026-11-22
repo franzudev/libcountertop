@@ -13,7 +13,7 @@ import (
 	ssync "github.com/Sendspin/sendspin-go/pkg/sync"
 	"github.com/gorilla/websocket"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 // Clock sync runs in bursts, matching the reference player.

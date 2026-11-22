@@ -1,7 +1,7 @@
 package ringsview
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/homecontrol"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/homecontrol"
 )
 
 const deviceWidth = 2.2

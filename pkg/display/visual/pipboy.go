@@ -11,8 +11,8 @@ import (
 	"github.com/tfriedel6/canvas/backend/softwarebackend"
 	"golang.org/x/image/font/opentype"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 const (

@@ -3,7 +3,7 @@ package wifi
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/system/metrics"
+	"github.com/franzudev/libcountertop/pkg/system/metrics"
 )
 
 func TestSignalPollReadsTheRSSILine(t *testing.T) {

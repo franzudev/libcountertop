@@ -11,10 +11,10 @@ import (
 	esphome "github.com/ygelfand/go-esphome-device"
 	"github.com/ygelfand/go-esphome-device/api"
 
-	"github.com/ygelfand/libcountertop/pkg/assistant/activity"
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/assistant/activity"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 // Home Assistant's reply to satellites that lost the wake race: "Duplicate wake-up detected for Glados".

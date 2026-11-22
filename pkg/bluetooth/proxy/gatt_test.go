@@ -12,9 +12,9 @@ import (
 	"github.com/ygelfand/go-esphome-device/api"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/gatt"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/hci"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/smp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/gatt"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/hci"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/smp"
 )
 
 type homeAssistant struct {

@@ -3,9 +3,9 @@ package screens
 import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/idleview"
-	"github.com/ygelfand/libcountertop/pkg/display/timerview"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/idleview"
+	"github.com/franzudev/libcountertop/pkg/display/timerview"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func (a *App) timer(w *gogui.Window) gogui.View {

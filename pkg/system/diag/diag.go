@@ -8,14 +8,14 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
-	netaddress "github.com/ygelfand/libcountertop/pkg/network/address"
-	"github.com/ygelfand/libcountertop/pkg/runtime/collector"
-	"github.com/ygelfand/libcountertop/pkg/say"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
-	"github.com/ygelfand/libcountertop/pkg/system/metrics"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
+	netaddress "github.com/franzudev/libcountertop/pkg/network/address"
+	"github.com/franzudev/libcountertop/pkg/runtime/collector"
+	"github.com/franzudev/libcountertop/pkg/say"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/system/metrics"
 )
 
 const Group setting.Group = "Diagnostics"

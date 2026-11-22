@@ -15,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
 )
 
 func bundleBody(t *testing.T, k *keys, starts ...time.Time) []byte {

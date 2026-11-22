@@ -13,13 +13,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/releases"
-	"github.com/ygelfand/libcountertop/pkg/runtime/payload"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/network/releases"
+	"github.com/franzudev/libcountertop/pkg/runtime/payload"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const (
-	repo       = "https://github.com/ygelfand/libcountertop"
+	repo       = "https://github.com/franzudev/libcountertop"
 	Tag        = "engine-full-1"
 	asset      = "engine-full-armhf.tar.xz"
 	sum        = "ee70db08ab23ffa6b0b05e33dfdac769f3f729e8d213c2c3ee3e3461257d455a"

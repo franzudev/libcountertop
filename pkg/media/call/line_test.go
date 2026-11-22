@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"testing"
 
-	discovery "github.com/ygelfand/libcountertop/pkg/network/peer"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	discovery "github.com/franzudev/libcountertop/pkg/network/peer"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type homeCalls struct {

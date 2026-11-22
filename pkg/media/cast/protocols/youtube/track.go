@@ -6,9 +6,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/media/sponsorblock"
-	"github.com/ygelfand/libcountertop/pkg/media/youtube"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/sponsorblock"
+	"github.com/franzudev/libcountertop/pkg/media/youtube"
 )
 
 type track struct {

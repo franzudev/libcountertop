@@ -3,7 +3,7 @@ package visualinput
 import (
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/analysis"
+	"github.com/franzudev/libcountertop/pkg/audio/analysis"
 )
 
 const LiftMax = 40

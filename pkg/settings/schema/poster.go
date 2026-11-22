@@ -3,7 +3,7 @@ package schema
 import (
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 type Poster struct {

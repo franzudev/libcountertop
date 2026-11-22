@@ -4,8 +4,8 @@ package fractionalscale
 
 import (
 	"fmt"
-	wl "github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wayland"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
+	wl "github.com/franzudev/libcountertop/pkg/display/compositor/internal/wayland"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
 )
 
 const (

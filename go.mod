@@ -1,4 +1,4 @@
-module github.com/ygelfand/libcountertop
+module github.com/franzudev/libcountertop
 
 go 1.27.0
 

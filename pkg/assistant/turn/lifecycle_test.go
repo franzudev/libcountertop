@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/hook"
 )
 
 func TestOldReplyCannotEndOrDisarmNewReply(t *testing.T) {

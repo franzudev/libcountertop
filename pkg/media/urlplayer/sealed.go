@@ -8,7 +8,7 @@ import (
 	"log/slog"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cenc"
+	"github.com/franzudev/libcountertop/pkg/media/cenc"
 )
 
 const sealedRead = 4096

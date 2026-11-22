@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestTimerTableExcludesMessageControls(t *testing.T) {

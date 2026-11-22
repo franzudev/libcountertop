@@ -3,7 +3,7 @@ package wakesettings
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func portable(t *testing.T) (*Settings, *memory) {

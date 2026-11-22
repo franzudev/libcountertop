@@ -5,7 +5,7 @@ import (
 	"image"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 func init() { register(LavaLamp, func() Visual { return &lavaLamp{r: seeded(1963)} }) }

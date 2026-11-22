@@ -1,6 +1,6 @@
 package clockview
 
-import "github.com/ygelfand/libcountertop/pkg/settings/schema"
+import "github.com/franzudev/libcountertop/pkg/settings/schema"
 
 type Face struct {
 	Name      schema.Face

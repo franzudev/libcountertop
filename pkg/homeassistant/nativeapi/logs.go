@@ -8,7 +8,7 @@ import (
 
 	proto "github.com/ygelfand/go-esphome-device/api"
 
-	"github.com/ygelfand/libcountertop/pkg/android/logd"
+	"github.com/franzudev/libcountertop/pkg/android/logd"
 )
 
 const waitForReader = time.Second

@@ -3,10 +3,10 @@ package settings
 import (
 	"log/slog"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/a2dp"
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/a2dp"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 func BluetoothSpeakerPage(sink *a2dp.Sink) *shell.Page {

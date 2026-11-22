@@ -6,7 +6,7 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	discovery "github.com/ygelfand/libcountertop/pkg/network/peer"
+	discovery "github.com/franzudev/libcountertop/pkg/network/peer"
 )
 
 const homeCaller = "homeassistant"

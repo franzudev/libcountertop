@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/radar"
+	"github.com/franzudev/libcountertop/pkg/radar"
 )
 
 func TestAPickedFrameStaysPutWhileFramesArrive(t *testing.T) {

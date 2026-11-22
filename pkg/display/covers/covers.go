@@ -13,8 +13,8 @@ import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 	xdraw "golang.org/x/image/draw"
 
-	"github.com/ygelfand/libcountertop/pkg/display/picture"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/display/picture"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const (

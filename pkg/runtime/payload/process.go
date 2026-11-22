@@ -11,7 +11,7 @@ import (
 	"regexp"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/oom"
+	"github.com/franzudev/libcountertop/pkg/runtime/oom"
 )
 
 type Command struct {

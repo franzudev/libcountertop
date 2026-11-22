@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ygelfand/libcountertop/pkg/network/releases"
+	"github.com/franzudev/libcountertop/pkg/network/releases"
 )
 
 const (

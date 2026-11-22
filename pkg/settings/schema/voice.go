@@ -3,7 +3,7 @@ package schema
 import (
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 type Chime string

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"log/slog"
 
-	"github.com/ygelfand/libcountertop/pkg/media/rtc"
+	"github.com/franzudev/libcountertop/pkg/media/rtc"
 )
 
 type Size struct {

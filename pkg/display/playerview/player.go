@@ -8,12 +8,12 @@ import (
 
 	gogui "github.com/go-gui-org/go-gui/gui"
 
-	"github.com/ygelfand/libcountertop/pkg/display/icons"
-	"github.com/ygelfand/libcountertop/pkg/display/interaction"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	videoplayer "github.com/ygelfand/libcountertop/pkg/display/videopage"
-	"github.com/ygelfand/libcountertop/pkg/display/widgets"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/display/icons"
+	"github.com/franzudev/libcountertop/pkg/display/interaction"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	videoplayer "github.com/franzudev/libcountertop/pkg/display/videopage"
+	"github.com/franzudev/libcountertop/pkg/display/widgets"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
 )
 
 const (

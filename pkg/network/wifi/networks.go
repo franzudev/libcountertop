@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/wpa"
+	"github.com/franzudev/libcountertop/pkg/network/wpa"
 )
 
 const scanMost = 10 * time.Second

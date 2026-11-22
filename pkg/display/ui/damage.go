@@ -3,7 +3,7 @@ package ui
 import (
 	"image"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 func Within(s Surface, to Rect) Surface { return within{under: s, to: to} }

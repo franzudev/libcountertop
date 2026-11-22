@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/tflite"
+	"github.com/franzudev/libcountertop/pkg/inference/tflite"
 )
 
 func TestMelModelShapes(t *testing.T) {

@@ -1,8 +1,8 @@
 package musicassistant
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/fetch"
-	"github.com/ygelfand/libcountertop/pkg/runtime/product"
+	"github.com/franzudev/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/runtime/product"
 )
 
 func BuildMusic(p product.Context, player func() string) *Music {

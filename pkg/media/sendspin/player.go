@@ -10,12 +10,12 @@ import (
 	"github.com/Sendspin/sendspin-go/pkg/protocol"
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	core "github.com/ygelfand/libcountertop/pkg/audio/sendspin"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	core "github.com/franzudev/libcountertop/pkg/audio/sendspin"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 type Player struct {

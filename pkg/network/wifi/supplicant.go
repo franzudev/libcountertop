@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/system/metrics"
+	"github.com/franzudev/libcountertop/pkg/system/metrics"
 )
 
 type Control struct{ conn net.Conn }

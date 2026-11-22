@@ -14,8 +14,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	netaddress "github.com/ygelfand/libcountertop/pkg/network/address"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	netaddress "github.com/franzudev/libcountertop/pkg/network/address"
 )
 
 const (

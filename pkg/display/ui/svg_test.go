@@ -4,7 +4,7 @@ import (
 	"image"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 const ring = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

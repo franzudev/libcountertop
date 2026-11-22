@@ -3,7 +3,7 @@ package detect
 import (
 	"log/slog"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
 )
 
 type Slots interface {

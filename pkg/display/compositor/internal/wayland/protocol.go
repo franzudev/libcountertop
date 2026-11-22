@@ -4,7 +4,7 @@ package wayland
 
 import (
 	"fmt"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
 	"os"
 )
 

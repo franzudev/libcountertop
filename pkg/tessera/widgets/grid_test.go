@@ -3,9 +3,9 @@ package widgets
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/tessera"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/tessera"
 )
 
 func TestSlotsLandOnTheirPageAndCell(t *testing.T) {

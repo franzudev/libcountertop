@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/thermostat"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/thermostat"
 )
 
 func TestTilesFillTheScreenWithFewerBeingBigger(t *testing.T) {

@@ -9,10 +9,10 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/videopage"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/media/playout"
-	video "github.com/ygelfand/libcountertop/pkg/media/videostream"
+	"github.com/franzudev/libcountertop/pkg/display/videopage"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/playout"
+	video "github.com/franzudev/libcountertop/pkg/media/videostream"
 )
 
 type webm []byte

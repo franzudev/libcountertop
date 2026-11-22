@@ -1,8 +1,8 @@
 package call
 
 import (
-	sharedstatus "github.com/ygelfand/libcountertop/pkg/media/callstatus"
-	"github.com/ygelfand/libcountertop/pkg/media/rtc"
+	sharedstatus "github.com/franzudev/libcountertop/pkg/media/callstatus"
+	"github.com/franzudev/libcountertop/pkg/media/rtc"
 )
 
 func (c *Calls) statusController() sharedstatus.Controller[*session] {

@@ -11,7 +11,7 @@ import (
 	gogui "github.com/go-gui-org/go-gui/gui"
 	"golang.org/x/image/font/gofont/goregular"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const (

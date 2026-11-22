@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/network/peer"
+	"github.com/franzudev/libcountertop/pkg/network/peer"
 )
 
 func PeersCommand(peers func() []peer.Peer) *cobra.Command {

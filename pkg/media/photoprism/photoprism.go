@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/fetch"
 )
 
 const maxPicture = 64 << 20

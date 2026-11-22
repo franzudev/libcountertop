@@ -6,10 +6,10 @@ import (
 	"github.com/bluenviron/mediacommon/v2/pkg/codecs/h264"
 	"github.com/bluenviron/mediacommon/v2/pkg/codecs/h265"
 
-	display "github.com/ygelfand/libcountertop/pkg/display/geometry"
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
-	"github.com/ygelfand/libcountertop/pkg/media/call"
-	"github.com/ygelfand/libcountertop/pkg/media/rtc"
+	display "github.com/franzudev/libcountertop/pkg/display/geometry"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/media/call"
+	"github.com/franzudev/libcountertop/pkg/media/rtc"
 )
 
 type Stream struct{ l *layer }

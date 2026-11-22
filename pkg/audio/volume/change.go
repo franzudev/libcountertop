@@ -1,8 +1,8 @@
 package volume
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const Step = 5

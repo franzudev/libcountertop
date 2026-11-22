@@ -1,6 +1,6 @@
 package homecontrol
 
-import "github.com/ygelfand/libcountertop/pkg/display/dashboard"
+import "github.com/franzudev/libcountertop/pkg/display/dashboard"
 
 func (e *Engine) DashboardTabs() []dashboard.Tab {
 	var out []dashboard.Tab

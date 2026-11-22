@@ -6,7 +6,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/address"
+	"github.com/franzudev/libcountertop/pkg/network/address"
 )
 
 const retry = 3 * time.Second

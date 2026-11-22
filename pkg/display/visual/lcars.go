@@ -11,8 +11,8 @@ import (
 	"github.com/tfriedel6/canvas/backend/softwarebackend"
 	"golang.org/x/image/font/gofont/gomedium"
 
-	fx "github.com/ygelfand/libcountertop/pkg/display/glow"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	fx "github.com/franzudev/libcountertop/pkg/display/glow"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 // Ported from anchorapp100/ha-visualisations src/28-lcars.js (MIT).

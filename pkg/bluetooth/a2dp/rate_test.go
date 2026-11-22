@@ -3,9 +3,9 @@ package a2dp
 import (
 	"testing"
 
-	speaker "github.com/ygelfand/libcountertop/pkg/audio/resample"
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/sbc"
-	fixtures "github.com/ygelfand/libcountertop/pkg/bluetooth/sbc/testdata"
+	speaker "github.com/franzudev/libcountertop/pkg/audio/resample"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/sbc"
+	fixtures "github.com/franzudev/libcountertop/pkg/bluetooth/sbc/testdata"
 )
 
 func TestThePlayPathFeedsTheCardAtItsOwnRate(t *testing.T) {

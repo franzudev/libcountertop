@@ -3,8 +3,8 @@ package assistant
 import (
 	"testing"
 
-	voice "github.com/ygelfand/libcountertop/pkg/assistant/turn"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	voice "github.com/franzudev/libcountertop/pkg/assistant/turn"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 type words schema.Wake

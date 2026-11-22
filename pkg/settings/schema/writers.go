@@ -5,8 +5,8 @@ import (
 	"maps"
 	"slices"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/ducking"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/audio/ducking"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 type APIWriter struct{ s storage.Section[API] }

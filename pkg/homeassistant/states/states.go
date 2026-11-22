@@ -11,7 +11,7 @@ import (
 	"github.com/ygelfand/go-esphome-device/api"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/ygelfand/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/hook"
 )
 
 type States struct {

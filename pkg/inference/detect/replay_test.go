@@ -10,7 +10,7 @@ import (
 
 	"github.com/zserge/microwakeword"
 
-	assets "github.com/ygelfand/libcountertop/pkg/inference/wakeassets"
+	assets "github.com/franzudev/libcountertop/pkg/inference/wakeassets"
 )
 
 func TestReplayStopScores(t *testing.T) {

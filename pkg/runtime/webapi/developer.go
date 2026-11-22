@@ -13,7 +13,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/android/logd"
+	"github.com/franzudev/libcountertop/pkg/android/logd"
 )
 
 type actionArg struct {

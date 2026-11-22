@@ -3,7 +3,7 @@ package upsample
 import (
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/resample"
+	"github.com/franzudev/libcountertop/pkg/audio/resample"
 )
 
 const VoiceRate = 16000

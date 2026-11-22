@@ -10,11 +10,11 @@ import (
 	"sync/atomic"
 	"syscall"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/fractionalscale"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/viewporter"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wayland"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/xdg"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/fractionalscale"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/viewporter"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wayland"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/xdg"
 )
 
 const (

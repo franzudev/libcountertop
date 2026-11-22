@@ -3,7 +3,7 @@ package voicematchview
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/assistant/voicematch"
+	"github.com/franzudev/libcountertop/pkg/assistant/voicematch"
 )
 
 func TestEveryStageSaysSomething(t *testing.T) {

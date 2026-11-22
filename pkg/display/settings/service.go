@@ -3,9 +3,9 @@ package settings
 import (
 	"log/slog"
 
-	"github.com/ygelfand/libcountertop/pkg/display/menu"
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/display/menu"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 func ServicePage[T any](title string, c *setting.Controls[T]) *shell.Page {

@@ -11,11 +11,11 @@ import (
 
 	"github.com/pion/webrtc/v4"
 
-	"github.com/ygelfand/libcountertop/pkg/display/callvideo"
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant"
-	"github.com/ygelfand/libcountertop/pkg/media/rtc"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/display/callvideo"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/homeassistant"
+	"github.com/franzudev/libcountertop/pkg/media/rtc"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 const (

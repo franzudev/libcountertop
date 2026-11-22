@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/hci"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/hci"
 )
 
 func TestQueueNeverWaitsForHomeAssistant(t *testing.T) {

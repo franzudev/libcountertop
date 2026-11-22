@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cast"
-	"github.com/ygelfand/libcountertop/pkg/media/cast/preferences"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/cast"
+	"github.com/franzudev/libcountertop/pkg/media/cast/preferences"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
 )
 
 func TestLoungeValuesReadAsStrings(t *testing.T) {

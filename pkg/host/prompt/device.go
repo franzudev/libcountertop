@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/ygelfand/libcountertop/pkg/host/adb"
+	"github.com/franzudev/libcountertop/pkg/host/adb"
 )
 
 func Serial(

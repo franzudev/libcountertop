@@ -3,8 +3,8 @@ package detect
 import (
 	"log/slog"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/gemini"
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/inference/gemini"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
 )
 
 type geminiBackend struct {

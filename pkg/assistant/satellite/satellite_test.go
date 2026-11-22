@@ -6,7 +6,7 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/assistant/turn"
+	"github.com/franzudev/libcountertop/pkg/assistant/turn"
 )
 
 type fakeTimers struct{ ringing, stopped bool }

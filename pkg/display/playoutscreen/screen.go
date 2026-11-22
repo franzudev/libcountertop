@@ -11,13 +11,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	"github.com/ygelfand/libcountertop/pkg/display/videopage"
-	"github.com/ygelfand/libcountertop/pkg/media/cenc"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/media/playout"
-	video "github.com/ygelfand/libcountertop/pkg/media/videostream"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/videopage"
+	"github.com/franzudev/libcountertop/pkg/media/cenc"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/playout"
+	video "github.com/franzudev/libcountertop/pkg/media/videostream"
 )
 
 const (

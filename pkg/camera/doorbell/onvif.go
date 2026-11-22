@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/onvif"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/camera/onvif"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func onvifDevice(ctx context.Context, door schema.DoorbellDoor) (*onvif.Client, error) {

@@ -7,7 +7,7 @@ import (
 
 	"github.com/tfriedel6/canvas"
 
-	fx "github.com/ygelfand/libcountertop/pkg/display/glow"
+	fx "github.com/franzudev/libcountertop/pkg/display/glow"
 )
 
 func crop(img *image.RGBA, r image.Rectangle) *image.RGBA {

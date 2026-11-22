@@ -10,8 +10,8 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/capture"
-	"github.com/ygelfand/libcountertop/pkg/inference/voiceprint"
+	"github.com/franzudev/libcountertop/pkg/audio/capture"
+	"github.com/franzudev/libcountertop/pkg/inference/voiceprint"
 )
 
 func newService(t *testing.T) *Service {

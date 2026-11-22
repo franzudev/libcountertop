@@ -8,9 +8,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/display/thermostatview"
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/thermostat"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/thermostatview"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/thermostat"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 var errNoView = errors.New("the thermostat screen is not running")

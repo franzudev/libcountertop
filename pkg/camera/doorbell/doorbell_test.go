@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/camera/onvif"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/camera/onvif"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func TestMuLawMatchesTheG711Table(t *testing.T) {

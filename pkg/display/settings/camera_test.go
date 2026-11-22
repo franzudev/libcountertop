@@ -3,8 +3,8 @@ package settings
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/shell"
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	"github.com/franzudev/libcountertop/pkg/display/shell"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 func TestCameraNavigationReusesPreviewPages(t *testing.T) {

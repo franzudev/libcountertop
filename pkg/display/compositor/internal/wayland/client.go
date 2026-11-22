@@ -6,10 +6,10 @@ import (
 	"io"
 	"net"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/debug"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/objstore"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/xsync"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/debug"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/objstore"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/xsync"
 )
 
 // Client represents a client connected to the server.

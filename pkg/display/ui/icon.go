@@ -4,7 +4,7 @@ import (
 	"image"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/display/theme"
+	"github.com/franzudev/libcountertop/pkg/display/theme"
 )
 
 type Icon []byte

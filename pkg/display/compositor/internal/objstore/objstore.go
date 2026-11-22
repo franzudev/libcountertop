@@ -3,8 +3,8 @@ package objstore
 import (
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/debug"
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/wire"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/debug"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/wire"
 )
 
 type Store struct {

@@ -5,8 +5,8 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/service"
-	"github.com/ygelfand/libcountertop/pkg/runtime/startup"
+	"github.com/franzudev/libcountertop/pkg/runtime/service"
+	"github.com/franzudev/libcountertop/pkg/runtime/startup"
 )
 
 type Phase int

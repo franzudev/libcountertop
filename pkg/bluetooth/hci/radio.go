@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	component "github.com/ygelfand/libcountertop/pkg/runtime/startup"
+	component "github.com/franzudev/libcountertop/pkg/runtime/startup"
 )
 
 type Radio struct {

@@ -4,7 +4,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 func homes(s *storage.Store[root]) HomeWriter {

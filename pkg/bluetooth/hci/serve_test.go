@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/pair"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/pair"
 )
 
 type deciding struct {

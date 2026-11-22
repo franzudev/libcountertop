@@ -11,7 +11,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/people"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/people"
 )
 
 const (

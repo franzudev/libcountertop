@@ -3,7 +3,7 @@ package webapi
 import (
 	"slices"
 
-	setting "github.com/ygelfand/libcountertop/pkg/settings"
+	setting "github.com/franzudev/libcountertop/pkg/settings"
 )
 
 type section struct {

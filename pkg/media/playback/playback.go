@@ -6,8 +6,8 @@ import (
 	"io"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/cenc"
-	"github.com/ygelfand/libcountertop/pkg/media/nowplaying"
+	"github.com/franzudev/libcountertop/pkg/media/cenc"
+	"github.com/franzudev/libcountertop/pkg/media/nowplaying"
 )
 
 const (

@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/input/textentry"
+	"github.com/franzudev/libcountertop/pkg/input/textentry"
 )
 
 func (a *API) KeyboardPair(target string) (string, time.Time, error) {

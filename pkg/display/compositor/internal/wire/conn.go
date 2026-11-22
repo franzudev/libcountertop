@@ -12,7 +12,7 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	"github.com/ygelfand/libcountertop/pkg/display/compositor/internal/set"
+	"github.com/franzudev/libcountertop/pkg/display/compositor/internal/set"
 )
 
 func pop[T any](s *[]T) (v T, ok bool) {

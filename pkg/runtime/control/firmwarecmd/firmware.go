@@ -7,8 +7,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	harness "github.com/ygelfand/libcountertop/pkg/runtime/control"
-	"github.com/ygelfand/libcountertop/pkg/system/firmware"
+	harness "github.com/franzudev/libcountertop/pkg/runtime/control"
+	"github.com/franzudev/libcountertop/pkg/system/firmware"
 )
 
 func Command[M any](get func() *firmware.Firmware[M]) *cobra.Command {

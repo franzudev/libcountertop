@@ -15,11 +15,11 @@ import (
 
 	esphome "github.com/ygelfand/go-esphome-device"
 
-	"github.com/ygelfand/libcountertop/pkg/audio/capture"
-	"github.com/ygelfand/libcountertop/pkg/hook"
-	"github.com/ygelfand/libcountertop/pkg/inference/voiceprint"
-	"github.com/ygelfand/libcountertop/pkg/runtime/background"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/audio/capture"
+	"github.com/franzudev/libcountertop/pkg/hook"
+	"github.com/franzudev/libcountertop/pkg/inference/voiceprint"
+	"github.com/franzudev/libcountertop/pkg/runtime/background"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 const (

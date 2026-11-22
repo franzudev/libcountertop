@@ -15,7 +15,7 @@ import (
 
 	"github.com/go-gui-org/go-glyph"
 
-	"github.com/ygelfand/libcountertop/pkg/display/icons"
+	"github.com/franzudev/libcountertop/pkg/display/icons"
 
 	"github.com/go-gui-org/go-gui/gui"
 	"github.com/go-gui-org/go-gui/gui/shader"

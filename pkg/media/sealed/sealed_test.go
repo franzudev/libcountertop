@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
 )
 
 func TestTheWidevinePSSHIsChosenOverOthers(t *testing.T) {

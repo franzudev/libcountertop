@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/profiler"
+	"github.com/franzudev/libcountertop/pkg/runtime/profiler"
 )
 
 type DeviceInfo struct {

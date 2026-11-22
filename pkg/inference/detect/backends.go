@@ -7,9 +7,9 @@ import (
 
 	"github.com/zserge/microwakeword"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/gemini"
-	"github.com/ygelfand/libcountertop/pkg/inference/oww"
-	"github.com/ygelfand/libcountertop/pkg/inference/wake"
+	"github.com/franzudev/libcountertop/pkg/inference/gemini"
+	"github.com/franzudev/libcountertop/pkg/inference/oww"
+	"github.com/franzudev/libcountertop/pkg/inference/wake"
 )
 
 type backend interface {

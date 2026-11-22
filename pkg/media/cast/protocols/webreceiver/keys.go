@@ -10,9 +10,9 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/ygelfand/libcountertop/pkg/display/surface"
-	"github.com/ygelfand/libcountertop/pkg/media/sealed"
-	"github.com/ygelfand/libcountertop/pkg/media/urlplayer"
+	"github.com/franzudev/libcountertop/pkg/display/surface"
+	"github.com/franzudev/libcountertop/pkg/media/sealed"
+	"github.com/franzudev/libcountertop/pkg/media/urlplayer"
 )
 
 var errNoWidevine = errors.New("webreceiver: no widevine init data")

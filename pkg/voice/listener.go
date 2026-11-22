@@ -8,10 +8,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/asr"
-	"github.com/ygelfand/libcountertop/pkg/runtime/payload"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
-	"github.com/ygelfand/libcountertop/pkg/settings/storage"
+	"github.com/franzudev/libcountertop/pkg/inference/asr"
+	"github.com/franzudev/libcountertop/pkg/runtime/payload"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/settings/storage"
 )
 
 const namesEvery = 10 * time.Minute

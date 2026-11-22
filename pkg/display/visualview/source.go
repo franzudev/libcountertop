@@ -1,8 +1,8 @@
 package visualview
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/display/visual"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/visual"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 func From(x visual.Input, s config.Source) visual.Input {

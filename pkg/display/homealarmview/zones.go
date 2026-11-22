@@ -5,8 +5,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/ygelfand/libcountertop/pkg/homeassistant/homealarm"
-	"github.com/ygelfand/libcountertop/pkg/say"
+	"github.com/franzudev/libcountertop/pkg/homeassistant/homealarm"
+	"github.com/franzudev/libcountertop/pkg/say"
 )
 
 var (

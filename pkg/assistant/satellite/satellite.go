@@ -8,9 +8,9 @@ import (
 	esphome "github.com/ygelfand/go-esphome-device"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/ygelfand/libcountertop/pkg/assistant/turn"
-	"github.com/ygelfand/libcountertop/pkg/inference/wakeslots"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/assistant/turn"
+	"github.com/franzudev/libcountertop/pkg/inference/wakeslots"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 // Announce and StartConversation both require a media player.

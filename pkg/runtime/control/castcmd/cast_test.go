@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/control"
+	"github.com/franzudev/libcountertop/pkg/runtime/control"
 )
 
 type fakePage struct {

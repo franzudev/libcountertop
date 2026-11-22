@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/ygelfand/libcountertop/pkg/network/peer/pictures"
+	"github.com/franzudev/libcountertop/pkg/network/peer/pictures"
 )
 
 func (a *API) picture(w http.ResponseWriter, r *http.Request) {

@@ -3,7 +3,7 @@ package a2dp
 import (
 	"testing"
 
-	"github.com/ygelfand/libcountertop/pkg/bluetooth/avrcp"
+	"github.com/franzudev/libcountertop/pkg/bluetooth/avrcp"
 )
 
 func list() []avrcp.Item {

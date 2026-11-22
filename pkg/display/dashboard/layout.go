@@ -1,8 +1,8 @@
 package dashboard
 
 import (
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
-	config "github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
+	config "github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 const positionShare = 0.72

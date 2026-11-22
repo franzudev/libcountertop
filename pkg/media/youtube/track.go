@@ -12,10 +12,10 @@ import (
 
 	"github.com/pion/opus"
 
-	"github.com/ygelfand/libcountertop/pkg/media/hls"
-	"github.com/ygelfand/libcountertop/pkg/media/playback"
-	"github.com/ygelfand/libcountertop/pkg/media/sponsorblock"
-	"github.com/ygelfand/libcountertop/pkg/media/webm"
+	"github.com/franzudev/libcountertop/pkg/media/hls"
+	"github.com/franzudev/libcountertop/pkg/media/playback"
+	"github.com/franzudev/libcountertop/pkg/media/sponsorblock"
+	"github.com/franzudev/libcountertop/pkg/media/webm"
 )
 
 const (

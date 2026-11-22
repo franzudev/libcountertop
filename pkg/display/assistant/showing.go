@@ -4,7 +4,7 @@ import (
 	"math"
 	"time"
 
-	voice "github.com/ygelfand/libcountertop/pkg/assistant/turn"
+	voice "github.com/franzudev/libcountertop/pkg/assistant/turn"
 )
 
 type Showing struct {

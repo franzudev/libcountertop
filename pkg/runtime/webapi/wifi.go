@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/network/wifi"
-	"github.com/ygelfand/libcountertop/pkg/network/wpa"
+	"github.com/franzudev/libcountertop/pkg/network/wifi"
+	"github.com/franzudev/libcountertop/pkg/network/wpa"
 )
 
 const wifiScanMost = 20 * time.Second

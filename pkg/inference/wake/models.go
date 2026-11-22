@@ -8,8 +8,8 @@ import (
 
 	"github.com/zserge/microwakeword"
 
-	"github.com/ygelfand/libcountertop/pkg/inference/oww"
-	"github.com/ygelfand/libcountertop/pkg/inference/tflite"
+	"github.com/franzudev/libcountertop/pkg/inference/oww"
+	"github.com/franzudev/libcountertop/pkg/inference/tflite"
 )
 
 // The reference satellite ships with this one selected.

@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/runtime/component"
-	"github.com/ygelfand/libcountertop/pkg/runtime/remember"
-	"github.com/ygelfand/libcountertop/pkg/settings/schema"
+	"github.com/franzudev/libcountertop/pkg/runtime/component"
+	"github.com/franzudev/libcountertop/pkg/runtime/remember"
+	"github.com/franzudev/libcountertop/pkg/settings/schema"
 )
 
 var monday = time.Date(2026, 10, 12, 6, 0, 0, 0, time.UTC)

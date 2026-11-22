@@ -24,7 +24,7 @@ import (
 	tscodecs "github.com/bluenviron/mediacommon/v2/pkg/formats/mpegts/codecs"
 	"github.com/tphakala/go-aac/pcm"
 
-	"github.com/ygelfand/libcountertop/pkg/fetch"
+	"github.com/franzudev/libcountertop/pkg/fetch"
 )
 
 type Options struct {

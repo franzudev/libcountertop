@@ -5,7 +5,7 @@ import (
 	"image"
 	"math"
 
-	"github.com/ygelfand/libcountertop/pkg/display/ui"
+	"github.com/franzudev/libcountertop/pkg/display/ui"
 )
 
 func init() { register(Fireflies, func() Visual { return &fireflies{r: seeded(1820)} }) }

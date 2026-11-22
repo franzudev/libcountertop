@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ygelfand/libcountertop/pkg/media/youtube"
-	"github.com/ygelfand/libcountertop/pkg/runtime/safe"
+	"github.com/franzudev/libcountertop/pkg/media/youtube"
+	"github.com/franzudev/libcountertop/pkg/runtime/safe"
 )
 
 const (
